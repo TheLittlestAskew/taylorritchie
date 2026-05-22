@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Tracker — Taylor Ritchie</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:#050b14;color:#e8edf5;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,rgba(16,185,129,0.10) 0%,transparent 45%),radial-gradient(ellipse at 85% 80%,rgba(59,130,246,0.08) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;position:relative;z-index:1;}
+.login-box{background:rgba(7,17,27,0.7);backdrop-filter:blur(20px);border:1px solid rgba(16,185,129,0.2);border-radius:16px;padding:48px 40px;width:380px;text-align:center;}
+.login-logo{font-family:'Orbitron',sans-serif;font-size:24px;font-weight:700;letter-spacing:0.2em;color:#10b981;}
+.login-sub{font-size:13px;color:#94a3b8;margin:8px 0 32px;letter-spacing:0.05em;}
+.login-box input{display:block;width:100%;padding:12px 16px;margin-bottom:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#e8edf5;font-size:14px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+.login-box input:focus{border-color:rgba(16,185,129,0.5);}
+.login-box button[type="submit"]{width:100%;padding:12px;background:linear-gradient(135deg,#10b981,#059669);border:none;border-radius:8px;color:white;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.1em;cursor:pointer;transition:opacity 0.2s;}
+.login-box button:hover{opacity:0.9;}
+.login-box button:disabled{opacity:0.5;cursor:default;}
+.login-err{color:#f87171;font-size:12px;margin-bottom:12px;text-align:left;}
+.login-toggle{margin-top:20px;font-size:12px;color:#94a3b8;cursor:pointer;}
+.login-toggle:hover{color:#10b981;}
+.loading-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;position:relative;z-index:1;}
+.loading-text{font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:0.3em;color:#10b981;}
+.loading-dots{display:flex;gap:6px;margin-top:16px;}
+.loading-dots span{width:8px;height:8px;border-radius:50%;background:#10b981;animation:pulse 1.2s infinite;}
+.loading-dots span:nth-child(2){animation-delay:0.2s;}
+.loading-dots span:nth-child(3){animation-delay:0.4s;}
+@keyframes pulse{0%,80%,100%{opacity:0.3;transform:scale(0.8);}40%{opacity:1;transform:scale(1.2);}}
+.app-header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 28px;background:rgba(5,11,20,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(16,185,129,0.15);}
+.app-brand{display:flex;align-items:center;gap:10px;}
+.brand-icon{font-size:20px;color:#10b981;}
+.brand-text{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.2em;color:#10b981;}
+.brand-divider{color:rgba(255,255,255,0.15);font-weight:300;}
+.brand-name{font-size:13px;color:#94a3b8;letter-spacing:0.05em;}
+.app-header-right{display:flex;align-items:center;gap:8px;}
+.view-btn{padding:6px 14px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#94a3b8;font-size:12px;font-weight:500;cursor:pointer;transition:all 0.2s;}
+.view-btn.active{background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.3);color:#10b981;}
+.view-btn:hover{border-color:rgba(16,185,129,0.3);}
+.btn-add{padding:6px 16px;border-radius:6px;border:none;background:linear-gradient(135deg,#10b981,#059669);color:white;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:0.05em;}
+.btn-add:hover{opacity:0.9;}
+.btn-logout{padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#64748b;font-size:11px;cursor:pointer;}
+.btn-logout:hover{color:#f87171;border-color:rgba(248,113,113,0.3);}
+.stats-strip{display:flex;gap:12px;padding:20px 28px;position:relative;z-index:1;}
+.stat-card{flex:1;background:rgba(7,17,27,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px 20px;text-align:center;}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;line-height:1;}
+.stat-lbl{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#94a3b8;margin-top:6px;}
+.controls-bar{display:flex;gap:12px;padding:0 28px 16px;position:relative;z-index:1;}
+.search-input{flex:1;padding:10px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#e8edf5;font-size:13px;font-family:inherit;outline:none;}
+.search-input:focus{border-color:rgba(16,185,129,0.4);}
+.search-input::placeholder{color:#64748b;}
+.filter-select{padding:10px 16px;background:#0f1d2e;border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#e8edf5;font-size:13px;font-family:inherit;outline:none;min-width:200px;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
+.filter-select option{background:#0f1d2e;color:#e8edf5;}
+.pipeline{display:flex;gap:16px;padding:0 28px 28px;overflow-x:auto;position:relative;z-index:1;min-height:60vh;}
+.pipeline-col{min-width:260px;max-width:300px;flex:1;}
+.pipeline-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 4px;}
+.pipeline-count{font-family:'JetBrains Mono',monospace;font-size:12px;color:#64748b;}
+.pipeline-cards{display:flex;flex-direction:column;gap:10px;}
+.job-card{background:rgba(7,17,27,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px;cursor:pointer;transition:all 0.2s;}
+.job-card:hover{transform:translateY(-2px);background:rgba(16,185,129,0.04);}
+.job-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.job-match{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;}
+.job-card-title{font-size:14px;font-weight:600;color:#f0fdf4;margin-bottom:4px;line-height:1.3;}
+.job-card-org{font-size:12px;color:#94a3b8;margin-bottom:8px;}
+.job-card-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.job-card-meta span{font-size:11px;padding:2px 8px;border-radius:4px;background:rgba(255,255,255,0.05);color:#94a3b8;}
+.job-card-bottom{display:flex;align-items:center;justify-content:space-between;}
+.job-card-docs{display:flex;gap:4px;}
+.doc-dot{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;}
+.doc-resume{background:rgba(16,185,129,0.2);color:#34d399;}
+.doc-cover{background:rgba(168,85,247,0.2);color:#c084fc;}
+.doc-quest{background:rgba(245,158,11,0.2);color:#fbbf24;}
+.job-card-deadline{font-size:11px;color:#64748b;font-family:'JetBrains Mono',monospace;}
+.match-badge{display:flex;align-items:center;gap:8px;padding:4px 10px;border-radius:6px;margin-bottom:8px;width:fit-content;}
+.match-pct{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;}
+.match-rec{font-size:11px;font-weight:600;letter-spacing:0.04em;}
+.list-view{padding:0 28px 28px;position:relative;z-index:1;}
+.list-view table{width:100%;border-collapse:collapse;background:rgba(7,17,27,0.5);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);}
+.list-view th{text-align:left;padding:12px 16px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#64748b;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);}
+.list-row{cursor:pointer;transition:background 0.15s;}
+.list-row:hover{background:rgba(16,185,129,0.05);}
+.list-row td{padding:12px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.03);}
+.list-title{font-weight:600;color:#f0fdf4;}
+.list-docs span{display:inline-block;width:20px;height:20px;border-radius:4px;text-align:center;line-height:20px;font-size:10px;font-weight:700;margin-right:3px;background:rgba(16,185,129,0.2);color:#34d399;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:#0c1420;border:1px solid rgba(16,185,129,0.2);border-radius:14px;width:100%;max-width:640px;max-height:85vh;overflow-y:auto;display:flex;flex-direction:column;}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start;padding:24px 24px 12px;gap:16px;}
+.modal-title-input{font-size:18px;font-weight:700;color:#f0fdf4;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.1);padding:4px 0;width:100%;font-family:inherit;outline:none;}
+.modal-title-input:focus{border-color:rgba(16,185,129,0.4);}
+.modal-org-input{font-size:13px;color:#94a3b8;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.06);padding:4px 0;width:100%;font-family:inherit;outline:none;margin-top:6px;}
+.modal-org-input:focus{border-color:rgba(16,185,129,0.3);}
+.modal-close{background:transparent;border:none;color:#64748b;font-size:20px;cursor:pointer;padding:4px 8px;}
+.modal-close:hover{color:#f87171;}
+.modal-tabs{display:flex;gap:0;padding:0 24px;border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;}
+.modal-tab{padding:10px 14px;font-size:12px;font-weight:500;color:#64748b;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.modal-tab.active{color:#10b981;border-bottom-color:#10b981;}
+.modal-tab:hover{color:#94a3b8;}
+.modal-body{padding:20px 24px;flex:1;overflow-y:auto;}
+.section-label-text{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#94a3b8;margin-bottom:12px;}
+.form-row{margin-bottom:14px;}
+.form-row label{display:block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#64748b;margin-bottom:5px;}
+.form-row input,.form-row textarea{width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#e8edf5;font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s;}
+.form-row input:focus,.form-row textarea:focus{border-color:rgba(16,185,129,0.4);}
+.form-row textarea{resize:vertical;line-height:1.5;}
+.form-row select{width:100%;padding:10px 14px;background:#0f1d2e;border:1px solid rgba(255,255,255,0.1);border-radius:6px;color:#e8edf5;font-size:13px;font-family:inherit;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
+.form-row select:focus{border-color:rgba(16,185,129,0.4);}
+.form-row select option{background:#0f1d2e;color:#e8edf5;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;}
+.input-with-link{display:flex;gap:8px;align-items:center;}
+.input-with-link input{flex:1;}
+.ext-link{color:#10b981;font-size:16px;text-decoration:none;flex-shrink:0;}
+.ext-link:hover{opacity:0.7;}
+.doc-checks{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
+.check-row{display:flex;align-items:center;gap:8px;font-size:13px;color:#94a3b8;cursor:pointer;}
+.check-row input[type="checkbox"]{accent-color:#10b981;width:16px;height:16px;}
+.mailto-btn{display:inline-block;padding:12px 24px;border-radius:8px;background:linear-gradient(135deg,#10b981,#059669);color:white;font-size:13px;font-weight:600;text-decoration:none;margin-top:12px;letter-spacing:0.04em;transition:opacity 0.2s;}
+.mailto-btn:hover{opacity:0.9;}
+.portal-btn{background:linear-gradient(135deg,#3b82f6,#2563eb);}
+.modal-footer{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-top:1px solid rgba(255,255,255,0.06);}
+.modal-footer div{display:flex;gap:8px;}
+.btn-save{padding:8px 20px;border-radius:6px;border:none;background:linear-gradient(135deg,#10b981,#059669);color:white;font-size:12px;font-weight:600;cursor:pointer;}
+.btn-cancel{padding:8px 20px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#94a3b8;font-size:12px;cursor:pointer;}
+.btn-delete{padding:8px 16px;border-radius:6px;border:1px solid rgba(248,113,113,0.3);background:transparent;color:#f87171;font-size:12px;cursor:pointer;}
+.btn-delete:hover{background:rgba(248,113,113,0.1);}
+.fit-section{margin-bottom:20px;}
+.fit-section-title{font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.fit-section-title.match{color:#34d399;}
+.fit-section-title.gap{color:#fbbf24;}
+.fit-list{list-style:none;padding:0;margin:0;}
+.fit-list li{position:relative;padding:6px 0 6px 20px;font-size:13px;color:#cbd5e1;line-height:1.5;border-bottom:1px solid rgba(255,255,255,0.02);}
+.fit-list li::before{content:"";position:absolute;left:4px;top:13px;width:6px;height:6px;border-radius:50%;}
+.fit-list.match li::before{background:#34d399;}
+.fit-list.gap li::before{background:#fbbf24;}
+.fit-empty{font-size:13px;color:#64748b;font-style:italic;padding:8px 0;}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(16,185,129,0.25);border-radius:3px;}
+@media(max-width:768px){
+  .stats-strip{flex-wrap:wrap;}.stat-card{min-width:calc(50% - 6px);}
+  .pipeline{flex-direction:column;}.pipeline-col{min-width:100%;max-width:100%;}
+  .form-grid{grid-template-columns:1fr;}
+  .modal{max-width:100%;margin:10px;}
+  .app-header{flex-direction:column;gap:12px;text-align:center;}
+  .app-header-right{flex-wrap:wrap;justify-content:center;}
+  .list-view{overflow-x:auto;}
+}
+</style>
+</head>
+<body>
+<div id="root">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh">
+    <div style="font-family:Orbitron,sans-serif;font-size:18px;font-weight:700;color:#10b981;letter-spacing:0.25em">JOB TRACKER</div>
+    <div style="margin-top:10px;color:#64748b;font-size:13px">Loading...</div>
+  </div>
+</div>
+<script>
+const{useState,useEffect,useRef,useCallback,useMemo}=React;
+// Job Tracker — tayloraritchie.com/tracker
+// React 18 single-file app with Supabase auth + data
+
+const SURL = "https://vtrtyagltwdrbastpppl.supabase.co";
+const SKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ0cnR5YWdsdHdkcmJhc3RwcHBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzNTY5NTAsImV4cCI6MjA5MTkzMjk1MH0.hnpwjHGIqiUN_VmmIkOAAFGGCKsyYgl7AO3FW5vDIeM";
+
+// Auth helpers
+function authHeaders(token) {
+  return {
+    "apikey": SKEY,
+    "Authorization": "Bearer " + token,
+    "Content-Type": "application/json"
+  };
+}
+async function signIn(email, password) {
+  const r = await fetch(SURL + "/auth/v1/token?grant_type=password", {
+    method: "POST",
+    headers: {
+      "apikey": SKEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  });
+  if (!r.ok) {
+    const e = await r.json();
+    throw new Error(e.error_description || e.msg || "Login failed");
+  }
+  return r.json();
+}
+async function signUp(email, password) {
+  const r = await fetch(SURL + "/auth/v1/signup", {
+    method: "POST",
+    headers: {
+      "apikey": SKEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  });
+  if (!r.ok) {
+    const e = await r.json();
+    throw new Error(e.error_description || e.msg || "Signup failed");
+  }
+  return r.json();
+}
+async function refreshToken(rt) {
+  const r = await fetch(SURL + "/auth/v1/token?grant_type=refresh_token", {
+    method: "POST",
+    headers: {
+      "apikey": SKEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      refresh_token: rt
+    })
+  });
+  if (!r.ok) return null;
+  return r.json();
+}
+
+// Data helpers
+async function sGet(table, token) {
+  try {
+    const r = await fetch(SURL + "/rest/v1/" + table + "?select=*&order=created_at.desc", {
+      headers: authHeaders(token)
+    });
+    return r.ok ? await r.json() : [];
+  } catch {
+    return [];
+  }
+}
+async function sUpsert(table, data, token) {
+  try {
+    const r = await fetch(SURL + "/rest/v1/" + table, {
+      method: "POST",
+      headers: {
+        ...authHeaders(token),
+        "Prefer": "resolution=merge-duplicates,return=representation"
+      },
+      body: JSON.stringify(Array.isArray(data) ? data : [data])
+    });
+    return r.ok ? await r.json() : null;
+  } catch {
+    return null;
+  }
+}
+async function sDel(table, col, val, token) {
+  try {
+    await fetch(SURL + "/rest/v1/" + table + "?" + col + "=eq." + val, {
+      method: "DELETE",
+      headers: authHeaders(token)
+    });
+  } catch {}
+}
+const uid = () => crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+
+// Status pipeline
+const STATUSES = ["Saved", "Docs Created", "Applied", "Email Confirm", "Interview Process", "Org Replied", "Application Process", "Not Interested"];
+const STATUS_COLORS = {
+  "Saved": {
+    bg: "rgba(59,130,246,0.15)",
+    fg: "#60a5fa",
+    border: "rgba(59,130,246,0.3)"
+  },
+  "Docs Created": {
+    bg: "rgba(168,85,247,0.15)",
+    fg: "#c084fc",
+    border: "rgba(168,85,247,0.3)"
+  },
+  "Applied": {
+    bg: "rgba(16,185,129,0.15)",
+    fg: "#34d399",
+    border: "rgba(16,185,129,0.3)"
+  },
+  "Email Confirm": {
+    bg: "rgba(245,158,11,0.15)",
+    fg: "#fbbf24",
+    border: "rgba(245,158,11,0.3)"
+  },
+  "Interview Process": {
+    bg: "rgba(236,72,153,0.15)",
+    fg: "#f472b6",
+    border: "rgba(236,72,153,0.3)"
+  },
+  "Org Replied": {
+    bg: "rgba(20,184,166,0.15)",
+    fg: "#2dd4bf",
+    border: "rgba(20,184,166,0.3)"
+  },
+  "Application Process": {
+    bg: "rgba(99,102,241,0.15)",
+    fg: "#818cf8",
+    border: "rgba(99,102,241,0.3)"
+  },
+  "Not Interested": {
+    bg: "rgba(107,114,128,0.15)",
+    fg: "#9ca3af",
+    border: "rgba(107,114,128,0.3)"
+  }
+};
+const JOB_TYPES = ["Full-Time", "Part-Time", "Temp", "Contract/Freelance"];
+const LOCATIONS = ["In-Person", "Remote - US", "Remote - GA", "Hybrid"];
+const RECS = ["Definitely", "Can't Hurt", "Long Shot", "Don't Bother"];
+const FRAMINGS = ["ops", "tech", "hybrid"];
+
+// Row mappers
+const jToR = j => ({
+  id: j.id,
+  status: j.status,
+  title: j.title,
+  organization: j.organization || null,
+  deadline: j.deadline || null,
+  job_type: j.jobType || null,
+  salary: j.salary || null,
+  cause_areas: j.causeAreas || null,
+  location: j.location || null,
+  match_percent: j.matchPercent || null,
+  recommendation: j.recommendation || null,
+  post_url: j.postUrl || null,
+  org_url: j.orgUrl || null,
+  resume_drive_url: j.resumeDriveUrl || null,
+  cover_drive_url: j.coverDriveUrl || null,
+  resume_filename: j.resumeFilename || null,
+  cover_filename: j.coverFilename || null,
+  has_resume: j.hasResume || false,
+  has_cover: j.hasCover || false,
+  has_questionnaire: j.hasQuestionnaire || false,
+  has_other: j.hasOther || false,
+  other_materials: j.otherMaterials || null,
+  other_notes: j.otherNotes || null,
+  start_date: j.startDate || null,
+  send_to: j.sendTo || null,
+  instructions: j.instructions || null,
+  duties: j.duties || null,
+  submission_date: j.submissionDate || null,
+  last_update: new Date().toISOString(),
+  created_at: j.createdAt || new Date().toISOString(),
+  framing: j.framing || null,
+  posting_summary: j.postingSummary || null,
+  posting_duties: j.postingDuties || null,
+  posting_requirements: j.postingRequirements || null,
+  posting_benefits: j.postingBenefits || null,
+  skills_match: j.skillsMatch || null,
+  skills_gap: j.skillsGap || null
+});
+const jFrR = r => ({
+  id: r.id,
+  status: r.status,
+  title: r.title,
+  organization: r.organization,
+  deadline: r.deadline,
+  jobType: r.job_type,
+  salary: r.salary,
+  causeAreas: r.cause_areas,
+  location: r.location,
+  matchPercent: r.match_percent,
+  recommendation: r.recommendation,
+  postUrl: r.post_url,
+  orgUrl: r.org_url,
+  resumeDriveUrl: r.resume_drive_url,
+  coverDriveUrl: r.cover_drive_url,
+  resumeFilename: r.resume_filename,
+  coverFilename: r.cover_filename,
+  hasResume: r.has_resume,
+  hasCover: r.has_cover,
+  hasQuestionnaire: r.has_questionnaire,
+  hasOther: r.has_other,
+  otherMaterials: r.other_materials,
+  otherNotes: r.other_notes,
+  startDate: r.start_date,
+  sendTo: r.send_to,
+  instructions: r.instructions,
+  duties: r.duties,
+  submissionDate: r.submission_date,
+  lastUpdate: r.last_update,
+  createdAt: r.created_at,
+  framing: r.framing,
+  postingSummary: r.posting_summary,
+  postingDuties: r.posting_duties,
+  postingRequirements: r.posting_requirements,
+  postingBenefits: r.posting_benefits,
+  skillsMatch: r.skills_match,
+  skillsGap: r.skills_gap
+});
+
+// --- Components ---
+
+function LoginScreen({
+  onLogin
+}) {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [mode, setMode] = useState("login");
+  const handle = async e => {
+    e.preventDefault();
+    setErr("");
+    setLoading(true);
+    try {
+      const fn = mode === "login" ? signIn : signUp;
+      const data = await fn(email, pass);
+      if (data.access_token) {
+        localStorage.setItem("jt_token", data.access_token);
+        localStorage.setItem("jt_refresh", data.refresh_token);
+        onLogin(data.access_token);
+      } else if (data.id && !data.access_token) {
+        setErr("Account created. Check your email to confirm, then log in.");
+        setMode("login");
+      }
+    } catch (ex) {
+      setErr(ex.message);
+    }
+    setLoading(false);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "login-wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "login-box"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "login-logo"
+  }, "JOB TRACKER"), /*#__PURE__*/React.createElement("div", {
+    className: "login-sub"
+  }, "Taylor Ritchie \u2014 Private Dashboard"), /*#__PURE__*/React.createElement("form", {
+    onSubmit: handle
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    placeholder: "Email",
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    required: true,
+    autoFocus: true
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    placeholder: "Password",
+    value: pass,
+    onChange: e => setPass(e.target.value),
+    required: true
+  }), err && /*#__PURE__*/React.createElement("div", {
+    className: "login-err"
+  }, err), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    disabled: loading
+  }, loading ? "..." : mode === "login" ? "Sign In" : "Create Account")), /*#__PURE__*/React.createElement("div", {
+    className: "login-toggle",
+    onClick: () => {
+      setMode(m => m === "login" ? "signup" : "login");
+      setErr("");
+    }
+  }, mode === "login" ? "Need an account? Sign up" : "Already have an account? Sign in")));
+}
+function StatusBadge({
+  status
+}) {
+  const c = STATUS_COLORS[status] || STATUS_COLORS["Saved"];
+  return /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: "inline-block",
+      padding: "3px 12px",
+      borderRadius: "999px",
+      fontSize: "11px",
+      fontWeight: 600,
+      letterSpacing: "0.06em",
+      background: c.bg,
+      color: c.fg,
+      border: "1px solid " + c.border
+    }
+  }, status);
+}
+function StatCard({
+  label,
+  value,
+  accent
+}) {
+  return /*#__PURE__*/React.createElement("div", {
+    className: "stat-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "stat-val",
+    style: {
+      color: accent || "#10b981"
+    }
+  }, value), /*#__PURE__*/React.createElement("div", {
+    className: "stat-lbl"
+  }, label));
+}
+const REC_COLORS = {
+  "Definitely": {
+    fg: "#34d399",
+    bg: "rgba(16,185,129,0.12)",
+    border: "rgba(16,185,129,0.3)"
+  },
+  "Can't Hurt": {
+    fg: "#fbbf24",
+    bg: "rgba(245,158,11,0.12)",
+    border: "rgba(245,158,11,0.3)"
+  },
+  "Long Shot": {
+    fg: "#fb923c",
+    bg: "rgba(251,146,60,0.12)",
+    border: "rgba(251,146,60,0.3)"
+  },
+  "Don't Bother": {
+    fg: "#f87171",
+    bg: "rgba(248,113,113,0.12)",
+    border: "rgba(248,113,113,0.3)"
+  }
+};
+function MatchBadge({
+  percent,
+  recommendation
+}) {
+  if (percent == null && !recommendation) return null;
+  const rc = REC_COLORS[recommendation] || {
+    fg: "#94a3b8",
+    bg: "rgba(148,163,184,0.12)",
+    border: "rgba(148,163,184,0.3)"
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "match-badge",
+    style: {
+      background: rc.bg,
+      border: "1px solid " + rc.border
+    }
+  }, percent != null && /*#__PURE__*/React.createElement("span", {
+    className: "match-pct",
+    style: {
+      color: rc.fg
+    }
+  }, percent, "%"), recommendation && /*#__PURE__*/React.createElement("span", {
+    className: "match-rec",
+    style: {
+      color: rc.fg
+    }
+  }, recommendation));
+}
+function JobCard({
+  job,
+  onClick
+}) {
+  const rc = REC_COLORS[job.recommendation];
+  const cardBorder = rc ? "1px solid " + rc.border : undefined;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "job-card",
+    style: cardBorder ? {
+      borderColor: rc.border
+    } : {},
+    onClick: () => onClick(job)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "job-card-top"
+  }, /*#__PURE__*/React.createElement(StatusBadge, {
+    status: job.status
+  }), job.matchPercent != null && /*#__PURE__*/React.createElement("span", {
+    className: "job-match",
+    style: {
+      color: rc ? rc.fg : "#94a3b8"
+    }
+  }, job.matchPercent, "%")), /*#__PURE__*/React.createElement("div", {
+    className: "job-card-title"
+  }, job.title), /*#__PURE__*/React.createElement("div", {
+    className: "job-card-org"
+  }, job.organization || "—"), (job.matchPercent != null || job.recommendation) && /*#__PURE__*/React.createElement(MatchBadge, {
+    percent: job.matchPercent,
+    recommendation: job.recommendation
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "job-card-meta"
+  }, job.location && /*#__PURE__*/React.createElement("span", null, job.location), job.jobType && /*#__PURE__*/React.createElement("span", null, job.jobType), job.salary && /*#__PURE__*/React.createElement("span", null, job.salary)), /*#__PURE__*/React.createElement("div", {
+    className: "job-card-bottom"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "job-card-docs"
+  }, job.hasResume && /*#__PURE__*/React.createElement("span", {
+    className: "doc-dot doc-resume",
+    title: "Resume"
+  }, "R"), job.hasCover && /*#__PURE__*/React.createElement("span", {
+    className: "doc-dot doc-cover",
+    title: "Cover Letter"
+  }, "C"), job.hasQuestionnaire && /*#__PURE__*/React.createElement("span", {
+    className: "doc-dot doc-quest",
+    title: "Questionnaire"
+  }, "Q")), job.deadline && /*#__PURE__*/React.createElement("span", {
+    className: "job-card-deadline"
+  }, "Due: ", new Date(job.deadline).toLocaleDateString())));
+}
+function DetailModal({
+  job,
+  onClose,
+  onSave,
+  onDelete,
+  token
+}) {
+  const [form, setForm] = useState({
+    ...job
+  });
+  const [tab, setTab] = useState("info");
+  const upd = (k, v) => setForm(f => ({
+    ...f,
+    [k]: v
+  }));
+  const handleSave = () => {
+    onSave(form);
+    onClose();
+  };
+  const handleDelete = () => {
+    if (confirm("Delete this application?")) {
+      onDelete(form.id);
+      onClose();
+    }
+  };
+  const mailtoLink = () => {
+    if (!form.sendTo || !form.sendTo.includes("@")) return null;
+    const subj = encodeURIComponent("Application: " + form.title + (form.organization ? " — " + form.organization : ""));
+    const body = encodeURIComponent("Hello,\n\nPlease find attached my application materials for the " + form.title + " position.\n\nThank you for your consideration.\n\nTaylor Ritchie\n706-767-7196\ntaylor.ritchie14@gmail.com\nhttps://www.linkedin.com/in/taylor-askew-ritchie-126618133/");
+    return "mailto:" + form.sendTo + "?subject=" + subj + "&body=" + body;
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "modal-overlay",
+    onClick: onClose
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal",
+    onClick: e => e.stopPropagation()
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "modal-header"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+    className: "modal-title-input",
+    value: form.title,
+    onChange: e => upd("title", e.target.value),
+    placeholder: "Job Title"
+  }), /*#__PURE__*/React.createElement("input", {
+    className: "modal-org-input",
+    value: form.organization || "",
+    onChange: e => upd("organization", e.target.value),
+    placeholder: "Organization"
+  })), /*#__PURE__*/React.createElement("button", {
+    className: "modal-close",
+    onClick: onClose
+  }, "\u2715")), /*#__PURE__*/React.createElement("div", {
+    className: "modal-tabs"
+  }, ["info", "docs", "submission", "posting", "fit", "notes"].map(t => /*#__PURE__*/React.createElement("button", {
+    key: t,
+    className: "modal-tab" + (tab === t ? " active" : ""),
+    onClick: () => setTab(t)
+  }, t === "docs" ? "Docs Required" : t === "fit" ? "Fit Analysis" : t.charAt(0).toUpperCase() + t.slice(1)))), /*#__PURE__*/React.createElement("div", {
+    className: "modal-body"
+  }, tab === "info" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Status"), /*#__PURE__*/React.createElement("select", {
+    value: form.status,
+    onChange: e => upd("status", e.target.value)
+  }, STATUSES.map(s => /*#__PURE__*/React.createElement("option", {
+    key: s
+  }, s)))), /*#__PURE__*/React.createElement("div", {
+    className: "form-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Job Type"), /*#__PURE__*/React.createElement("select", {
+    value: form.jobType || "",
+    onChange: e => upd("jobType", e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "\u2014"), JOB_TYPES.map(t => /*#__PURE__*/React.createElement("option", {
+    key: t
+  }, t)))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Location"), /*#__PURE__*/React.createElement("select", {
+    value: form.location || "",
+    onChange: e => upd("location", e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "\u2014"), LOCATIONS.map(l => /*#__PURE__*/React.createElement("option", {
+    key: l
+  }, l)))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Salary"), /*#__PURE__*/React.createElement("input", {
+    value: form.salary || "",
+    onChange: e => upd("salary", e.target.value),
+    placeholder: "e.g. $50k-$60k"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Deadline to Apply"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: form.deadline || "",
+    onChange: e => upd("deadline", e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Match %"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    max: "100",
+    value: form.matchPercent || "",
+    onChange: e => upd("matchPercent", e.target.value ? parseInt(e.target.value) : null)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Recommendation"), /*#__PURE__*/React.createElement("select", {
+    value: form.recommendation || "",
+    onChange: e => upd("recommendation", e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "\u2014"), RECS.map(r => /*#__PURE__*/React.createElement("option", {
+    key: r
+  }, r))))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Cause Areas"), /*#__PURE__*/React.createElement("input", {
+    value: form.causeAreas || "",
+    onChange: e => upd("causeAreas", e.target.value),
+    placeholder: "e.g. Homelessness, Housing"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Posting URL"), /*#__PURE__*/React.createElement("div", {
+    className: "input-with-link"
+  }, /*#__PURE__*/React.createElement("input", {
+    value: form.postUrl || "",
+    onChange: e => upd("postUrl", e.target.value),
+    placeholder: "https://..."
+  }), form.postUrl && /*#__PURE__*/React.createElement("a", {
+    href: form.postUrl,
+    target: "_blank",
+    rel: "noopener",
+    className: "ext-link"
+  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Org Website"), /*#__PURE__*/React.createElement("div", {
+    className: "input-with-link"
+  }, /*#__PURE__*/React.createElement("input", {
+    value: form.orgUrl || "",
+    onChange: e => upd("orgUrl", e.target.value),
+    placeholder: "https://..."
+  }), form.orgUrl && /*#__PURE__*/React.createElement("a", {
+    href: form.orgUrl,
+    target: "_blank",
+    rel: "noopener",
+    className: "ext-link"
+  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Framing"), /*#__PURE__*/React.createElement("select", {
+    value: form.framing || "",
+    onChange: e => upd("framing", e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "\u2014"), FRAMINGS.map(f => /*#__PURE__*/React.createElement("option", {
+    key: f
+  }, f)))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Start Date"), /*#__PURE__*/React.createElement("input", {
+    value: form.startDate || "",
+    onChange: e => upd("startDate", e.target.value),
+    placeholder: "e.g. ASAP, June 2026"
+  }))), tab === "docs" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "section-label-text"
+  }, "What does this application require?"), /*#__PURE__*/React.createElement("div", {
+    className: "doc-checks"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "check-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: form.hasResume || false,
+    onChange: e => upd("hasResume", e.target.checked)
+  }), " Resume required"), /*#__PURE__*/React.createElement("label", {
+    className: "check-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: form.hasCover || false,
+    onChange: e => upd("hasCover", e.target.checked)
+  }), " Cover letter required"), /*#__PURE__*/React.createElement("label", {
+    className: "check-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: form.hasQuestionnaire || false,
+    onChange: e => upd("hasQuestionnaire", e.target.checked)
+  }), " Questionnaire required")), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Other Materials Needed"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 2,
+    value: form.otherMaterials || "",
+    onChange: e => upd("otherMaterials", e.target.value),
+    placeholder: "e.g. Writing sample, references, portfolio link"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "section-label-text",
+    style: {
+      marginTop: "24px"
+    }
+  }, "Completed Docs (Drive Links)"), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Resume"), /*#__PURE__*/React.createElement("div", {
+    className: "input-with-link"
+  }, /*#__PURE__*/React.createElement("input", {
+    value: form.resumeDriveUrl || "",
+    onChange: e => upd("resumeDriveUrl", e.target.value),
+    placeholder: "Google Drive URL"
+  }), form.resumeDriveUrl && /*#__PURE__*/React.createElement("a", {
+    href: form.resumeDriveUrl,
+    target: "_blank",
+    rel: "noopener",
+    className: "ext-link"
+  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Resume Filename"), /*#__PURE__*/React.createElement("input", {
+    value: form.resumeFilename || "",
+    onChange: e => upd("resumeFilename", e.target.value),
+    placeholder: "TaylorRitchie_Resume_..."
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Cover Letter"), /*#__PURE__*/React.createElement("div", {
+    className: "input-with-link"
+  }, /*#__PURE__*/React.createElement("input", {
+    value: form.coverDriveUrl || "",
+    onChange: e => upd("coverDriveUrl", e.target.value),
+    placeholder: "Google Drive URL"
+  }), form.coverDriveUrl && /*#__PURE__*/React.createElement("a", {
+    href: form.coverDriveUrl,
+    target: "_blank",
+    rel: "noopener",
+    className: "ext-link"
+  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Cover Filename"), /*#__PURE__*/React.createElement("input", {
+    value: form.coverFilename || "",
+    onChange: e => upd("coverFilename", e.target.value),
+    placeholder: "TaylorRitchie_CoverLetter_..."
+  }))), tab === "submission" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Send To (email or portal URL)"), /*#__PURE__*/React.createElement("div", {
+    className: "input-with-link"
+  }, /*#__PURE__*/React.createElement("input", {
+    value: form.sendTo || "",
+    onChange: e => upd("sendTo", e.target.value),
+    placeholder: "hr@company.com or https://portal.com/apply"
+  }), form.sendTo && form.sendTo.startsWith("http") && /*#__PURE__*/React.createElement("a", {
+    href: form.sendTo,
+    target: "_blank",
+    rel: "noopener",
+    className: "ext-link"
+  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Submission Instructions"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 3,
+    value: form.instructions || "",
+    onChange: e => upd("instructions", e.target.value),
+    placeholder: "How to submit: email, portal, specific subject line, etc."
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Submission Date"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: form.submissionDate ? form.submissionDate.slice(0, 10) : "",
+    onChange: e => upd("submissionDate", e.target.value ? new Date(e.target.value).toISOString() : null)
+  })), mailtoLink() && /*#__PURE__*/React.createElement("a", {
+    href: mailtoLink(),
+    className: "mailto-btn"
+  }, "\uD83D\uDCE7 Open Email Draft"), form.sendTo && !form.sendTo.includes("@") && form.sendTo.startsWith("http") && /*#__PURE__*/React.createElement("a", {
+    href: form.sendTo,
+    target: "_blank",
+    rel: "noopener",
+    className: "mailto-btn portal-btn"
+  }, "\uD83C\uDF10 Open Application Portal")), tab === "posting" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Summary (1-2 sentences)"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 2,
+    value: form.postingSummary || "",
+    onChange: e => upd("postingSummary", e.target.value),
+    placeholder: "What is this role in plain English?"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Job Duties"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 6,
+    value: form.postingDuties || "",
+    onChange: e => upd("postingDuties", e.target.value),
+    placeholder: "Key responsibilities"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Requirements"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 6,
+    value: form.postingRequirements || "",
+    onChange: e => upd("postingRequirements", e.target.value),
+    placeholder: "Required and preferred qualifications"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Benefits"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 4,
+    value: form.postingBenefits || "",
+    onChange: e => upd("postingBenefits", e.target.value),
+    placeholder: "Salary, health, PTO, retirement, etc."
+  }))), tab === "fit" && /*#__PURE__*/React.createElement(React.Fragment, null,
+  (() => {
+    const matchItems = (form.skillsMatch || "").split("\n").filter(l => l.trim());
+    const gapItems = (form.skillsGap || "").split("\n").filter(l => l.trim());
+    return /*#__PURE__*/React.createElement(React.Fragment, null,
+      /*#__PURE__*/React.createElement("div", {className: "fit-section"},
+        /*#__PURE__*/React.createElement("div", {className: "fit-section-title match"}, "\u2705 Experience That Applies"),
+        matchItems.length > 0
+          ? /*#__PURE__*/React.createElement("ul", {className: "fit-list match"}, matchItems.map((item, i) => /*#__PURE__*/React.createElement("li", {key: i}, item.replace(/^[-•]\s*/, ""))))
+          : /*#__PURE__*/React.createElement("div", {className: "fit-empty"}, "No fit analysis yet. Claude will populate this when reviewing the posting.")
+      ),
+      /*#__PURE__*/React.createElement("div", {className: "fit-section"},
+        /*#__PURE__*/React.createElement("div", {className: "fit-section-title gap"}, "\u26A0\uFE0F Requirements Not in My Experience"),
+        gapItems.length > 0
+          ? /*#__PURE__*/React.createElement("ul", {className: "fit-list gap"}, gapItems.map((item, i) => /*#__PURE__*/React.createElement("li", {key: i}, item.replace(/^[-•]\s*/, ""))))
+          : /*#__PURE__*/React.createElement("div", {className: "fit-empty"}, "No gaps identified yet.")
+      ),
+      /*#__PURE__*/React.createElement("details", {style: {marginTop: "16px"}},
+        /*#__PURE__*/React.createElement("summary", {style: {cursor: "pointer", fontSize: "12px", color: "#64748b", fontWeight: "600", letterSpacing: "0.08em", textTransform: "uppercase"}}, "Edit Raw Data"),
+        /*#__PURE__*/React.createElement("div", {className: "form-row", style: {marginTop: "12px"}},
+          /*#__PURE__*/React.createElement("label", null, "Matching Skills (one per line)"),
+          /*#__PURE__*/React.createElement("textarea", {rows: 6, value: form.skillsMatch || "", onChange: e => upd("skillsMatch", e.target.value), placeholder: "One matching skill/experience per line..."})
+        ),
+        /*#__PURE__*/React.createElement("div", {className: "form-row"},
+          /*#__PURE__*/React.createElement("label", null, "Gaps (one per line)"),
+          /*#__PURE__*/React.createElement("textarea", {rows: 6, value: form.skillsGap || "", onChange: e => upd("skillsGap", e.target.value), placeholder: "One gap per line..."})
+        )
+      )
+    );
+  })()
+  ), tab === "notes" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Notes"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 6,
+    value: form.otherNotes || "",
+    onChange: e => upd("otherNotes", e.target.value),
+    placeholder: "Contacts, referrals, research notes, concerns..."
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "modal-footer"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "btn-delete",
+    onClick: handleDelete
+  }, "Delete"), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    className: "btn-cancel",
+    onClick: onClose
+  }, "Cancel"), /*#__PURE__*/React.createElement("button", {
+    className: "btn-save",
+    onClick: handleSave
+  }, "Save")))));
+}
+
+// --- Main App ---
+function App() {
+  const [token, setToken] = useState(null);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [view, setView] = useState("pipeline");
+  const [selected, setSelected] = useState(null);
+  const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
+
+  // Try to restore session
+  useEffect(() => {
+    const stored = localStorage.getItem("jt_token");
+    const rt = localStorage.getItem("jt_refresh");
+    if (stored) {
+      // Try a quick data fetch to see if token is still valid
+      fetch(SURL + "/rest/v1/job_applications?select=id&limit=1", {
+        headers: authHeaders(stored)
+      }).then(r => {
+        if (r.ok) {
+          setToken(stored);
+        } else if (rt) {
+          refreshToken(rt).then(d => {
+            if (d && d.access_token) {
+              localStorage.setItem("jt_token", d.access_token);
+              localStorage.setItem("jt_refresh", d.refresh_token);
+              setToken(d.access_token);
+            } else {
+              setLoading(false);
+            }
+          });
+        } else {
+          setLoading(false);
+        }
+      }).catch(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  // Load data when token is set
+  useEffect(() => {
+    if (!token) return;
+    sGet("job_applications", token).then(rows => {
+      setJobs(rows.map(jFrR));
+      setLoading(false);
+    });
+  }, [token]);
+  const addJob = () => {
+    const j = {
+      id: uid(),
+      status: "Saved",
+      title: "New Application",
+      organization: "",
+      deadline: null,
+      jobType: null,
+      salary: null,
+      causeAreas: null,
+      location: null,
+      matchPercent: null,
+      recommendation: null,
+      postUrl: null,
+      orgUrl: null,
+      resumeDriveUrl: null,
+      coverDriveUrl: null,
+      resumeFilename: null,
+      coverFilename: null,
+      hasResume: false,
+      hasCover: false,
+      hasQuestionnaire: false,
+      hasOther: false,
+      otherNotes: null,
+      startDate: null,
+      sendTo: null,
+      instructions: null,
+      duties: null,
+      submissionDate: null,
+      createdAt: new Date().toISOString(),
+      framing: null,
+      postingRaw: null,
+      skillsMatch: null,
+      skillsGap: null
+    };
+    setJobs(prev => [j, ...prev]);
+    sUpsert("job_applications", jToR(j), token);
+    setSelected(j);
+  };
+  const saveJob = j => {
+    setJobs(prev => prev.map(x => x.id === j.id ? j : x));
+    sUpsert("job_applications", jToR(j), token);
+  };
+  const deleteJob = id => {
+    setJobs(prev => prev.filter(x => x.id !== id));
+    sDel("job_applications", "id", id, token);
+  };
+  const logout = () => {
+    localStorage.removeItem("jt_token");
+    localStorage.removeItem("jt_refresh");
+    setToken(null);
+    setJobs([]);
+  };
+  if (!token && !loading) return /*#__PURE__*/React.createElement(LoginScreen, {
+    onLogin: setToken
+  });
+  if (loading) return /*#__PURE__*/React.createElement("div", {
+    className: "loading-screen"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "loading-text"
+  }, "LOADING TRACKER"), /*#__PURE__*/React.createElement("div", {
+    className: "loading-dots"
+  }, /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", null), /*#__PURE__*/React.createElement("span", null)));
+  const filtered = jobs.filter(j => {
+    if (filter !== "all" && j.status !== filter) return false;
+    if (search) {
+      const s = search.toLowerCase();
+      return (j.title || "").toLowerCase().includes(s) || (j.organization || "").toLowerCase().includes(s) || (j.causeAreas || "").toLowerCase().includes(s);
+    }
+    return true;
+  });
+  const counts = {};
+  STATUSES.forEach(s => {
+    counts[s] = jobs.filter(j => j.status === s).length;
+  });
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "app-header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "app-brand"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "brand-icon"
+  }, "\u25C8"), /*#__PURE__*/React.createElement("span", {
+    className: "brand-text"
+  }, "JOB TRACKER"), /*#__PURE__*/React.createElement("span", {
+    className: "brand-divider"
+  }, "|"), /*#__PURE__*/React.createElement("span", {
+    className: "brand-name"
+  }, "Taylor Ritchie")), /*#__PURE__*/React.createElement("div", {
+    className: "app-header-right"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "view-btn" + (view === "pipeline" ? " active" : ""),
+    onClick: () => setView("pipeline")
+  }, "Pipeline"), /*#__PURE__*/React.createElement("button", {
+    className: "view-btn" + (view === "list" ? " active" : ""),
+    onClick: () => setView("list")
+  }, "List"), /*#__PURE__*/React.createElement("button", {
+    className: "btn-add",
+    onClick: addJob
+  }, "+ New"), /*#__PURE__*/React.createElement("button", {
+    className: "btn-logout",
+    onClick: logout
+  }, "Sign Out"))), /*#__PURE__*/React.createElement("div", {
+    className: "stats-strip"
+  }, /*#__PURE__*/React.createElement(StatCard, {
+    label: "Total",
+    value: jobs.length,
+    accent: "#60a5fa"
+  }), /*#__PURE__*/React.createElement(StatCard, {
+    label: "Saved",
+    value: counts["Saved"] || 0,
+    accent: "#60a5fa"
+  }), /*#__PURE__*/React.createElement(StatCard, {
+    label: "Applied",
+    value: counts["Applied"] || 0,
+    accent: "#34d399"
+  }), /*#__PURE__*/React.createElement(StatCard, {
+    label: "Interviewing",
+    value: counts["Interview Process"] || 0,
+    accent: "#f472b6"
+  }), /*#__PURE__*/React.createElement(StatCard, {
+    label: "Docs Ready",
+    value: counts["Docs Created"] || 0,
+    accent: "#c084fc"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "controls-bar"
+  }, /*#__PURE__*/React.createElement("input", {
+    className: "search-input",
+    placeholder: "Search jobs...",
+    value: search,
+    onChange: e => setSearch(e.target.value)
+  }), /*#__PURE__*/React.createElement("select", {
+    className: "filter-select",
+    value: filter,
+    onChange: e => setFilter(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "All Statuses"), STATUSES.map(s => /*#__PURE__*/React.createElement("option", {
+    key: s,
+    value: s
+  }, s, " (", counts[s] || 0, ")")))), view === "pipeline" ? /*#__PURE__*/React.createElement("div", {
+    className: "pipeline"
+  }, STATUSES.filter(s => counts[s] > 0 || ["Saved", "Docs Created", "Applied", "Interview Process"].includes(s)).map(status => /*#__PURE__*/React.createElement("div", {
+    key: status,
+    className: "pipeline-col"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pipeline-header"
+  }, /*#__PURE__*/React.createElement(StatusBadge, {
+    status: status
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pipeline-count"
+  }, counts[status] || 0)), /*#__PURE__*/React.createElement("div", {
+    className: "pipeline-cards"
+  }, jobs.filter(j => j.status === status).map(j => /*#__PURE__*/React.createElement(JobCard, {
+    key: j.id,
+    job: j,
+    onClick: setSelected
+  })))))) : /*#__PURE__*/React.createElement("div", {
+    className: "list-view"
+  }, /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "Title"), /*#__PURE__*/React.createElement("th", null, "Organization"), /*#__PURE__*/React.createElement("th", null, "Type"), /*#__PURE__*/React.createElement("th", null, "Location"), /*#__PURE__*/React.createElement("th", null, "Salary"), /*#__PURE__*/React.createElement("th", null, "Match"), /*#__PURE__*/React.createElement("th", null, "Docs"))), /*#__PURE__*/React.createElement("tbody", null, filtered.map(j => /*#__PURE__*/React.createElement("tr", {
+    key: j.id,
+    onClick: () => setSelected(j),
+    className: "list-row"
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(StatusBadge, {
+    status: j.status
+  })), /*#__PURE__*/React.createElement("td", {
+    className: "list-title"
+  }, j.title), /*#__PURE__*/React.createElement("td", null, j.organization || "—"), /*#__PURE__*/React.createElement("td", null, j.jobType || "—"), /*#__PURE__*/React.createElement("td", null, j.location || "—"), /*#__PURE__*/React.createElement("td", null, j.salary || "—"), /*#__PURE__*/React.createElement("td", null, j.matchPercent != null ? j.matchPercent + "%" : "—"), /*#__PURE__*/React.createElement("td", {
+    className: "list-docs"
+  }, j.hasResume && /*#__PURE__*/React.createElement("span", {
+    title: "Resume"
+  }, "R"), j.hasCover && /*#__PURE__*/React.createElement("span", {
+    title: "Cover"
+  }, "C"), j.hasQuestionnaire && /*#__PURE__*/React.createElement("span", {
+    title: "Quest"
+  }, "Q"))))))), selected && /*#__PURE__*/React.createElement(DetailModal, {
+    job: selected,
+    onClose: () => setSelected(null),
+    onSave: saveJob,
+    onDelete: deleteJob,
+    token: token
+  }));
+}
+ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+</script>
+</body>
+</html>

@@ -38,8 +38,6 @@
 
 **Personal Effectiveness:** Organization & time management · prioritization · attention to detail · problem solving & critical thinking · adaptability · self-directed work · collaboration & teamwork
 
-**Languages:** Basic conversational Spanish (non-professional)
-
 **Familiarity:** Salesforce · Power Fx (Model-Driven & Power Automate contexts) · DAX
 
 ---

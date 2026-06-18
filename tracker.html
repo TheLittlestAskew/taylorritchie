@@ -139,6 +139,38 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .fit-list.match li::before{background:#34d399;}
 .fit-list.gap li::before{background:#fbbf24;}
 .fit-empty{font-size:13px;color:#64748b;font-style:italic;padding:8px 0;}
+.ws-report{padding:0 28px 28px;position:relative;z-index:1;}
+.ws-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:20px;flex-wrap:wrap;}
+.ws-title{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:#10b981;letter-spacing:0.08em;}
+.ws-note{font-size:12px;color:#94a3b8;margin-top:6px;max-width:620px;line-height:1.5;}
+.ws-actions{display:flex;gap:8px;}
+.ws-btn{padding:8px 16px;border-radius:6px;border:1px solid rgba(16,185,129,0.3);background:rgba(16,185,129,0.1);color:#34d399;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;}
+.ws-btn:hover{background:rgba(16,185,129,0.18);}
+.ws-week{margin-bottom:24px;}
+.ws-week-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:0 2px;gap:12px;flex-wrap:wrap;}
+.ws-week-label{font-size:13px;font-weight:600;color:#e8edf5;font-family:'JetBrains Mono',monospace;}
+.ws-week-count{font-size:11px;font-weight:700;letter-spacing:0.04em;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+.ws-week-count.ok{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3);}
+.ws-week-count.low{background:rgba(248,113,113,0.12);color:#f87171;border:1px solid rgba(248,113,113,0.3);}
+.ws-table{width:100%;border-collapse:collapse;background:rgba(7,17,27,0.5);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);}
+.ws-table th{text-align:left;padding:10px 14px;font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#64748b;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(0,0,0,0.2);}
+.ws-table td{padding:10px 14px;font-size:12px;border-bottom:1px solid rgba(255,255,255,0.03);color:#cbd5e1;vertical-align:top;}
+.ws-contactinfo{word-break:break-all;max-width:220px;font-size:11px;color:#94a3b8;}
+.ws-missing{color:#fbbf24;font-style:italic;font-size:11px;}
+.ws-empty{padding:48px;text-align:center;color:#64748b;font-size:14px;line-height:1.6;}
+@media print{
+  body::before{display:none;}
+  .app-header,.stats-strip,.controls-bar,.ws-actions{display:none !important;}
+  body{background:#fff !important;color:#000 !important;}
+  .ws-report{padding:0;}
+  .ws-title,.ws-week-label{color:#000 !important;}
+  .ws-note{color:#333 !important;}
+  .ws-table{border-color:#ccc;background:#fff;}
+  .ws-table th{color:#333;background:#eee;}
+  .ws-table td{color:#000;border-color:#ddd;}
+  .ws-contactinfo{color:#333;}
+  .ws-week{break-inside:avoid;}
+}
 ::-webkit-scrollbar{width:6px;height:6px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:rgba(16,185,129,0.25);border-radius:3px;}
@@ -311,6 +343,9 @@ const JOB_TYPES = ["Full-Time", "Part-Time", "Temp", "Contract/Freelance"];
 const LOCATIONS = ["In-Person", "Remote - US", "Remote - GA", "Hybrid"];
 const RECS = ["Definitely", "Can't Hurt", "Long Shot", "Don't Bother"];
 const FRAMINGS = ["ops", "tech", "hybrid"];
+const CONTACT_METHODS = ["Online", "Email", "In Person", "Telephone", "Fax", "Resume Mailed"];
+const APPLIED_STATUSES = ["Applied", "Email Confirm", "Interview Process", "Org Replied", "Application Process"];
+const GA_MIN_CONTACTS = 3;
 
 // Row mappers
 const jToR = j => ({
@@ -350,7 +385,9 @@ const jToR = j => ({
   posting_requirements: j.postingRequirements || null,
   posting_benefits: j.postingBenefits || null,
   skills_match: j.skillsMatch || null,
-  skills_gap: j.skillsGap || null
+  skills_gap: j.skillsGap || null,
+  contact_method: j.contactMethod || null,
+  contact_result: j.contactResult || null
 });
 const jFrR = r => ({
   id: r.id,
@@ -389,7 +426,9 @@ const jFrR = r => ({
   postingRequirements: r.posting_requirements,
   postingBenefits: r.posting_benefits,
   skillsMatch: r.skills_match,
-  skillsGap: r.skills_gap
+  skillsGap: r.skills_gap,
+  contactMethod: r.contact_method,
+  contactResult: r.contact_result
 });
 
 // --- Components ---
@@ -430,7 +469,7 @@ function LoginScreen({
     className: "login-logo"
   }, "JOB TRACKER"), /*#__PURE__*/React.createElement("div", {
     className: "login-sub"
-  }, "Taylor Ritchie \u2014 Private Dashboard"), /*#__PURE__*/React.createElement("form", {
+  }, "Taylor Ritchie — Private Dashboard"), /*#__PURE__*/React.createElement("form", {
     onSubmit: handle
   }, /*#__PURE__*/React.createElement("input", {
     type: "email",
@@ -641,7 +680,7 @@ function DetailModal({
   })), /*#__PURE__*/React.createElement("button", {
     className: "modal-close",
     onClick: onClose
-  }, "\u2715")), /*#__PURE__*/React.createElement("div", {
+  }, "✕")), /*#__PURE__*/React.createElement("div", {
     className: "modal-tabs"
   }, ["info", "docs", "submission", "posting", "fit", "notes"].map(t => /*#__PURE__*/React.createElement("button", {
     key: t,
@@ -665,7 +704,7 @@ function DetailModal({
     onChange: e => upd("jobType", e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2014"), JOB_TYPES.map(t => /*#__PURE__*/React.createElement("option", {
+  }, "—"), JOB_TYPES.map(t => /*#__PURE__*/React.createElement("option", {
     key: t
   }, t)))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
@@ -674,7 +713,7 @@ function DetailModal({
     onChange: e => upd("location", e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2014"), LOCATIONS.map(l => /*#__PURE__*/React.createElement("option", {
+  }, "—"), LOCATIONS.map(l => /*#__PURE__*/React.createElement("option", {
     key: l
   }, l)))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
@@ -703,7 +742,7 @@ function DetailModal({
     onChange: e => upd("recommendation", e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2014"), RECS.map(r => /*#__PURE__*/React.createElement("option", {
+  }, "—"), RECS.map(r => /*#__PURE__*/React.createElement("option", {
     key: r
   }, r))))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
@@ -724,7 +763,7 @@ function DetailModal({
     target: "_blank",
     rel: "noopener",
     className: "ext-link"
-  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+  }, "↗"))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Org Website"), /*#__PURE__*/React.createElement("div", {
     className: "input-with-link"
@@ -737,14 +776,14 @@ function DetailModal({
     target: "_blank",
     rel: "noopener",
     className: "ext-link"
-  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+  }, "↗"))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Framing"), /*#__PURE__*/React.createElement("select", {
     value: form.framing || "",
     onChange: e => upd("framing", e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2014"), FRAMINGS.map(f => /*#__PURE__*/React.createElement("option", {
+  }, "—"), FRAMINGS.map(f => /*#__PURE__*/React.createElement("option", {
     key: f
   }, f)))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
@@ -799,7 +838,7 @@ function DetailModal({
     target: "_blank",
     rel: "noopener",
     className: "ext-link"
-  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+  }, "↗"))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Resume Filename"), /*#__PURE__*/React.createElement("input", {
     value: form.resumeFilename || "",
@@ -818,7 +857,7 @@ function DetailModal({
     target: "_blank",
     rel: "noopener",
     className: "ext-link"
-  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+  }, "↗"))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Cover Filename"), /*#__PURE__*/React.createElement("input", {
     value: form.coverFilename || "",
@@ -837,7 +876,7 @@ function DetailModal({
     target: "_blank",
     rel: "noopener",
     className: "ext-link"
-  }, "\u2197"))), /*#__PURE__*/React.createElement("div", {
+  }, "↗"))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Submission Instructions"), /*#__PURE__*/React.createElement("textarea", {
     rows: 3,
@@ -850,15 +889,30 @@ function DetailModal({
     type: "date",
     value: form.submissionDate ? form.submissionDate.slice(0, 10) : "",
     onChange: e => upd("submissionDate", e.target.value ? new Date(e.target.value).toISOString() : null)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Method of Contact (GA work-search)"), /*#__PURE__*/React.createElement("select", {
+    value: form.contactMethod || "",
+    onChange: e => upd("contactMethod", e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "—"), CONTACT_METHODS.map(m => /*#__PURE__*/React.createElement("option", {
+    key: m
+  }, m)))), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Result of Contact (GA work-search)"), /*#__PURE__*/React.createElement("input", {
+    value: form.contactResult || "",
+    onChange: e => upd("contactResult", e.target.value),
+    placeholder: "e.g. Applied online, Submitted resume, Interview scheduled"
   })), mailtoLink() && /*#__PURE__*/React.createElement("a", {
     href: mailtoLink(),
     className: "mailto-btn"
-  }, "\uD83D\uDCE7 Open Email Draft"), form.sendTo && !form.sendTo.includes("@") && form.sendTo.startsWith("http") && /*#__PURE__*/React.createElement("a", {
+  }, "📧 Open Email Draft"), form.sendTo && !form.sendTo.includes("@") && form.sendTo.startsWith("http") && /*#__PURE__*/React.createElement("a", {
     href: form.sendTo,
     target: "_blank",
     rel: "noopener",
     className: "mailto-btn portal-btn"
-  }, "\uD83C\uDF10 Open Application Portal")), tab === "posting" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "🌐 Open Application Portal")), tab === "posting" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Summary (1-2 sentences)"), /*#__PURE__*/React.createElement("textarea", {
     rows: 2,
@@ -892,13 +946,13 @@ function DetailModal({
     const gapItems = (form.skillsGap || "").split("\n").filter(l => l.trim());
     return /*#__PURE__*/React.createElement(React.Fragment, null,
       /*#__PURE__*/React.createElement("div", {className: "fit-section"},
-        /*#__PURE__*/React.createElement("div", {className: "fit-section-title match"}, "\u2705 Experience That Applies"),
+        /*#__PURE__*/React.createElement("div", {className: "fit-section-title match"}, "✅ Experience That Applies"),
         matchItems.length > 0
           ? /*#__PURE__*/React.createElement("ul", {className: "fit-list match"}, matchItems.map((item, i) => /*#__PURE__*/React.createElement("li", {key: i}, item.replace(/^[-•]\s*/, ""))))
           : /*#__PURE__*/React.createElement("div", {className: "fit-empty"}, "No fit analysis yet. Claude will populate this when reviewing the posting.")
       ),
       /*#__PURE__*/React.createElement("div", {className: "fit-section"},
-        /*#__PURE__*/React.createElement("div", {className: "fit-section-title gap"}, "\u26A0\uFE0F Requirements Not in My Experience"),
+        /*#__PURE__*/React.createElement("div", {className: "fit-section-title gap"}, "⚠️ Requirements Not in My Experience"),
         gapItems.length > 0
           ? /*#__PURE__*/React.createElement("ul", {className: "fit-list gap"}, gapItems.map((item, i) => /*#__PURE__*/React.createElement("li", {key: i}, item.replace(/^[-•]\s*/, ""))))
           : /*#__PURE__*/React.createElement("div", {className: "fit-empty"}, "No gaps identified yet.")
@@ -935,6 +989,88 @@ function DetailModal({
     className: "btn-save",
     onClick: handleSave
   }, "Save")))));
+}
+
+// --- GA Work-Search Weekly Report ---
+function wsContactDate(j) {
+  if (j.submissionDate) return new Date(j.submissionDate);
+  if (APPLIED_STATUSES.includes(j.status)) return new Date(j.lastUpdate || j.createdAt);
+  return null;
+}
+function wsWeekEnding(d) {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  x.setDate(x.getDate() + (6 - x.getDay())); // advance to Saturday (GA benefit week is Sun–Sat)
+  return x;
+}
+function wsFmt(d) {
+  return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+}
+function wsContactInfo(j) {
+  return j.sendTo || j.postUrl || j.orgUrl || "";
+}
+function WeeklyReport({ jobs }) {
+  const weeks = useMemo(() => {
+    const map = {};
+    jobs.forEach(j => {
+      const d = wsContactDate(j);
+      if (!d || isNaN(d.getTime())) return;
+      const we = wsWeekEnding(d);
+      const key = we.getFullYear() + "-" + String(we.getMonth() + 1).padStart(2, "0") + "-" + String(we.getDate()).padStart(2, "0");
+      if (!map[key]) map[key] = { ending: we, rows: [] };
+      map[key].rows.push({ job: j, date: d });
+    });
+    return Object.keys(map).sort().reverse().map(k => {
+      const w = map[k];
+      w.rows.sort((a, b) => b.date - a.date);
+      return w;
+    });
+  }, [jobs]);
+
+  const exportCSV = () => {
+    const header = ["Week Ending", "Date of Contact", "Company", "Position", "Person / Reference", "Address / Phone / Email / Web", "Method of Contact", "Result of Contact"];
+    const lines = [header];
+    weeks.forEach(w => w.rows.forEach(r => {
+      lines.push([wsFmt(w.ending), wsFmt(r.date), r.job.organization || "", r.job.title || "", r.job.sendTo || "", wsContactInfo(r.job), r.job.contactMethod || "", r.job.contactResult || r.job.status || ""]);
+    }));
+    const csv = lines.map(row => row.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(",")).join("\r\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "GA_WorkSearch_Report.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  if (weeks.length === 0) {
+    return /*#__PURE__*/React.createElement("div", { className: "ws-report" }, /*#__PURE__*/React.createElement("div", { className: "ws-empty" }, "No applications logged yet. Mark a job ", /*#__PURE__*/React.createElement("strong", null, "Applied"), " (and set its Submission Date) to start building your Georgia weekly work-search report."));
+  }
+  return /*#__PURE__*/React.createElement("div", { className: "ws-report" },
+    /*#__PURE__*/React.createElement("div", { className: "ws-toolbar" },
+      /*#__PURE__*/React.createElement("div", { className: "ws-intro" },
+        /*#__PURE__*/React.createElement("div", { className: "ws-title" }, "Georgia Weekly Work-Search Report"),
+        /*#__PURE__*/React.createElement("div", { className: "ws-note" }, "Georgia DOL requires at least ", GA_MIN_CONTACTS, " new job contacts each benefit week (Sun–Sat). Weeks below ", GA_MIN_CONTACTS, " are flagged. Set each job's Method and Result of Contact on the Submission tab.")),
+      /*#__PURE__*/React.createElement("div", { className: "ws-actions" },
+        /*#__PURE__*/React.createElement("button", { className: "ws-btn", onClick: exportCSV }, "⬇ Export CSV"),
+        /*#__PURE__*/React.createElement("button", { className: "ws-btn", onClick: () => window.print() }, "🖨 Print / Save PDF"))),
+    weeks.map((w, wi) => {
+      const n = w.rows.length;
+      const ok = n >= GA_MIN_CONTACTS;
+      return /*#__PURE__*/React.createElement("div", { key: wi, className: "ws-week" },
+        /*#__PURE__*/React.createElement("div", { className: "ws-week-head" },
+          /*#__PURE__*/React.createElement("span", { className: "ws-week-label" }, "Week ending ", wsFmt(w.ending)),
+          /*#__PURE__*/React.createElement("span", { className: "ws-week-count " + (ok ? "ok" : "low") }, n, " / ", GA_MIN_CONTACTS, " contacts", ok ? "" : " — below minimum")),
+        /*#__PURE__*/React.createElement("table", { className: "ws-table" },
+          /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ["Date", "Company", "Position", "Contact", "Address / Phone / Email / Web", "Method", "Result"].map(h => /*#__PURE__*/React.createElement("th", { key: h }, h)))),
+          /*#__PURE__*/React.createElement("tbody", null, w.rows.map((r, ri) => /*#__PURE__*/React.createElement("tr", { key: ri },
+            /*#__PURE__*/React.createElement("td", null, wsFmt(r.date)),
+            /*#__PURE__*/React.createElement("td", null, r.job.organization || "—"),
+            /*#__PURE__*/React.createElement("td", null, r.job.title || "—"),
+            /*#__PURE__*/React.createElement("td", null, r.job.sendTo || "—"),
+            /*#__PURE__*/React.createElement("td", { className: "ws-contactinfo" }, wsContactInfo(r.job) || "—"),
+            /*#__PURE__*/React.createElement("td", null, r.job.contactMethod || /*#__PURE__*/React.createElement("span", { className: "ws-missing" }, "set method")),
+            /*#__PURE__*/React.createElement("td", null, r.job.contactResult || r.job.status || "—")))))); })
+  );
 }
 
 // --- Main App ---
@@ -1018,7 +1154,9 @@ function App() {
       framing: null,
       postingRaw: null,
       skillsMatch: null,
-      skillsGap: null
+      skillsGap: null,
+      contactMethod: null,
+      contactResult: null
     };
     setJobs(prev => [j, ...prev]);
     sUpsert("job_applications", jToR(j), token);
@@ -1066,7 +1204,7 @@ function App() {
     className: "app-brand"
   }, /*#__PURE__*/React.createElement("span", {
     className: "brand-icon"
-  }, "\u25C8"), /*#__PURE__*/React.createElement("span", {
+  }, "◈"), /*#__PURE__*/React.createElement("span", {
     className: "brand-text"
   }, "JOB TRACKER"), /*#__PURE__*/React.createElement("span", {
     className: "brand-divider"
@@ -1081,6 +1219,9 @@ function App() {
     className: "view-btn" + (view === "list" ? " active" : ""),
     onClick: () => setView("list")
   }, "List"), /*#__PURE__*/React.createElement("button", {
+    className: "view-btn" + (view === "report" ? " active" : ""),
+    onClick: () => setView("report")
+  }, "Report"), /*#__PURE__*/React.createElement("button", {
     className: "btn-add",
     onClick: addJob
   }, "+ New"), /*#__PURE__*/React.createElement("button", {
@@ -1141,7 +1282,9 @@ function App() {
     key: j.id,
     job: j,
     onClick: setSelected
-  })))))) : /*#__PURE__*/React.createElement("div", {
+  })))))) : view === "report" ? /*#__PURE__*/React.createElement(WeeklyReport, {
+    jobs: jobs
+  }) : /*#__PURE__*/React.createElement("div", {
     className: "list-view"
   }, /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "Title"), /*#__PURE__*/React.createElement("th", null, "Organization"), /*#__PURE__*/React.createElement("th", null, "Type"), /*#__PURE__*/React.createElement("th", null, "Location"), /*#__PURE__*/React.createElement("th", null, "Salary"), /*#__PURE__*/React.createElement("th", null, "Match"), /*#__PURE__*/React.createElement("th", null, "Docs"))), /*#__PURE__*/React.createElement("tbody", null, filtered.map(j => /*#__PURE__*/React.createElement("tr", {
     key: j.id,

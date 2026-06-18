@@ -386,8 +386,25 @@ const jToR = j => ({
   posting_benefits: j.postingBenefits || null,
   skills_match: j.skillsMatch || null,
   skills_gap: j.skillsGap || null,
-  contact_method: j.contactMethod || null,
-  contact_result: j.contactResult || null
+  ws_activity_type: j.wsActivityType || null,
+  ws_method_of_contact: j.wsMethodOfContact || null,
+  ws_activity_date: j.wsActivityDate || null,
+  ws_week_ending: j.wsWeekEnding || null,
+  ws_reported: j.wsReported || false,
+  ws_new_or_followup: j.wsNewOrFollowup || null,
+  ws_how_learned: j.wsHowLearned || null,
+  ws_employer_phone: j.wsEmployerPhone || null,
+  ws_employer_street1: j.wsEmployerStreet1 || null,
+  ws_employer_street2: j.wsEmployerStreet2 || null,
+  ws_employer_city: j.wsEmployerCity || null,
+  ws_employer_state: j.wsEmployerState || null,
+  ws_employer_zip: j.wsEmployerZip || null,
+  ws_employer_web: j.wsEmployerWeb || null,
+  ws_contact_email: j.wsContactEmail || null,
+  ws_contact_person: j.wsContactPerson || null,
+  ws_job_details: j.wsJobDetails || null,
+  ws_offered_job: j.wsOfferedJob || false,
+  ws_proof_available: j.wsProofAvailable || false
 });
 const jFrR = r => ({
   id: r.id,
@@ -427,8 +444,25 @@ const jFrR = r => ({
   postingBenefits: r.posting_benefits,
   skillsMatch: r.skills_match,
   skillsGap: r.skills_gap,
-  contactMethod: r.contact_method,
-  contactResult: r.contact_result
+  wsActivityType: r.ws_activity_type,
+  wsMethodOfContact: r.ws_method_of_contact,
+  wsActivityDate: r.ws_activity_date,
+  wsWeekEnding: r.ws_week_ending,
+  wsReported: r.ws_reported,
+  wsNewOrFollowup: r.ws_new_or_followup,
+  wsHowLearned: r.ws_how_learned,
+  wsEmployerPhone: r.ws_employer_phone,
+  wsEmployerStreet1: r.ws_employer_street1,
+  wsEmployerStreet2: r.ws_employer_street2,
+  wsEmployerCity: r.ws_employer_city,
+  wsEmployerState: r.ws_employer_state,
+  wsEmployerZip: r.ws_employer_zip,
+  wsEmployerWeb: r.ws_employer_web,
+  wsContactEmail: r.ws_contact_email,
+  wsContactPerson: r.ws_contact_person,
+  wsJobDetails: r.ws_job_details,
+  wsOfferedJob: r.ws_offered_job,
+  wsProofAvailable: r.ws_proof_available
 });
 
 // --- Components ---
@@ -682,11 +716,11 @@ function DetailModal({
     onClick: onClose
   }, "✕")), /*#__PURE__*/React.createElement("div", {
     className: "modal-tabs"
-  }, ["info", "docs", "submission", "posting", "fit", "notes"].map(t => /*#__PURE__*/React.createElement("button", {
+  }, ["info", "docs", "submission", "worksearch", "posting", "fit", "notes"].map(t => /*#__PURE__*/React.createElement("button", {
     key: t,
     className: "modal-tab" + (tab === t ? " active" : ""),
     onClick: () => setTab(t)
-  }, t === "docs" ? "Docs Required" : t === "fit" ? "Fit Analysis" : t.charAt(0).toUpperCase() + t.slice(1)))), /*#__PURE__*/React.createElement("div", {
+  }, t === "docs" ? "Docs Required" : t === "fit" ? "Fit Analysis" : t === "worksearch" ? "Work Search" : t.charAt(0).toUpperCase() + t.slice(1)))), /*#__PURE__*/React.createElement("div", {
     className: "modal-body"
   }, tab === "info" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "form-row"
@@ -889,21 +923,6 @@ function DetailModal({
     type: "date",
     value: form.submissionDate ? form.submissionDate.slice(0, 10) : "",
     onChange: e => upd("submissionDate", e.target.value ? new Date(e.target.value).toISOString() : null)
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "form-row"
-  }, /*#__PURE__*/React.createElement("label", null, "Method of Contact (GA work-search)"), /*#__PURE__*/React.createElement("select", {
-    value: form.contactMethod || "",
-    onChange: e => upd("contactMethod", e.target.value)
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "—"), CONTACT_METHODS.map(m => /*#__PURE__*/React.createElement("option", {
-    key: m
-  }, m)))), /*#__PURE__*/React.createElement("div", {
-    className: "form-row"
-  }, /*#__PURE__*/React.createElement("label", null, "Result of Contact (GA work-search)"), /*#__PURE__*/React.createElement("input", {
-    value: form.contactResult || "",
-    onChange: e => upd("contactResult", e.target.value),
-    placeholder: "e.g. Applied online, Submitted resume, Interview scheduled"
   })), mailtoLink() && /*#__PURE__*/React.createElement("a", {
     href: mailtoLink(),
     className: "mailto-btn"
@@ -912,7 +931,28 @@ function DetailModal({
     target: "_blank",
     rel: "noopener",
     className: "mailto-btn portal-btn"
-  }, "🌐 Open Application Portal")), tab === "posting" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "🌐 Open Application Portal")), tab === "worksearch" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "section-label-text"
+  }, "Georgia DOL Work-Search Record"), /*#__PURE__*/React.createElement("div", {
+    className: "form-grid"
+  }, wsField("Activity Type", "wsActivityType", form, upd, ["Applied for a job", "Job Interview", "Job Fair", "Career Workshop", "Employer Contact"]), wsField("Method of Contact", "wsMethodOfContact", form, upd, ["Internet", "In Person", "Email", "Telephone", "Fax", "Mail"]), wsField("Activity Date", "wsActivityDate", form, upd, "date"), wsField("New or Follow-up", "wsNewOrFollowup", form, upd, ["New", "Follow-up"]), wsField("How Learned (source)", "wsHowLearned", form, upd), wsField("Employer Phone", "wsEmployerPhone", form, upd)), wsField("Street Address 1", "wsEmployerStreet1", form, upd), wsField("Street Address 2", "wsEmployerStreet2", form, upd), /*#__PURE__*/React.createElement("div", {
+    className: "form-grid"
+  }, wsField("City", "wsEmployerCity", form, upd), wsField("State", "wsEmployerState", form, upd), wsField("ZIP", "wsEmployerZip", form, upd), wsField("Employer Website", "wsEmployerWeb", form, upd), wsField("Contact Person", "wsContactPerson", form, upd), wsField("Contact Email", "wsContactEmail", form, upd)), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Job / Opportunity Details"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 2,
+    value: form.wsJobDetails || "",
+    onChange: e => upd("wsJobDetails", e.target.value),
+    placeholder: "Position or opportunity details (defaults to job title if blank)"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "doc-checks"
+  }, wsCheck("Offered the job", "wsOfferedJob", form, upd), wsCheck("Proof available", "wsProofAvailable", form, upd), wsCheck("Reported to GDOL", "wsReported", form, upd)), /*#__PURE__*/React.createElement("div", {
+    className: "form-row"
+  }, /*#__PURE__*/React.createElement("label", null, "Week Ending (override — auto if blank)"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: form.wsWeekEnding || "",
+    onChange: e => upd("wsWeekEnding", e.target.value || null)
+  }))), tab === "posting" && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("label", null, "Summary (1-2 sentences)"), /*#__PURE__*/React.createElement("textarea", {
     rows: 2,
@@ -991,48 +1031,50 @@ function DetailModal({
   }, "Save")))));
 }
 
-// --- GA Work-Search Weekly Report ---
-function wsContactDate(j) {
-  if (j.submissionDate) return new Date(j.submissionDate);
-  if (APPLIED_STATUSES.includes(j.status)) return new Date(j.lastUpdate || j.createdAt);
-  return null;
+// --- GA Work-Search Weekly Report (reads the gdol_work_search view) ---
+function wsField(label, key, form, upd, opt) {
+  let input;
+  if (Array.isArray(opt)) {
+    input = /*#__PURE__*/React.createElement("select", { value: form[key] || "", onChange: e => upd(key, e.target.value) }, /*#__PURE__*/React.createElement("option", { value: "" }, "—"), opt.map(o => /*#__PURE__*/React.createElement("option", { key: o }, o)));
+  } else if (opt === "date") {
+    input = /*#__PURE__*/React.createElement("input", { type: "date", value: form[key] || "", onChange: e => upd(key, e.target.value || null) });
+  } else {
+    input = /*#__PURE__*/React.createElement("input", { value: form[key] || "", onChange: e => upd(key, e.target.value) });
+  }
+  return /*#__PURE__*/React.createElement("div", { className: "form-row", key: key }, /*#__PURE__*/React.createElement("label", null, label), input);
 }
-function wsWeekEnding(d) {
-  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  x.setDate(x.getDate() + (6 - x.getDay())); // advance to Saturday (GA benefit week is Sun–Sat)
-  return x;
+function wsCheck(label, key, form, upd) {
+  return /*#__PURE__*/React.createElement("label", { className: "check-row", key: key }, /*#__PURE__*/React.createElement("input", { type: "checkbox", checked: form[key] || false, onChange: e => upd(key, e.target.checked) }), " " + label);
 }
-function wsFmt(d) {
-  return (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear();
+function wsFmtDate(s) {
+  if (!s) return "—";
+  const p = String(s).slice(0, 10).split("-");
+  return p.length === 3 ? p[1] + "/" + p[2] + "/" + p[0] : s;
 }
-function wsContactInfo(j) {
-  return j.sendTo || j.postUrl || j.orgUrl || "";
+function wsAddr(r) {
+  const parts = [r.street_address_1, r.street_address_2, [r.city, r.state].filter(Boolean).join(", "), r.zip].filter(Boolean).join(" · ");
+  return parts || r.web_address || r.email_address || r.business_phone || "—";
 }
-function WeeklyReport({ jobs }) {
+function WeeklyReport({ token }) {
+  const [rows, setRows] = useState(null);
+  useEffect(() => {
+    fetch(SURL + "/rest/v1/gdol_work_search?select=*", { headers: authHeaders(token) }).then(r => r.ok ? r.json() : []).then(setRows).catch(() => setRows([]));
+  }, [token]);
   const weeks = useMemo(() => {
+    if (!rows) return null;
     const map = {};
-    jobs.forEach(j => {
-      const d = wsContactDate(j);
-      if (!d || isNaN(d.getTime())) return;
-      const we = wsWeekEnding(d);
-      const key = we.getFullYear() + "-" + String(we.getMonth() + 1).padStart(2, "0") + "-" + String(we.getDate()).padStart(2, "0");
-      if (!map[key]) map[key] = { ending: we, rows: [] };
-      map[key].rows.push({ job: j, date: d });
+    rows.forEach(r => {
+      const key = r.week_ending || "unknown";
+      if (!map[key]) map[key] = [];
+      map[key].push(r);
     });
-    return Object.keys(map).sort().reverse().map(k => {
-      const w = map[k];
-      w.rows.sort((a, b) => b.date - a.date);
-      return w;
-    });
-  }, [jobs]);
-
+    return Object.keys(map).sort().reverse().map(k => ({ ending: k, rows: map[k].sort((a, b) => String(b.date_applied || "").localeCompare(String(a.date_applied || ""))) }));
+  }, [rows]);
   const exportCSV = () => {
-    const header = ["Week Ending", "Date of Contact", "Company", "Position", "Person / Reference", "Address / Phone / Email / Web", "Method of Contact", "Result of Contact"];
+    const header = ["Week Ending", "Reported", "Date", "Activity", "Method", "New/Follow-up", "How Learned", "Business", "Phone", "Street 1", "Street 2", "City", "State", "ZIP", "Web", "Email", "Contact Person", "Job/Position", "Offered Job", "Proof"];
     const lines = [header];
-    weeks.forEach(w => w.rows.forEach(r => {
-      lines.push([wsFmt(w.ending), wsFmt(r.date), r.job.organization || "", r.job.title || "", r.job.sendTo || "", wsContactInfo(r.job), r.job.contactMethod || "", r.job.contactResult || r.job.status || ""]);
-    }));
-    const csv = lines.map(row => row.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(",")).join("\r\n");
+    weeks.forEach(w => w.rows.forEach(r => lines.push([wsFmtDate(w.ending), r.ws_reported ? "Yes" : "No", wsFmtDate(r.date_applied), r.activity || "", r.method_of_contact || "", r.new_or_followup || "", r.how_learned || "", r.business_name || "", r.business_phone || "", r.street_address_1 || "", r.street_address_2 || "", r.city || "", r.state || "", r.zip || "", r.web_address || "", r.email_address || "", r.contact_person || "", r.job_opportunity_details || "", r.offered_job || "", r.can_provide_proof || ""])));
+    const csv = lines.map(row => row.map(x => '"' + String(x).replace(/"/g, '""') + '"').join(",")).join("\r\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -1041,36 +1083,14 @@ function WeeklyReport({ jobs }) {
     a.click();
     URL.revokeObjectURL(url);
   };
-
-  if (weeks.length === 0) {
-    return /*#__PURE__*/React.createElement("div", { className: "ws-report" }, /*#__PURE__*/React.createElement("div", { className: "ws-empty" }, "No applications logged yet. Mark a job ", /*#__PURE__*/React.createElement("strong", null, "Applied"), " (and set its Submission Date) to start building your Georgia weekly work-search report."));
-  }
-  return /*#__PURE__*/React.createElement("div", { className: "ws-report" },
-    /*#__PURE__*/React.createElement("div", { className: "ws-toolbar" },
-      /*#__PURE__*/React.createElement("div", { className: "ws-intro" },
-        /*#__PURE__*/React.createElement("div", { className: "ws-title" }, "Georgia Weekly Work-Search Report"),
-        /*#__PURE__*/React.createElement("div", { className: "ws-note" }, "Georgia DOL requires at least ", GA_MIN_CONTACTS, " new job contacts each benefit week (Sun–Sat). Weeks below ", GA_MIN_CONTACTS, " are flagged. Set each job's Method and Result of Contact on the Submission tab.")),
-      /*#__PURE__*/React.createElement("div", { className: "ws-actions" },
-        /*#__PURE__*/React.createElement("button", { className: "ws-btn", onClick: exportCSV }, "⬇ Export CSV"),
-        /*#__PURE__*/React.createElement("button", { className: "ws-btn", onClick: () => window.print() }, "🖨 Print / Save PDF"))),
-    weeks.map((w, wi) => {
-      const n = w.rows.length;
-      const ok = n >= GA_MIN_CONTACTS;
-      return /*#__PURE__*/React.createElement("div", { key: wi, className: "ws-week" },
-        /*#__PURE__*/React.createElement("div", { className: "ws-week-head" },
-          /*#__PURE__*/React.createElement("span", { className: "ws-week-label" }, "Week ending ", wsFmt(w.ending)),
-          /*#__PURE__*/React.createElement("span", { className: "ws-week-count " + (ok ? "ok" : "low") }, n, " / ", GA_MIN_CONTACTS, " contacts", ok ? "" : " — below minimum")),
-        /*#__PURE__*/React.createElement("table", { className: "ws-table" },
-          /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ["Date", "Company", "Position", "Contact", "Address / Phone / Email / Web", "Method", "Result"].map(h => /*#__PURE__*/React.createElement("th", { key: h }, h)))),
-          /*#__PURE__*/React.createElement("tbody", null, w.rows.map((r, ri) => /*#__PURE__*/React.createElement("tr", { key: ri },
-            /*#__PURE__*/React.createElement("td", null, wsFmt(r.date)),
-            /*#__PURE__*/React.createElement("td", null, r.job.organization || "—"),
-            /*#__PURE__*/React.createElement("td", null, r.job.title || "—"),
-            /*#__PURE__*/React.createElement("td", null, r.job.sendTo || "—"),
-            /*#__PURE__*/React.createElement("td", { className: "ws-contactinfo" }, wsContactInfo(r.job) || "—"),
-            /*#__PURE__*/React.createElement("td", null, r.job.contactMethod || /*#__PURE__*/React.createElement("span", { className: "ws-missing" }, "set method")),
-            /*#__PURE__*/React.createElement("td", null, r.job.contactResult || r.job.status || "—")))))); })
-  );
+  if (weeks === null) return /*#__PURE__*/React.createElement("div", { className: "ws-report" }, /*#__PURE__*/React.createElement("div", { className: "ws-empty" }, "Loading work-search report…"));
+  if (weeks.length === 0) return /*#__PURE__*/React.createElement("div", { className: "ws-report" }, /*#__PURE__*/React.createElement("div", { className: "ws-empty" }, "No work-search activity yet. Mark a job ", /*#__PURE__*/React.createElement("strong", null, "Applied"), " and set its Activity Date on the Work Search tab to populate this report."));
+  return /*#__PURE__*/React.createElement("div", { className: "ws-report" }, /*#__PURE__*/React.createElement("div", { className: "ws-toolbar" }, /*#__PURE__*/React.createElement("div", { className: "ws-intro" }, /*#__PURE__*/React.createElement("div", { className: "ws-title" }, "Georgia Weekly Work-Search Report"), /*#__PURE__*/React.createElement("div", { className: "ws-note" }, "Georgia DOL requires at least ", GA_MIN_CONTACTS, " new job contacts each benefit week (Sun–Sat). Weeks below ", GA_MIN_CONTACTS, " are flagged red. Edit per-job details on the Work Search tab.")), /*#__PURE__*/React.createElement("div", { className: "ws-actions" }, /*#__PURE__*/React.createElement("button", { className: "ws-btn", onClick: exportCSV }, "⬇ Export CSV"), /*#__PURE__*/React.createElement("button", { className: "ws-btn", onClick: () => window.print() }, "🖨 Print / Save PDF"))), weeks.map((w, wi) => {
+    const n = w.rows.length;
+    const ok = n >= GA_MIN_CONTACTS;
+    const reported = w.rows.filter(r => r.ws_reported).length;
+    return /*#__PURE__*/React.createElement("div", { key: wi, className: "ws-week" }, /*#__PURE__*/React.createElement("div", { className: "ws-week-head" }, /*#__PURE__*/React.createElement("span", { className: "ws-week-label" }, "Week ending ", wsFmtDate(w.ending)), /*#__PURE__*/React.createElement("span", { className: "ws-week-count " + (ok ? "ok" : "low") }, n, " / ", GA_MIN_CONTACTS, " contacts", ok ? "" : " — below minimum", reported ? " · " + reported + " reported" : "")), /*#__PURE__*/React.createElement("table", { className: "ws-table" }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, ["Date", "Business", "Position", "Method", "How Learned", "New/F-U", "Address / Contact", "Rpt"].map(h => /*#__PURE__*/React.createElement("th", { key: h }, h)))), /*#__PURE__*/React.createElement("tbody", null, w.rows.map((r, ri) => /*#__PURE__*/React.createElement("tr", { key: ri }, /*#__PURE__*/React.createElement("td", null, wsFmtDate(r.date_applied)), /*#__PURE__*/React.createElement("td", null, r.business_name || "—"), /*#__PURE__*/React.createElement("td", null, r.job_opportunity_details || "—"), /*#__PURE__*/React.createElement("td", null, r.method_of_contact || /*#__PURE__*/React.createElement("span", { className: "ws-missing" }, "set")), /*#__PURE__*/React.createElement("td", null, r.how_learned || "—"), /*#__PURE__*/React.createElement("td", null, r.new_or_followup || "—"), /*#__PURE__*/React.createElement("td", { className: "ws-contactinfo" }, wsAddr(r)), /*#__PURE__*/React.createElement("td", null, r.ws_reported ? "✓" : "—"))))));
+  }));
 }
 
 // --- Main App ---
@@ -1155,8 +1175,25 @@ function App() {
       postingRaw: null,
       skillsMatch: null,
       skillsGap: null,
-      contactMethod: null,
-      contactResult: null
+      wsActivityType: null,
+      wsMethodOfContact: null,
+      wsActivityDate: null,
+      wsWeekEnding: null,
+      wsReported: false,
+      wsNewOrFollowup: null,
+      wsHowLearned: null,
+      wsEmployerPhone: null,
+      wsEmployerStreet1: null,
+      wsEmployerStreet2: null,
+      wsEmployerCity: null,
+      wsEmployerState: null,
+      wsEmployerZip: null,
+      wsEmployerWeb: null,
+      wsContactEmail: null,
+      wsContactPerson: null,
+      wsJobDetails: null,
+      wsOfferedJob: false,
+      wsProofAvailable: false
     };
     setJobs(prev => [j, ...prev]);
     sUpsert("job_applications", jToR(j), token);
@@ -1283,7 +1320,7 @@ function App() {
     job: j,
     onClick: setSelected
   })))))) : view === "report" ? /*#__PURE__*/React.createElement(WeeklyReport, {
-    jobs: jobs
+    token: token
   }) : /*#__PURE__*/React.createElement("div", {
     className: "list-view"
   }, /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Status"), /*#__PURE__*/React.createElement("th", null, "Title"), /*#__PURE__*/React.createElement("th", null, "Organization"), /*#__PURE__*/React.createElement("th", null, "Type"), /*#__PURE__*/React.createElement("th", null, "Location"), /*#__PURE__*/React.createElement("th", null, "Salary"), /*#__PURE__*/React.createElement("th", null, "Match"), /*#__PURE__*/React.createElement("th", null, "Docs"))), /*#__PURE__*/React.createElement("tbody", null, filtered.map(j => /*#__PURE__*/React.createElement("tr", {

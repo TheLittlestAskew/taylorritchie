@@ -296,8 +296,13 @@ async function sDel(table, col, val, token) {
 const uid = () => crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
 
 // Status pipeline
-const STATUSES = ["Saved", "Docs Created", "Applied", "Email Confirm", "Interview Process", "Org Replied", "Application Process", "Not Interested"];
+const STATUSES = ["Discovered", "Saved", "Docs Created", "Applied", "Email Confirm", "Interview Process", "Org Replied", "Application Process", "Not Interested"];
 const STATUS_COLORS = {
+  "Discovered": {
+    bg: "rgba(249,115,22,0.15)",
+    fg: "#fb923c",
+    border: "rgba(249,115,22,0.3)"
+  },
   "Saved": {
     bg: "rgba(59,130,246,0.15)",
     fg: "#60a5fa",
@@ -1304,7 +1309,7 @@ function App() {
     value: s
   }, s, " (", counts[s] || 0, ")")))), view === "pipeline" ? /*#__PURE__*/React.createElement("div", {
     className: "pipeline"
-  }, STATUSES.filter(s => counts[s] > 0 || ["Saved", "Docs Created", "Applied", "Interview Process"].includes(s)).map(status => /*#__PURE__*/React.createElement("div", {
+  }, STATUSES.filter(s => counts[s] > 0 || ["Discovered", "Saved", "Docs Created", "Applied", "Interview Process"].includes(s)).map(status => /*#__PURE__*/React.createElement("div", {
     key: status,
     className: "pipeline-col"
   }, /*#__PURE__*/React.createElement("div", {

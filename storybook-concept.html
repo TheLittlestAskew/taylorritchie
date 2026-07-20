@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Storybook portfolio concept for Taylor Askew Ritchie, connecting operations, systems, reporting, brand, and creative infrastructure.">
+  <meta name="theme-color" content="#071d26">
+  <title>Taylor Askew Ritchie · A portfolio of systems and stories</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2210%22 fill=%22%23071d26%22/><path d=%22M14 43C25 39 28 27 32 12c4 15 7 27 18 31-11-1-15 3-18 10-3-7-7-11-18-10Z%22 fill=%22%23ffc17d%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #061820;
+      --ink-soft: #0c2831;
+      --text: #f4eee2;
+      --muted: #b9c8c6;
+      --line: rgba(220, 235, 225, 0.2);
+      --glow: #ffc17d;
+      --glow-hot: #ff765f;
+      --teal: #1e6970;
+      --serif: "EB Garamond", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+      --mono: "IBM Plex Mono", Consolas, monospace;
+      --shell: min(100% - 2.25rem, 82rem);
+      --nav-height: 4.5rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); overflow-x: clip; }
+    body { margin: 0; background: var(--ink); color: var(--text); font-family: var(--sans); line-height: 1.6; overflow-x: clip; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    :focus-visible { outline: 3px solid var(--glow); outline-offset: 4px; }
+    ::selection { color: var(--ink); background: var(--glow); }
+
+    .skip-link { position: fixed; left: 1rem; top: -5rem; z-index: 100; padding: 0.8rem 1rem; color: var(--ink); background: var(--glow); font-weight: 700; }
+    .skip-link:focus { top: 1rem; }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 30;
+      min-height: var(--nav-height);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 0.75rem max(1.1rem, calc((100vw - 82rem) / 2));
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--ink) 82%, transparent);
+      backdrop-filter: blur(18px);
+    }
+    .nav-mark { font: 600 1.15rem/1 var(--serif); letter-spacing: 0.06em; text-decoration: none; }
+    .nav-mark i { color: var(--glow); font-style: normal; }
+    .nav-links { justify-self: center; display: flex; gap: clamp(1rem, 2.5vw, 2.3rem); }
+    .nav-links a, .resume-link { min-height: 2.75rem; display: inline-flex; align-items: center; font: 500 0.69rem/1 var(--mono); letter-spacing: 0.09em; text-transform: uppercase; text-decoration: none; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--glow); }
+    .resume-link { padding: 0 0.9rem; border: 1px solid var(--line); }
+
+    .threshold {
+      position: relative;
+      min-height: 100dvh;
+      isolation: isolate;
+      display: grid;
+      align-items: end;
+      overflow: clip;
+      background: #071d26;
+    }
+    .threshold-art { position: absolute; inset: -7% -3%; z-index: -3; }
+    .threshold-art img { width: 100%; height: 115%; object-fit: cover; object-position: center; filter: saturate(0.86) contrast(1.03) brightness(0.74); }
+    .threshold-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,17,24,0.94) 0%, rgba(3,17,24,0.7) 31%, rgba(3,17,24,0.08) 68%, rgba(3,17,24,0.35) 100%), linear-gradient(0deg, rgba(3,17,24,0.92) 0%, transparent 55%); }
+    .mist { position: absolute; z-index: -2; border-radius: 50%; filter: blur(4rem); opacity: 0.38; mix-blend-mode: screen; }
+    .mist-one { width: 44vw; height: 34vw; right: 3vw; top: 14vh; background: rgba(255,183,112,0.42); }
+    .mist-two { width: 40vw; height: 36vw; left: -12vw; bottom: -8vw; background: rgba(48,146,152,0.35); }
+    .threshold-copy { width: var(--shell); margin: 0 auto; padding: calc(var(--nav-height) + 5rem) 0 clamp(4rem, 8vw, 7rem); }
+    .eyebrow { margin: 0 0 1.3rem; font: 500 0.7rem/1.5 var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--glow); }
+    h1 { max-width: 9ch; margin: 0; font: 600 clamp(4.7rem, 11vw, 10.5rem)/0.72 var(--serif); letter-spacing: -0.065em; text-wrap: balance; }
+    h1 em { display: block; margin-left: 0.32em; color: var(--glow); font-weight: 500; }
+    .threshold-deck { max-width: 39rem; margin: 2.2rem 0 0; font-size: clamp(1.05rem, 2vw, 1.35rem); color: #d4ddda; text-wrap: pretty; }
+    .threshold-actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
+    .action { min-height: 3rem; display: inline-flex; align-items: center; padding: 0.75rem 1rem; border: 1px solid var(--line); font: 500 0.72rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: transform 180ms ease, background 180ms ease, color 180ms ease; }
+    .action-primary { color: var(--ink); background: var(--glow); border-color: var(--glow); }
+    .action:hover { transform: translateY(-2px); background: var(--text); color: var(--ink); }
+    .scroll-cue { position: absolute; right: max(1rem, calc((100vw - 82rem) / 2)); bottom: 2rem; writing-mode: vertical-rl; font: 500 0.62rem/1 var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+
+    .contents { position: relative; padding: clamp(5rem, 11vw, 10rem) 0; background: #0a222a; }
+    .contents-shell { width: var(--shell); margin: auto; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.4fr); gap: clamp(3rem, 8vw, 9rem); align-items: start; }
+    .folio { color: var(--glow); font: 500 0.67rem/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+    .contents h2, .chapter-title { margin: 0.8rem 0 0; font: 600 clamp(3.2rem, 7vw, 7.2rem)/0.83 var(--serif); letter-spacing: -0.045em; text-wrap: balance; }
+    .contents-intro { max-width: 31rem; margin-top: 1.6rem; color: var(--muted); font-size: 1.05rem; }
+    .contents-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .contents-list a { display: grid; grid-template-columns: 3.5rem 1fr auto; gap: 1rem; align-items: center; min-height: 5rem; border-bottom: 1px solid var(--line); text-decoration: none; }
+    .contents-list b { font: 500 0.65rem/1 var(--mono); color: var(--glow); }
+    .contents-list span { font: 500 clamp(1.3rem, 2.8vw, 2.1rem)/1 var(--serif); }
+    .contents-list i { color: var(--muted); font-style: normal; }
+
+    .chapter { --chapter-bg: #102e35; --chapter-deep: #071d25; --chapter-glow: #ffc17d; position: relative; min-height: 125dvh; overflow: clip; background: var(--chapter-bg); }
+    .chapter-indigo { --chapter-bg: #232b52; --chapter-deep: #11172f; --chapter-glow: #ffae78; }
+    .chapter-moss { --chapter-bg: #243c34; --chapter-deep: #10251f; --chapter-glow: #f2bd62; }
+    .chapter::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 72% 38%, color-mix(in srgb, var(--chapter-glow) 28%, transparent), transparent 23%), linear-gradient(160deg, transparent 30%, var(--chapter-deep) 86%); }
+    .chapter-shell { position: relative; width: var(--shell); min-height: 125dvh; margin: auto; display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2rem, 6vw, 7rem); align-items: center; padding: clamp(6rem, 13vw, 11rem) 0; }
+    .chapter-heading { position: relative; z-index: 3; }
+    .chapter-number { position: absolute; left: -0.13em; top: -0.35em; color: color-mix(in srgb, var(--chapter-glow) 10%, transparent); font: 600 clamp(12rem, 30vw, 29rem)/0.7 var(--serif); }
+    .chapter-kicker { position: relative; margin: 0 0 1rem; color: var(--chapter-glow); font: 500 0.68rem/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+    .chapter-title { position: relative; max-width: 7ch; }
+    .chapter-summary { position: relative; max-width: 32rem; margin: 1.7rem 0 0; color: color-mix(in srgb, var(--text) 80%, var(--chapter-bg)); font-size: 1.05rem; }
+    .chapter-spread { position: relative; min-height: 45rem; display: grid; align-content: center; }
+    .orb { position: absolute; width: min(33rem, 60vw); aspect-ratio: 1; right: -8%; top: 7%; border-radius: 50%; background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--chapter-glow) 80%, white), color-mix(in srgb, var(--chapter-glow) 35%, transparent) 22%, transparent 65%); filter: blur(0.1rem); opacity: 0.56; mix-blend-mode: screen; }
+    .evidence-card { position: relative; z-index: 2; max-width: 35rem; margin-left: auto; padding: clamp(1.5rem, 4vw, 3.2rem); border: 1px solid color-mix(in srgb, var(--chapter-glow) 35%, transparent); background: color-mix(in srgb, var(--chapter-deep) 82%, transparent); box-shadow: 0 2rem 7rem color-mix(in srgb, var(--chapter-deep) 80%, transparent); backdrop-filter: blur(16px); }
+    .evidence-card::before { content: ""; position: absolute; inset: 0.75rem; pointer-events: none; border: 1px solid color-mix(in srgb, var(--chapter-glow) 14%, transparent); }
+    .evidence-card h3 { position: relative; margin: 0 0 1rem; font: 600 clamp(2rem, 4vw, 3.4rem)/0.95 var(--serif); }
+    .evidence-meta { position: relative; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1.5rem 0; }
+    .evidence-meta div { padding-top: 0.8rem; border-top: 1px solid var(--line); }
+    .evidence-meta b { display: block; color: var(--chapter-glow); font: 500 0.62rem/1.5 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+    .evidence-meta span { font-size: 0.88rem; color: var(--muted); }
+    .evidence-card p { position: relative; color: #d5dfdc; }
+    .evidence-link { position: relative; display: inline-flex; margin-top: 0.7rem; color: var(--chapter-glow); font: 500 0.69rem/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; text-decoration-thickness: 1px; text-underline-offset: 0.35rem; }
+
+    .image-chapter { background: #101f31; }
+    .image-spread { position: relative; min-height: 105dvh; overflow: clip; display: grid; align-items: center; }
+    .image-spread::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #071821 0%, rgba(7,24,33,0.86) 38%, rgba(7,24,33,0.12) 74%), radial-gradient(circle at 74% 42%, rgba(255,163,116,0.3), transparent 28%); z-index: 1; }
+    .image-spread > img { position: absolute; inset: -9% 0; width: 100%; height: 118%; object-fit: cover; object-position: center; filter: saturate(0.76) brightness(0.62); }
+    .creative-copy { position: relative; z-index: 2; width: var(--shell); margin: auto; }
+    .creative-copy > div { max-width: 38rem; }
+    .creative-copy h2 { margin: 0.8rem 0 1.5rem; font: 600 clamp(3.6rem, 8vw, 8rem)/0.82 var(--serif); letter-spacing: -0.05em; }
+    .creative-copy p { color: #d4ddda; font-size: 1.08rem; }
+    .transfer-list { display: flex; flex-wrap: wrap; gap: 0.55rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+    .transfer-list li { padding: 0.45rem 0.65rem; border: 1px solid rgba(255,255,255,0.24); font: 500 0.62rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .metrics { padding: clamp(5rem, 10vw, 8rem) 0; color: #f4eee2; background: #0b2830; }
+    .metrics-shell { width: var(--shell); margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+    .metric { min-height: 15rem; padding: 1.5rem; border-left: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; }
+    .metric:last-child { border-right: 1px solid var(--line); }
+    .metric-number { font: 600 clamp(3rem, 6vw, 6.5rem)/0.8 var(--serif); color: var(--glow); font-variant-numeric: tabular-nums; }
+    .metric-label { max-width: 14rem; color: var(--muted); font-size: 0.84rem; }
+
+    .colophon { position: relative; padding: clamp(6rem, 12vw, 11rem) 0 3rem; background: #071820; }
+    .colophon-shell { width: var(--shell); margin: auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(3rem, 9vw, 9rem); }
+    .colophon h2 { max-width: 8ch; margin: 0.7rem 0 1.5rem; font: 600 clamp(4rem, 9vw, 9rem)/0.76 var(--serif); letter-spacing: -0.055em; }
+    .colophon-copy { max-width: 37rem; color: var(--muted); font-size: 1.05rem; }
+    .contact-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .contact-list a { min-height: 4.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line); color: var(--muted); text-decoration: none; }
+    .contact-list a:hover { color: var(--glow); }
+    .contact-list b { color: var(--text); font: 500 1.2rem/1 var(--serif); }
+    .footer { width: var(--shell); margin: 7rem auto 0; padding-top: 1rem; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 1rem; color: #728c8e; font: 500 0.62rem/1.5 var(--mono); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    @media (max-width: 900px) {
+      .nav { grid-template-columns: auto 1fr; }
+      .nav-links { justify-self: end; }
+      .resume-link { display: none; }
+      .contents-shell, .chapter-shell, .colophon-shell { grid-template-columns: 1fr; }
+      .chapter-shell { align-content: center; }
+      .chapter-heading { max-width: 40rem; }
+      .chapter-spread { min-height: 32rem; }
+      .evidence-card { margin-left: 0; }
+      .metrics-shell { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(3) { border-top: 1px solid var(--line); }
+      .metric:nth-child(4) { border-top: 1px solid var(--line); border-right: 1px solid var(--line); }
+    }
+
+    @media (max-width: 620px) {
+      :root { --nav-height: 3.7rem; --shell: min(100% - 1.4rem, 82rem); }
+      .nav { display: block; padding-inline: 0; overflow: hidden; }
+      .nav-mark { display: none; }
+      .nav-links { width: 100vw; display: flex; gap: 0; overflow-x: auto; }
+      .nav-links a { flex: 0 0 auto; padding-inline: 0.8rem; }
+      h1 { font-size: clamp(4rem, 22vw, 6.2rem); }
+      .threshold-copy { padding-bottom: 5.5rem; }
+      .scroll-cue { display: none; }
+      .contents-list a { grid-template-columns: 2.5rem 1fr auto; }
+      .chapter { min-height: auto; }
+      .chapter-shell { min-height: auto; padding-block: 7rem; }
+      .chapter-number { font-size: 14rem; }
+      .evidence-meta { grid-template-columns: 1fr; }
+      .metrics-shell { grid-template-columns: 1fr; }
+      .metric { min-height: 11rem; border-right: 1px solid var(--line); border-top: 1px solid var(--line); }
+      .footer { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      [data-depth] { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="nav">
+    <a class="nav-mark" href="#top">Taylor Askew Ritchie <i>✦</i></a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#contents">Contents</a>
+      <a href="#work">Selected work</a>
+      <a href="#creative">Creative systems</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="resume-link" href="resume/TaylorRitchie_Resume.pdf">Résumé ↗</a>
+  </header>
+
+  <main id="main">
+    <section class="threshold" id="top" aria-labelledby="hero-title">
+      <div class="threshold-art" data-depth="0.12"><img src="img/storybook/threshold-radiance.webp" width="1672" height="935" alt="" role="presentation"></div>
+      <div class="mist mist-one" data-depth="0.24"></div>
+      <div class="mist mist-two" data-depth="-0.1"></div>
+      <div class="threshold-copy">
+        <p class="eyebrow">A portfolio of systems and stories</p>
+        <h1 id="hero-title">Taylor <em>Askew</em> Ritchie</h1>
+        <p class="threshold-deck">I build the infrastructure that helps organizations do the work, preserve what happened, and explain why it mattered.</p>
+        <div class="threshold-actions">
+          <a class="action action-primary" href="#work">Enter the work</a>
+          <a class="action" href="resume/TaylorRitchie_Resume.pdf">View résumé</a>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true">Follow the path ↓</div>
+    </section>
+
+    <section class="contents" id="contents" aria-labelledby="contents-title">
+      <div class="contents-shell">
+        <div>
+          <span class="folio">Contents · The working volume</span>
+          <h2 id="contents-title">The story behind the systems.</h2>
+          <p class="contents-intro">Every chapter begins with a real operational problem. The visual language invites curiosity; the evidence remains plain, skimmable, and specific.</p>
+        </div>
+        <ol class="contents-list">
+          <li><a href="#chapter-one"><b>01</b><span>Building the operating system</span><i>Systems</i></a></li>
+          <li><a href="#chapter-two"><b>02</b><span>Making revenue visible</span><i>Operations</i></a></li>
+          <li><a href="#chapter-three"><b>03</b><span>Turning promises into evidence</span><i>Reporting</i></a></li>
+          <li><a href="#creative"><b>04</b><span>Creative systems and living archives</span><i>Story</i></a></li>
+        </ol>
+      </div>
+    </section>
+
+    <div id="work">
+      <section class="chapter" id="chapter-one" aria-labelledby="chapter-one-title">
+        <div class="chapter-shell">
+          <div class="chapter-heading" data-depth="0.08">
+            <div class="chapter-number" aria-hidden="true">I</div>
+            <p class="chapter-kicker">Chapter one · Systems &amp; operations</p>
+            <h2 class="chapter-title" id="chapter-one-title">Building the operating system.</h2>
+            <p class="chapter-summary">A nonprofit was running vital work across disconnected forms, records, payment systems, and institutional memory. I designed the connective tissue.</p>
+          </div>
+          <div class="chapter-spread">
+            <div class="orb" data-depth="0.2"></div>
+            <article class="evidence-card" data-depth="-0.07">
+              <h3>Power Platform ecosystem</h3>
+              <div class="evidence-meta"><div><b>Role</b><span>Sole systems builder and administrator</span></div><div><b>Scope</b><span>Intake, case management, donors, grants, finance</span></div><div><b>Build</b><span>Power Apps, Dataverse, Power Automate, Power BI</span></div><div><b>Value</b><span>One governed operational environment</span></div></div>
+              <p>The work was not one application. It was an information architecture that let staff move between service delivery, fundraising, reporting, and administration without losing the thread.</p>
+              <a class="evidence-link" href="systemhorizon/">View technical work ↗</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter chapter-indigo" id="chapter-two" aria-labelledby="chapter-two-title">
+        <div class="chapter-shell">
+          <div class="chapter-heading" data-depth="0.08">
+            <div class="chapter-number" aria-hidden="true">II</div>
+            <p class="chapter-kicker">Chapter two · Development operations</p>
+            <h2 class="chapter-title" id="chapter-two-title">Making revenue visible.</h2>
+            <p class="chapter-summary">Campaigns, gifts, payment channels, acknowledgements, stewardship, and reconciliation became one continuous operating story.</p>
+          </div>
+          <div class="chapter-spread">
+            <div class="orb" data-depth="0.22"></div>
+            <article class="evidence-card" data-depth="-0.06">
+              <h3>Annual giving revenue engine</h3>
+              <div class="evidence-meta"><div><b>Need</b><span>Connect planning to recorded revenue</span></div><div><b>Role</b><span>Development Administrator</span></div><div><b>Build</b><span>CRM, campaign calendar, gift and donor workflows</span></div><div><b>Value</b><span>Shared evidence for development and finance</span></div></div>
+              <p>I ran the process as well as designed it, which meant the architecture had to survive real deadlines, imperfect inputs, and cross-functional handoffs.</p>
+              <a class="evidence-link" href="#metrics">See selected impact ↗</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="chapter chapter-moss" id="chapter-three" aria-labelledby="chapter-three-title">
+        <div class="chapter-shell">
+          <div class="chapter-heading" data-depth="0.08">
+            <div class="chapter-number" aria-hidden="true">III</div>
+            <p class="chapter-kicker">Chapter three · Grants &amp; measurement</p>
+            <h2 class="chapter-title" id="chapter-three-title">Turning promises into evidence.</h2>
+            <p class="chapter-summary">A grant narrative makes a promise about change. The reporting system has to preserve how that promise will be measured long after the application is submitted.</p>
+          </div>
+          <div class="chapter-spread">
+            <div class="orb" data-depth="0.18"></div>
+            <article class="evidence-card" data-depth="-0.05">
+              <h3>Grant KPI framework</h3>
+              <div class="evidence-meta"><div><b>Framework</b><span>Twenty measures around nine KPIs</span></div><div><b>Grant</b><span>$80K foundation award</span></div><div><b>Build</b><span>Targets, methods, capture, analysis, reporting</span></div><div><b>Value</b><span>An auditable path from activity to outcome</span></div></div>
+              <p>The framework connected frontline work to funder language without pretending that human outcomes could be reduced to decorative numbers.</p>
+              <a class="evidence-link" href="resume/TaylorRitchie_Resume.pdf">View résumé ↗</a>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="image-chapter" id="creative" aria-labelledby="creative-title">
+      <div class="image-spread">
+        <img src="img/storybook/threshold-radiance.webp" width="1672" height="935" alt="" role="presentation" data-depth="0.12">
+        <div class="creative-copy">
+          <div>
+            <p class="chapter-kicker">Chapter four · Creative systems</p>
+            <h2 id="creative-title">Worlds need infrastructure, too.</h2>
+            <p>My D&amp;D projects are not separate from my professional practice. They are laboratories for information architecture, continuity, structured knowledge, workflow automation, and interface design, built around stories people care enough to remember.</p>
+            <ul class="transfer-list"><li>Knowledge architecture</li><li>Timeline systems</li><li>Data modeling</li><li>Source control</li><li>Workflow automation</li><li>Interface design</li></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics" id="metrics" aria-label="Selected impact metrics">
+      <div class="metrics-shell">
+        <article class="metric"><div class="metric-number">$855K+</div><div class="metric-label">Annual revenue supported through systems and reporting</div></article>
+        <article class="metric"><div class="metric-number">379</div><div class="metric-label">Donor records managed in the CRM</div></article>
+        <article class="metric"><div class="metric-number">~199</div><div class="metric-label">Dataverse tables architected across the environment</div></article>
+        <article class="metric"><div class="metric-number">$80K</div><div class="metric-label">Grant supported by a custom KPI and outcomes framework</div></article>
+      </div>
+    </section>
+
+    <section class="colophon" id="contact" aria-labelledby="contact-title">
+      <div class="colophon-shell">
+        <div>
+          <p class="eyebrow">Colophon · Where the next story begins</p>
+          <h2 id="contact-title">Let’s build something that holds.</h2>
+          <p class="colophon-copy">I am interested in operations, business systems, CRM, development administration, and program roles where clarity, infrastructure, and good judgment belong in the same job.</p>
+        </div>
+        <ul class="contact-list">
+          <li><a href="mailto:taylor.ritchie14@gmail.com"><b>Email</b><span>taylor.ritchie14@gmail.com ↗</span></a></li>
+          <li><a href="resume/TaylorRitchie_Resume.pdf"><b>Résumé</b><span>Current PDF ↗</span></a></li>
+          <li><a href="https://www.linkedin.com/in/taylor-askew-ritchie-126618133" target="_blank" rel="noopener noreferrer"><b>LinkedIn</b><span>Professional profile ↗</span></a></li>
+          <li><a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener noreferrer"><b>GitHub</b><span>Repositories ↗</span></a></li>
+        </ul>
+      </div>
+      <footer class="footer"><span>© 2026 Taylor Askew Ritchie</span><span>Operations · Systems · Stories</span><span>Rome, Georgia</span></footer>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script>
+    function initializeStoryMotion(runtime) {
+      if (!runtime || !runtime.gsap || !runtime.ScrollTrigger) return { enabled: false, reason: "animation library unavailable" };
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return { enabled: false, reason: "reduced motion requested" };
+
+      const layers = Array.from(document.querySelectorAll("[data-depth]"));
+      if (layers.length === 0) return { enabled: false, reason: "no depth layers found" };
+
+      runtime.gsap.registerPlugin(runtime.ScrollTrigger);
+      const media = runtime.gsap.matchMedia();
+      media.add("(min-width: 721px)", function addDesktopParallax() {
+        layers.forEach(function animateLayer(layer) {
+          const depth = Number.parseFloat(layer.dataset.depth);
+          if (!Number.isFinite(depth) || depth === 0) return;
+          const section = layer.closest("section") || document.body;
+          runtime.gsap.fromTo(layer, { yPercent: -depth * 18 }, { yPercent: depth * 28, ease: "none", scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 0.7, invalidateOnRefresh: true } });
+        });
+      });
+      return { enabled: true, layerCount: layers.length, media: media };
+    }
+
+    // Verification block: edge cases are exercised before the real runtime is initialized.
+    console.assert(initializeStoryMotion(null).enabled === false, "Motion must fail safely without a runtime.");
+    const motionState = initializeStoryMotion({ gsap: window.gsap, ScrollTrigger: window.ScrollTrigger });
+    console.assert(typeof motionState.enabled === "boolean", "Motion initializer must return an explicit state.");
+  </script>
+</body>
+</html>

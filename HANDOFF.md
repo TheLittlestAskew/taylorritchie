@@ -4,12 +4,19 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-Verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/`, including the homepage, résumé download, and `systemhorizon/` subroute. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+Review `storybook-concept.html` in the storybook-architecture draft PR. Decide whether the blue-green base with indigo and moss chapter shifts plus apricot-gold radiance should replace the current production direction, and identify any content or intensity changes before promoting the concept into `index.html`. Do not replace the live homepage without Taylor's explicit approval.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-20 · Codex
+- **Changed:** Created a standalone storybook-architecture prototype on `codex/storybook-architecture`. Added a semi-monochromatic radiant palette that deepens through blue-green, indigo, and moss chapters with apricot-gold contrast; an original threshold illustration; chapter-based evidence cards; a dedicated creative-systems section connecting D&D work to professional systems practice; restrained GSAP ScrollTrigger parallax on desktop; and a static reduced-motion experience. The live `index.html` is unchanged.
+- **Asset:** Generated an original editorial watercolor/cut-paper threshold scene with the built-in image-generation tool, then optimized it from a 2.8 MB PNG to a 287.9 KB WebP at `img/storybook/threshold-radiance.webp`.
+- **Tests:** `npx --yes html-validate storybook-concept.html` (pass); `node tests/storybook-audit.mjs http://127.0.0.1:4173/storybook-concept.html` (pass at 320, 375, 480, 768, 1024, 1280, 1440, and 1920 px; local links, IDs, one `h1`, alt text, disputed-metric absence, mobile navigation, anchor behavior, horizontal scrolling, reduced-motion transforms, desktop parallax activation, and browser console errors); `git diff --check` (pass); visual inspection at 320 and 1440 px (pass).
+- **Unresolved:** Taylor must choose whether the chapter-to-chapter hue changes feel cohesive and whether this concept should replace the live homepage.
+- **Next:** Review the draft prototype. If approved, promote it into `index.html`, reconnect the fuller work archive, rerun production validation, and merge only with explicit approval.
 
 ### 2026-07-20 · Codex
 - **Changed:** Taylor explicitly approved merging PR #1. Updated the return point from pre-merge review to post-merge GitHub Pages verification.

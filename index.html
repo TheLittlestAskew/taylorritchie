@@ -1,2392 +1,1207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taylor Askew Ritchie · Operations, Systems, Storytelling</title>
-<meta name="description" content="Taylor Askew Ritchie. Development Administrator, systems builder, and nonprofit operations professional.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  /* ---------- RESET + BASE ---------- */
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scroll-padding-top:20px}
-  body{
-    font-family:'Inter',system-ui,sans-serif;
-    background:#050b14;
-    color:#e8edf5;
-    line-height:1.65;
-    min-height:100vh;
-    overflow-x:hidden;
-    position:relative;
-  }
-  /* Atmospheric background */
-  body::before{
-    content:"";
-    position:fixed;
-    inset:0;
-    background:
-      radial-gradient(ellipse at 15% 20%,rgba(16,185,129,0.12) 0%,transparent 45%),
-      radial-gradient(ellipse at 85% 80%,rgba(59,130,246,0.10) 0%,transparent 50%),
-      radial-gradient(ellipse at 50% 100%,rgba(139,92,246,0.08) 0%,transparent 60%);
-    pointer-events:none;
-    z-index:0;
-  }
-  body::after{
-    content:"";
-    position:fixed;
-    inset:0;
-    background-image:
-      linear-gradient(rgba(16,185,129,0.025) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(16,185,129,0.025) 1px,transparent 1px);
-    background-size:60px 60px;
-    pointer-events:none;
-    z-index:0;
-    mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Taylor Askew Ritchie builds the systems, CRM operations, reporting, and communications infrastructure behind mission-driven work.">
+  <meta name="theme-color" content="#070707">
+  <link rel="canonical" href="https://tayloraritchie.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Taylor Askew Ritchie · Operations, Systems, and Development Infrastructure">
+  <meta property="og:description" content="Systems, CRM operations, reporting, and communications infrastructure for mission-driven work.">
+  <meta property="og:url" content="https://tayloraritchie.com/">
+  <meta property="og:image" content="https://tayloraritchie.com/img/avatar.png">
+  <meta property="og:image:alt" content="Portrait of Taylor Askew Ritchie">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Taylor Askew Ritchie · Operations, Systems, and Development Infrastructure">
+  <meta name="twitter:description" content="Systems, CRM operations, reporting, and communications infrastructure for mission-driven work.">
+  <meta name="twitter:image" content="https://tayloraritchie.com/img/avatar.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 fill=%22%23070707%22/><text x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-family=%22Georgia%22 font-size=%2235%22 font-weight=%22700%22 fill=%22%23fff9ec%22>T</text><circle cx=%2253%22 cy=%2252%22 r=%225%22 fill=%22%23ef233c%22/></svg>">
+  <title>Taylor Askew Ritchie · Operations, Systems &amp; Development</title>
 
-  a{color:inherit;text-decoration:none}
-  img{display:block;max-width:100%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo+Narrow:ital,wght@0,400;0,600;0,700;1,600&family=Bodoni+Moda:opsz,ital,wght@6..96,400;6..96,600;6..96,700;6..96,900;6..96,600&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  /* ---------- LAYOUT ---------- */
-  .layout{
-    position:relative;
-    z-index:1;
-    display:grid;
-    grid-template-columns:340px 1fr;
-    min-height:100vh;
-  }
-
-  /* ---------- SIDEBAR ---------- */
-  .sidebar{
-    position:fixed;
-    top:0;left:0;
-    width:340px;
-    height:100vh;
-    padding:40px 32px;
-    background:rgba(2,20,16,0.55);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border-right:1px solid rgba(16,185,129,0.15);
-    display:flex;
-    flex-direction:column;
-    overflow-y:auto;
-    z-index:10;
-  }
-  .sidebar::-webkit-scrollbar{width:4px}
-  .sidebar::-webkit-scrollbar-thumb{background:rgba(16,185,129,0.25);border-radius:2px}
-
-  .avatar-ring{
-    position:relative;
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    margin:0 auto 24px;
-    padding:3px;
-    background:conic-gradient(from 0deg,#10b981,#3b82f6,#8b5cf6,#10b981);
-    animation:spin 12s linear infinite;
-    box-shadow:0 0 30px rgba(16,185,129,0.2),0 0 60px rgba(59,130,246,0.1);
-  }
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .avatar{
-    width:100%;
-    height:100%;
-    border-radius:50%;
-    background:#050b14;
-    overflow:hidden;
-    display:block;
-    /* Counter-rotate so the image stays upright while the ring spins */
-    animation:spin 12s linear infinite reverse;
-  }
-  .avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    border-radius:50%;
-  }
-
-  .name-block{text-align:center;margin-bottom:8px}
-  .name{
-    font-family:'Orbitron',sans-serif;
-    font-size:20px;
-    font-weight:600;
-    letter-spacing:0.14em;
-    color:#f0fdf4;
-    line-height:1.3;
-    text-transform:uppercase;
-  }
-  .title{
-    margin-top:10px;
-    font-size:12px;
-    font-weight:500;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    color:#10b981;
-    opacity:0.9;
-  }
-
-  .divider{
-    height:1px;
-    background:linear-gradient(90deg,transparent,rgba(16,185,129,0.3),transparent);
-    margin:28px 0;
-  }
-
-  .nav{display:flex;flex-direction:column;gap:4px;margin-bottom:28px}
-  .nav a{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    padding:11px 14px;
-    border-radius:8px;
-    font-size:13px;
-    font-weight:500;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:#94a3b8;
-    transition:all 0.25s ease;
-    border:1px solid transparent;
-  }
-  .nav a:hover{
-    background:rgba(16,185,129,0.08);
-    color:#f0fdf4;
-    border-color:rgba(16,185,129,0.2);
-    transform:translateX(4px);
-  }
-  .nav a.active{
-    background:rgba(16,185,129,0.12);
-    color:#10b981;
-    border-color:rgba(16,185,129,0.3);
-  }
-  .nav-icon{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:currentColor;
-    opacity:0.6;
-    flex-shrink:0;
-  }
-
-  .contact-block{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    font-size:12px;
-    color:#94a3b8;
-  }
-  .contact-item{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:8px 10px;
-    border-radius:6px;
-    transition:all 0.2s ease;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    word-break:break-all;
-  }
-  .contact-item:hover{
-    background:rgba(16,185,129,0.06);
-    color:#e8edf5;
-  }
-  .contact-label{
-    font-family:'Orbitron',sans-serif;
-    font-size:9px;
-    letter-spacing:0.2em;
-    color:#10b981;
-    text-transform:uppercase;
-    min-width:60px;
-    opacity:0.8;
-  }
-
-  .sidebar-footer{
-    margin-top:auto;
-    padding-top:24px;
-    text-align:center;
-    font-size:10px;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:#475569;
-    font-family:'JetBrains Mono',monospace;
-  }
-
-  /* ---------- MAIN CONTENT ---------- */
-  .main{
-    grid-column:2;
-    padding:0;
-  }
-  .section{
-    min-height:100vh;
-    padding:80px clamp(40px,5vw,80px);
-    max-width:1600px;
-  }
-  .section-label{
-    display:inline-block;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    letter-spacing:0.3em;
-    text-transform:uppercase;
-    color:#10b981;
-    padding:6px 14px;
-    border:1px solid rgba(16,185,129,0.3);
-    border-radius:4px;
-    margin-bottom:24px;
-    background:rgba(16,185,129,0.05);
-  }
-  .section-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:48px;
-    font-weight:700;
-    letter-spacing:0.06em;
-    line-height:1.1;
-    margin-bottom:20px;
-    background:linear-gradient(135deg,#f0fdf4 0%,#10b981 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    text-transform:uppercase;
-  }
-  .section-subtitle{
-    font-size:18px;
-    color:#94a3b8;
-    max-width:700px;
-    margin-bottom:48px;
-    line-height:1.7;
-  }
-
-  /* ---------- ABOUT ---------- */
-  #about .hero{
-    min-height:calc(100vh - 160px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-  }
-  .hero-tagline{
-    font-family:'Orbitron',sans-serif;
-    font-size:clamp(32px,5vw,64px);
-    font-weight:700;
-    letter-spacing:0.04em;
-    line-height:1.1;
-    margin-bottom:32px;
-    text-transform:uppercase;
-  }
-  .hero-tagline .accent{
-    background:linear-gradient(135deg,#10b981 0%,#3b82f6 50%,#8b5cf6 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-  .hero-tagline .dot{
-    color:#10b981;
-    margin:0 0.2em;
-  }
-  .hero-bio{
-    font-size:19px;
-    line-height:1.75;
-    color:#cbd5e1;
-    max-width:880px;
-    margin-bottom:48px;
-  }
-
-  .stats-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:20px;
-    margin-bottom:64px;
-  }
-  .stat-card{
-    padding:24px;
-    background:rgba(7,17,27,0.55);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border:1px solid rgba(16,185,129,0.15);
-    border-radius:12px;
-    transition:all 0.3s ease;
-    position:relative;
-    overflow:hidden;
-  }
-  .stat-card::before{
-    content:"";
-    position:absolute;
-    top:0;left:0;
-    width:100%;
-    height:2px;
-    background:linear-gradient(90deg,#10b981,#3b82f6);
-    transform:translateX(-100%);
-    transition:transform 0.5s ease;
-  }
-  .stat-card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(16,185,129,0.35);
-  }
-  .stat-card:hover::before{transform:translateX(0)}
-  .stat-num{
-    font-family:'Orbitron',sans-serif;
-    font-size:36px;
-    font-weight:700;
-    color:#10b981;
-    line-height:1;
-    margin-bottom:8px;
-    letter-spacing:0.02em;
-  }
-  .stat-label{
-    font-size:12px;
-    font-weight:500;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:#94a3b8;
-  }
-
-  .what-i-do-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:14px;
-    font-weight:600;
-    letter-spacing:0.25em;
-    color:#10b981;
-    text-transform:uppercase;
-    margin-bottom:24px;
-    padding-bottom:12px;
-    border-bottom:1px solid rgba(16,185,129,0.2);
-  }
-  .services-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-    gap:20px;
-  }
-  .service-card{
-    padding:24px;
-    background:rgba(7,17,27,0.45);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:10px;
-    transition:all 0.3s ease;
-  }
-  .service-card:hover{
-    background:rgba(16,185,129,0.06);
-    border-color:rgba(16,185,129,0.25);
-    transform:translateY(-3px);
-  }
-  .service-num{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    color:#10b981;
-    letter-spacing:0.15em;
-    margin-bottom:12px;
-  }
-  .service-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:15px;
-    font-weight:600;
-    letter-spacing:0.08em;
-    color:#f0fdf4;
-    text-transform:uppercase;
-    margin-bottom:10px;
-  }
-  .service-desc{
-    font-size:14px;
-    color:#94a3b8;
-    line-height:1.65;
-  }
-
-  /* ---------- RESUME ---------- */
-  .resume-grid{
-    display:grid;
-    grid-template-columns:3fr 2fr;
-    gap:56px;
-  }
-  .resume-block{margin-bottom:48px}
-  .resume-heading{
-    font-family:'Orbitron',sans-serif;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:0.25em;
-    color:#10b981;
-    text-transform:uppercase;
-    margin-bottom:24px;
-    padding-bottom:10px;
-    border-bottom:1px solid rgba(16,185,129,0.2);
-  }
-
-  .timeline{position:relative;padding-left:28px}
-  .timeline::before{
-    content:"";
-    position:absolute;
-    left:6px;top:6px;bottom:6px;
-    width:1px;
-    background:linear-gradient(180deg,rgba(16,185,129,0.4) 0%,rgba(16,185,129,0.1) 100%);
-  }
-  .timeline-item{
-    position:relative;
-    margin-bottom:32px;
-    padding-left:4px;
-  }
-  .timeline-item::before{
-    content:"";
-    position:absolute;
-    left:-28px;top:8px;
-    width:13px;height:13px;
-    border-radius:50%;
-    background:#050b14;
-    border:2px solid #10b981;
-    box-shadow:0 0 0 3px rgba(16,185,129,0.15);
-  }
-  .timeline-date{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    letter-spacing:0.12em;
-    color:#10b981;
-    margin-bottom:6px;
-    text-transform:uppercase;
-  }
-  .timeline-role{
-    font-family:'Orbitron',sans-serif;
-    font-size:16px;
-    font-weight:600;
-    letter-spacing:0.06em;
-    color:#f0fdf4;
-    margin-bottom:4px;
-    text-transform:uppercase;
-  }
-  .timeline-org{
-    font-size:13px;
-    color:#94a3b8;
-    font-weight:500;
-    margin-bottom:12px;
-  }
-  .timeline-bullets{
-    list-style:none;
-    padding:0;
-  }
-  .timeline-bullets li{
-    position:relative;
-    padding-left:18px;
-    font-size:14px;
-    line-height:1.65;
-    color:#cbd5e1;
-    margin-bottom:8px;
-  }
-  .timeline-bullets li::before{
-    content:"▸";
-    position:absolute;
-    left:0;
-    color:#10b981;
-    font-size:12px;
-  }
-
-  .skills-category{margin-bottom:28px}
-  .skills-category-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.2em;
-    color:#94a3b8;
-    text-transform:uppercase;
-    margin-bottom:12px;
-  }
-  .skills-tags{display:flex;flex-wrap:wrap;gap:6px}
-  .skill-tag{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    padding:6px 12px;
-    background:rgba(16,185,129,0.08);
-    border:1px solid rgba(16,185,129,0.2);
-    border-radius:4px;
-    color:#d1fae5;
-    transition:all 0.2s ease;
-    letter-spacing:0.03em;
-  }
-  .skill-tag:hover{
-    background:rgba(16,185,129,0.15);
-    border-color:rgba(16,185,129,0.4);
-    transform:translateY(-1px);
-  }
-
-  .cert-item,.board-item{
-    padding:16px 20px;
-    background:rgba(7,17,27,0.45);
-    border:1px solid rgba(255,255,255,0.05);
-    border-radius:8px;
-    margin-bottom:12px;
-    transition:all 0.25s ease;
-  }
-  .cert-item:hover,.board-item:hover{
-    border-color:rgba(16,185,129,0.25);
-    background:rgba(16,185,129,0.04);
-  }
-  .cert-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:0.06em;
-    color:#f0fdf4;
-    margin-bottom:4px;
-    text-transform:uppercase;
-  }
-  .cert-meta{
-    font-size:11px;
-    color:#94a3b8;
-    font-family:'JetBrains Mono',monospace;
-    letter-spacing:0.05em;
-  }
-  .lapsed-badge{
-    display:inline-block;
-    padding:2px 8px;
-    background:rgba(251,146,60,0.12);
-    border:1px solid rgba(251,146,60,0.3);
-    color:#fb923c;
-    border-radius:3px;
-    font-size:9px;
-    letter-spacing:0.15em;
-    text-transform:uppercase;
-    margin-left:8px;
-    vertical-align:middle;
-  }
-
-  .edu-item{
-    margin-bottom:20px;
-    padding-bottom:20px;
-    border-bottom:1px solid rgba(255,255,255,0.05);
-  }
-  .edu-item:last-child{border-bottom:none}
-  .edu-degree{
-    font-family:'Orbitron',sans-serif;
-    font-size:14px;
-    font-weight:600;
-    letter-spacing:0.06em;
-    color:#f0fdf4;
-    margin-bottom:4px;
-    text-transform:uppercase;
-  }
-  .edu-school{
-    font-size:13px;
-    color:#94a3b8;
-    margin-bottom:4px;
-  }
-  .edu-date{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    color:#10b981;
-    letter-spacing:0.1em;
-  }
-  .edu-detail{
-    font-size:12px;
-    color:#94a3b8;
-    margin-top:8px;
-    font-style:italic;
-    line-height:1.6;
-  }
-
-  /* ---------- CONTACT ---------- */
-  #contact{display:flex;flex-direction:column;justify-content:center}
-  .contact-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:20px;
-    margin-top:24px;
-  }
-  .contact-card{
-    padding:28px;
-    background:rgba(7,17,27,0.55);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border:1px solid rgba(16,185,129,0.15);
-    border-radius:12px;
-    transition:all 0.3s ease;
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .contact-card:hover{
-    border-color:rgba(16,185,129,0.4);
-    transform:translateY(-4px);
-    background:rgba(16,185,129,0.05);
-  }
-  .contact-card-label{
-    font-family:'Orbitron',sans-serif;
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:0.25em;
-    color:#10b981;
-    text-transform:uppercase;
-  }
-  .contact-card-value{
-    font-family:'JetBrains Mono',monospace;
-    font-size:15px;
-    color:#f0fdf4;
-    word-break:break-all;
-  }
-  .contact-card-note{
-    font-size:12px;
-    color:#94a3b8;
-    margin-top:4px;
-  }
-
-  .contact-cta{
-    margin-top:48px;
-    padding:32px;
-    background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(59,130,246,0.06));
-    border:1px solid rgba(16,185,129,0.25);
-    border-radius:14px;
-    text-align:center;
-  }
-  .contact-cta-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:18px;
-    font-weight:600;
-    letter-spacing:0.08em;
-    color:#f0fdf4;
-    margin-bottom:10px;
-    text-transform:uppercase;
-  }
-  .contact-cta-text{
-    font-size:15px;
-    color:#cbd5e1;
-    max-width:560px;
-    margin:0 auto 24px;
-    line-height:1.7;
-  }
-  .email-btn{
-    display:inline-block;
-    padding:14px 32px;
-    background:linear-gradient(135deg,#10b981,#059669);
-    color:#050b14;
-    font-family:'Orbitron',sans-serif;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    border-radius:8px;
-    transition:all 0.3s ease;
-    border:1px solid rgba(16,185,129,0.5);
-  }
-  .email-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 30px rgba(16,185,129,0.3);
-  }
-
-  /* ---------- MOBILE TOGGLE ---------- */
-  .mobile-toggle{
-    display:none;
-    position:fixed;
-    top:16px;left:16px;
-    z-index:20;
-    width:44px;height:44px;
-    background:rgba(2,20,16,0.8);
-    backdrop-filter:blur(12px);
-    border:1px solid rgba(16,185,129,0.3);
-    border-radius:8px;
-    cursor:pointer;
-    align-items:center;
-    justify-content:center;
-  }
-  .mobile-toggle span{
-    display:block;
-    width:18px;height:2px;
-    background:#10b981;
-    position:relative;
-  }
-  .mobile-toggle span::before,
-  .mobile-toggle span::after{
-    content:"";
-    position:absolute;
-    left:0;
-    width:18px;height:2px;
-    background:#10b981;
-  }
-  .mobile-toggle span::before{top:-6px}
-  .mobile-toggle span::after{top:6px}
-
-  /* ---------- PORTFOLIO ---------- */
-  .portfolio-filters{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-bottom:48px;
-    padding-bottom:24px;
-    border-bottom:1px solid rgba(16,185,129,0.15);
-  }
-  .filter-btn{
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    padding:10px 18px;
-    background:rgba(7,17,27,0.5);
-    border:1px solid rgba(255,255,255,0.08);
-    color:#94a3b8;
-    border-radius:6px;
-    cursor:pointer;
-    transition:all 0.25s ease;
-  }
-  .filter-btn:hover{
-    border-color:rgba(16,185,129,0.4);
-    color:#f0fdf4;
-    background:rgba(16,185,129,0.06);
-  }
-  .filter-btn.active{
-    background:rgba(16,185,129,0.15);
-    border-color:rgba(16,185,129,0.5);
-    color:#10b981;
-  }
-
-  .portfolio-category{
-    margin-bottom:32px;
-    transition:opacity 0.3s ease;
-    border:1px solid rgba(255,255,255,0.05);
-    border-radius:12px;
-    background:rgba(2,20,16,0.2);
-    overflow:hidden;
-  }
-  .portfolio-category.hidden{display:none}
-  .portfolio-category.collapsed .category-body{
-    max-height:0;
-    opacity:0;
-    pointer-events:none;
-    padding-top:0;
-    padding-bottom:0;
-    margin-bottom:0;
-  }
-  .portfolio-category.collapsed .collapse-icon{
-    transform:rotate(-90deg);
-  }
-  .portfolio-category.collapsed{
-    margin-bottom:12px;
-  }
-
-  .category-header{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    padding:20px 28px;
-    cursor:pointer;
-    transition:background 0.2s ease;
-    user-select:none;
-  }
-  .category-header:hover{
-    background:rgba(16,185,129,0.04);
-  }
-  .collapse-icon{
-    display:inline-flex;
-    width:24px;height:24px;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(16,185,129,0.3);
-    border-radius:4px;
-    color:#10b981;
-    font-size:11px;
-    font-family:'JetBrains Mono',monospace;
-    font-weight:700;
-    transition:transform 0.25s ease;
-    flex-shrink:0;
-  }
-  .collapse-icon::before{
-    content:"▾";
-    display:block;
-  }
-  .portfolio-category.collapsed .collapse-icon{
-    transform:rotate(-90deg);
-  }
-  .category-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:22px;
-    font-weight:700;
-    letter-spacing:0.1em;
-    color:#f0fdf4;
-    text-transform:uppercase;
-    flex:1;
-  }
-  .category-count{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;
-    color:#10b981;
-    letter-spacing:0.1em;
-  }
-  .category-body{
-    padding:8px 28px 32px;
-    max-height:20000px;
-    opacity:1;
-    transition:max-height 0.5s ease,opacity 0.3s ease,padding 0.3s ease;
-    overflow:hidden;
-  }
-  .category-desc{
-    font-size:15px;
-    color:#94a3b8;
-    margin-bottom:32px;
-    max-width:760px;
-    line-height:1.7;
-  }
-
-  .project-subheader{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:20px;
-    margin-top:40px;
-    padding:10px 14px 10px 10px;
-    border-bottom:1px dashed rgba(16,185,129,0.2);
-    cursor:pointer;
-    border-radius:6px 6px 0 0;
-    transition:background 0.2s ease;
-    user-select:none;
-  }
-  .project-subheader:hover{
-    background:rgba(16,185,129,0.04);
-  }
-  .project-subheader:first-of-type{margin-top:0}
-  .project-subheader-line{
-    width:28px;
-    height:1px;
-    background:#10b981;
-    flex-shrink:0;
-  }
-  .project-subheader-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:0.22em;
-    color:#10b981;
-    text-transform:uppercase;
-    flex:1;
-  }
-  .project-subheader-count{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;
-    color:#64748b;
-    letter-spacing:0.1em;
-  }
-  .subproject-chevron{
-    display:inline-flex;
-    width:20px;height:20px;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(16,185,129,0.25);
-    border-radius:3px;
-    color:#10b981;
-    font-size:9px;
-    font-family:'JetBrains Mono',monospace;
-    font-weight:700;
-    transition:transform 0.25s ease;
-    flex-shrink:0;
-    margin-left:10px;
-  }
-  .subproject-chevron::before{
-    content:"▾";
-    display:block;
-  }
-  .subproject.collapsed .subproject-chevron{
-    transform:rotate(-90deg);
-  }
-
-  .subproject{
-    margin-bottom:16px;
-  }
-  .subproject-body{
-    max-height:20000px;
-    opacity:1;
-    overflow:hidden;
-    transition:max-height 0.5s ease,opacity 0.3s ease,margin 0.3s ease;
-    margin-top:20px;
-  }
-  .subproject.collapsed .subproject-body{
-    max-height:0;
-    opacity:0;
-    margin-top:0;
-    pointer-events:none;
-  }
-
-  /* Browser frame mockup */
-  .portfolio-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
-    gap:24px;
-  }
-  .browser-card{
-    background:rgba(7,17,27,0.55);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    overflow:hidden;
-    transition:all 0.3s ease;
-    cursor:pointer;
-    display:flex;
-    flex-direction:column;
-  }
-  .browser-card:hover{
-    border-color:rgba(16,185,129,0.4);
-    transform:translateY(-4px);
-    box-shadow:0 12px 40px rgba(0,0,0,0.4);
-  }
-  .browser-chrome{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    padding:10px 14px;
-    background:rgba(2,20,16,0.6);
-    border-bottom:1px solid rgba(255,255,255,0.06);
-  }
-  .browser-dot{
-    width:10px;height:10px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.15);
-  }
-  .browser-dot:nth-child(1){background:rgba(239,68,68,0.5)}
-  .browser-dot:nth-child(2){background:rgba(251,146,60,0.5)}
-  .browser-dot:nth-child(3){background:rgba(16,185,129,0.5)}
-  .browser-url{
-    flex:1;
-    margin-left:10px;
-    padding:4px 12px;
-    background:rgba(0,0,0,0.3);
-    border-radius:4px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;
-    color:#94a3b8;
-    letter-spacing:0.02em;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
-  .browser-screenshot{
-    width:100%;
-    height:260px;
-    object-fit:cover;
-    object-position:top center;
-    background:#0f1923;
-    display:block;
-  }
-  .browser-caption{
-    padding:14px 18px;
-    border-top:1px solid rgba(255,255,255,0.06);
-  }
-  .browser-caption-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:0.08em;
-    color:#f0fdf4;
-    text-transform:uppercase;
-    margin-bottom:4px;
-  }
-  .browser-caption-desc{
-    font-size:12px;
-    color:#94a3b8;
-    line-height:1.5;
-  }
-
-  /* Compact tiles for resource library overflow */
-  .tile-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:12px;
-    margin-top:20px;
-  }
-  .tile-card{
-    padding:16px;
-    background:rgba(7,17,27,0.4);
-    border:1px solid rgba(255,255,255,0.05);
-    border-radius:8px;
-    font-size:12px;
-    color:#cbd5e1;
-    transition:all 0.2s ease;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .tile-card:hover{
-    border-color:rgba(16,185,129,0.25);
-    background:rgba(16,185,129,0.05);
-    color:#f0fdf4;
-  }
-  .tile-dot{
-    width:6px;height:6px;
-    border-radius:50%;
-    background:#10b981;
-    flex-shrink:0;
-  }
-  .tile-label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    letter-spacing:0.05em;
-  }
-
-  /* Placeholder card (for categories we haven't built yet) */
-  .placeholder-card{
-    padding:32px;
-    background:rgba(7,17,27,0.35);
-    border:1px dashed rgba(16,185,129,0.25);
-    border-radius:10px;
-    text-align:center;
-    color:#64748b;
-  }
-  .placeholder-card .placeholder-icon{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    color:#10b981;
-    letter-spacing:0.2em;
-    margin-bottom:8px;
-    opacity:0.7;
-  }
-  .placeholder-card .placeholder-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:14px;
-    letter-spacing:0.12em;
-    color:#94a3b8;
-    text-transform:uppercase;
-    margin-bottom:6px;
-  }
-  .placeholder-card .placeholder-desc{
-    font-size:13px;
-    color:#64748b;
-    font-style:italic;
-  }
-
-  /* ---------- DOCUMENT CARDS ---------- */
-  .doc-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(340px,1fr));
-    gap:24px;
-    margin-bottom:24px;
-  }
-  .doc-card{
-    background:rgba(7,17,27,0.55);
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border:1px solid rgba(16,185,129,0.15);
-    border-radius:12px;
-    padding:32px;
-    transition:all 0.3s ease;
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-  }
-  .doc-card::before{
-    content:"";
-    position:absolute;
-    top:0;left:0;
-    width:100%;
-    height:2px;
-    background:linear-gradient(90deg,#10b981,#3b82f6);
-    transform:translateX(-100%);
-    transition:transform 0.5s ease;
-  }
-  .doc-card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(16,185,129,0.4);
-    box-shadow:0 12px 40px rgba(0,0,0,0.4);
-  }
-  .doc-card:hover::before{transform:translateX(0)}
-  .doc-card-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:6px 12px;
-    background:rgba(16,185,129,0.08);
-    border:1px solid rgba(16,185,129,0.2);
-    border-radius:4px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;
-    letter-spacing:0.15em;
-    color:#10b981;
-    text-transform:uppercase;
-    margin-bottom:20px;
-    width:fit-content;
-  }
-  .doc-card-badge svg{
-    width:14px;
-    height:14px;
-    stroke:currentColor;
-    stroke-width:1.5;
-    fill:none;
-  }
-  .doc-card-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:16px;
-    font-weight:600;
-    letter-spacing:0.06em;
-    color:#f0fdf4;
-    text-transform:uppercase;
-    margin-bottom:12px;
-    line-height:1.3;
-  }
-  .doc-card-desc{
-    font-size:14px;
-    color:#94a3b8;
-    line-height:1.7;
-    margin-bottom:20px;
-    flex:1;
-  }
-  .doc-card-meta{
-    display:flex;
-    gap:16px;
-    margin-bottom:24px;
-    flex-wrap:wrap;
-  }
-  .doc-meta-tag{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;
-    letter-spacing:0.08em;
-    color:#64748b;
-    padding:4px 10px;
-    background:rgba(255,255,255,0.03);
-    border:1px solid rgba(255,255,255,0.06);
-    border-radius:3px;
-    text-transform:uppercase;
-  }
-  .doc-card-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    padding:12px 24px;
-    background:rgba(16,185,129,0.1);
-    border:1px solid rgba(16,185,129,0.3);
-    border-radius:6px;
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.18em;
-    text-transform:uppercase;
-    color:#10b981;
-    cursor:pointer;
-    transition:all 0.25s ease;
-    text-decoration:none;
-    width:fit-content;
-  }
-  .doc-card-btn:hover{
-    background:rgba(16,185,129,0.2);
-    border-color:rgba(16,185,129,0.5);
-    transform:translateY(-1px);
-    box-shadow:0 4px 16px rgba(16,185,129,0.15);
-  }
-  .doc-card-btn svg{
-    width:14px;
-    height:14px;
-    stroke:currentColor;
-    stroke-width:2;
-    fill:none;
-  }
-
-  /* ---------- SOCIAL POST CARDS ---------- */
-  .social-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:16px;
-  }
-  .social-card{
-    position:relative;
-    aspect-ratio:1/1;
-    background:rgba(7,17,27,0.55);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:10px;
-    overflow:hidden;
-    cursor:pointer;
-    transition:all 0.3s ease;
-  }
-  .social-card:hover{
-    border-color:rgba(16,185,129,0.4);
-    transform:translateY(-3px) scale(1.02);
-    box-shadow:0 12px 30px rgba(0,0,0,0.4);
-  }
-  .social-card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    transition:transform 0.3s ease;
-  }
-  .social-card:hover img{transform:scale(1.03)}
-  .social-caption-overlay{
-    position:absolute;
-    left:0;right:0;bottom:0;
-    padding:14px 14px 12px;
-    background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 70%,transparent 100%);
-    color:#f0fdf4;
-    opacity:0;
-    transition:opacity 0.3s ease;
-    pointer-events:none;
-  }
-  .social-card:hover .social-caption-overlay{opacity:1}
-  .social-caption-overlay-title{
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;
-    font-weight:600;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    margin-bottom:3px;
-  }
-  .social-caption-overlay-desc{
-    font-size:11px;
-    color:#cbd5e1;
-    line-height:1.4;
-  }
-  .platform-badge{
-    position:absolute;
-    top:10px;right:10px;
-    padding:4px 8px;
-    background:rgba(2,20,16,0.75);
-    backdrop-filter:blur(8px);
-    border:1px solid rgba(16,185,129,0.3);
-    border-radius:4px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:9px;
-    letter-spacing:0.1em;
-    color:#10b981;
-    text-transform:uppercase;
-    z-index:2;
-  }
-
-  /* ---------- LIGHTBOX ---------- */
-  .lightbox{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:100;
-    background:rgba(0,0,0,0.92);
-    backdrop-filter:blur(8px);
-    align-items:center;
-    justify-content:center;
-    padding:40px;
-    cursor:zoom-out;
-  }
-  .lightbox.open{display:flex}
-  .lightbox img{
-    max-width:95%;
-    max-height:92vh;
-    border-radius:8px;
-    box-shadow:0 20px 80px rgba(0,0,0,0.6);
-    cursor:default;
-  }
-  .lightbox-close{
-    position:absolute;
-    top:20px;right:20px;
-    width:44px;height:44px;
-    background:rgba(16,185,129,0.15);
-    border:1px solid rgba(16,185,129,0.4);
-    border-radius:50%;
-    color:#10b981;
-    font-size:20px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:'Orbitron',sans-serif;
-    transition:all 0.2s ease;
-  }
-  .lightbox-close:hover{
-    background:rgba(16,185,129,0.3);
-    transform:rotate(90deg);
-  }
-
-  /* ---------- MOBILE HEADER BAR ---------- */
-  .mobile-header{
-    display:none;
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:15;
-    padding:12px 16px 12px 72px;
-    background:rgba(2,20,16,0.75);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border-bottom:1px solid rgba(16,185,129,0.15);
-    align-items:center;
-    gap:14px;
-    min-height:68px;
-  }
-  .mobile-header-avatar{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    padding:2px;
-    background:conic-gradient(from 0deg,#10b981,#3b82f6,#8b5cf6,#10b981);
-    flex-shrink:0;
-    animation:spin 12s linear infinite;
-  }
-  .mobile-header-avatar-inner{
-    width:100%;
-    height:100%;
-    border-radius:50%;
-    overflow:hidden;
-    background:#050b14;
-    animation:spin 12s linear infinite reverse;
-  }
-  .mobile-header-avatar-inner img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .mobile-header-name{
-    font-family:'Orbitron',sans-serif;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:0.12em;
-    color:#f0fdf4;
-    text-transform:uppercase;
-    line-height:1.2;
-  }
-
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width:1200px){
-    .resume-grid{grid-template-columns:1fr;gap:0}
-  }
-
-  @media (max-width:1024px){
-    .section-title{font-size:36px}
-  }
-
-  @media (max-width:768px){
-    .layout{grid-template-columns:1fr}
-    .sidebar{
-      transform:translateX(-100%);
-      transition:transform 0.3s ease;
-      width:min(320px,85vw);
+  <style>
+    :root {
+      --ink: #070707;
+      --soft-ink: #171717;
+      --paper: #f2eadc;
+      --paper-hot: #fff9ec;
+      --paper-dim: #d9d0c1;
+      --signal-red: #ef233c;
+      --coral: #ff6b63;
+      --cobalt: #175cff;
+      --electric-blue: #0b72ff;
+      --wine: #6f1733;
+      --gold: #c99a45;
+      --rule: rgba(7, 7, 7, 0.22);
+      --display: "Bodoni Moda", Georgia, serif;
+      --condensed: "Archivo Narrow", "Arial Narrow", sans-serif;
+      --heavy: "Archivo Black", Impact, sans-serif;
+      --body: "Libre Franklin", Arial, sans-serif;
+      --mono: "IBM Plex Mono", Consolas, monospace;
+      --page-pad: clamp(1.15rem, 4vw, 4.5rem);
+      --content: 1440px;
     }
-    .sidebar.open{transform:translateX(0)}
-    .main{grid-column:1;padding-top:80px}
-    .mobile-toggle{display:flex}
-    .mobile-header{display:flex}
-    .section{padding:40px 24px;min-height:auto}
-    .hero-tagline{font-size:36px}
-    .hero-bio{font-size:16px}
-    .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-    .stat-num{font-size:28px}
-    .stat-card{padding:18px}
-  }
 
-  @media (max-width:480px){
-    .stats-grid{grid-template-columns:1fr}
-    .section-title{font-size:28px}
-    .portfolio-grid{grid-template-columns:1fr}
-    .browser-screenshot{height:200px}
-    .portfolio-filters{gap:6px}
-    .filter-btn{font-size:10px;padding:8px 12px}
-    .doc-grid{grid-template-columns:1fr}
-  }
-</style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 4.25rem; overflow-x: clip; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper-hot);
+      font-family: var(--body);
+      line-height: 1.55;
+      overflow-x: clip;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+    .portfolio :focus-visible, .playbill :focus-visible { outline-color: var(--cobalt); }
+    ::selection { background: var(--cobalt); color: white; }
+
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -5rem;
+      z-index: 1000;
+      background: var(--paper-hot);
+      color: var(--ink);
+      padding: 0.8rem 1rem;
+      font: 600 0.8rem/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .site-rail {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      right: 0;
+      min-height: 3.15rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem var(--page-pad);
+      background: rgba(7, 7, 7, 0.94);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      overflow: hidden;
+      contain: layout paint;
+    }
+
+    .rail-mark {
+      color: var(--signal-red);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .rail-nav {
+      min-width: 0;
+      max-width: 100%;
+      justify-self: center;
+      display: flex;
+      gap: clamp(0.8rem, 2vw, 2.2rem);
+    }
+    .rail-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      text-decoration: none;
+      color: rgba(255,255,255,0.72);
+      transition: color 160ms ease;
+    }
+    .rail-nav a:hover, .rail-nav a:focus-visible { color: white; }
+
+    .rail-status {
+      color: rgba(255,255,255,0.62);
+      white-space: nowrap;
+    }
+
+    main { display: block; }
+
+    .section-shell {
+      width: min(100%, var(--content));
+      margin-inline: auto;
+      padding-inline: var(--page-pad);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 6rem 0 3rem;
+      background:
+        linear-gradient(90deg, transparent 49.93%, rgba(255,255,255,0.09) 50%, transparent 50.07%),
+        radial-gradient(circle at 68% 18%, rgba(239,35,60,0.16), transparent 24%),
+        var(--ink);
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.23;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 4px);
+      mix-blend-mode: screen;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 0.31fr);
+      gap: clamp(2rem, 6vw, 7rem);
+      align-items: end;
+    }
+
+    .hero-kicker {
+      margin: 0 0 1.5rem;
+      color: var(--signal-red);
+      font: 600 clamp(0.68rem, 1vw, 0.85rem)/1.4 var(--mono);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(4.1rem, 12.2vw, 11.2rem);
+      font-weight: 900;
+      line-height: 0.73;
+      letter-spacing: -0.072em;
+      text-transform: uppercase;
+    }
+    .hero-title span { display: block; }
+    .hero-title .askew {
+      margin-left: clamp(0rem, 7vw, 7rem);
+      color: transparent;
+      -webkit-text-stroke: clamp(1px, 0.13vw, 2px) var(--paper-hot);
+      text-stroke: clamp(1px, 0.13vw, 2px) var(--paper-hot);
+    }
+    .hero-title .ritchie { color: var(--paper-hot); }
+
+    .hero-deck {
+      align-self: end;
+      padding: 1.25rem 0 0;
+      border-top: 6px solid var(--cobalt);
+    }
+    .hero-deck strong {
+      display: block;
+      margin-bottom: 0.65rem;
+      font: 700 clamp(1.25rem, 2.1vw, 2.25rem)/0.98 var(--condensed);
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+    .hero-deck p {
+      margin: 0;
+      color: rgba(255,255,255,0.73);
+      font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+    }
+
+    .hero-caption {
+      grid-column: 1 / -1;
+      margin-top: clamp(2.5rem, 8vh, 6rem);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      font: 500 0.68rem/1.45 var(--mono);
+      color: rgba(255,255,255,0.58);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .ticker {
+      contain: layout paint;
+      overflow: hidden;
+      background: var(--signal-red);
+      color: white;
+      border-block: 1px solid var(--ink);
+      font: 700 clamp(1rem, 1.8vw, 1.55rem)/1 var(--condensed);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 24s linear infinite;
+    }
+    .ticker-track span { padding: 0.85rem 2rem; white-space: nowrap; }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    .broadcast {
+      background: var(--paper-hot);
+      color: var(--ink);
+      padding: clamp(4.5rem, 8vw, 8rem) 0;
+    }
+
+    .broadcast-topline {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      font: 600 0.68rem/1 var(--mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .broadcast-topline::before,
+    .broadcast-topline::after {
+      content: "";
+      height: 1px;
+      background: var(--ink);
+    }
+
+    .broadcast-heading {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      align-items: stretch;
+    }
+
+    .broadcast-slug {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 19rem;
+      overflow: hidden;
+      background: var(--cobalt);
+      color: white;
+      border: 1px solid var(--ink);
+    }
+    .broadcast-slug::before {
+      content: "LIVE";
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.38rem 0.65rem;
+      background: var(--signal-red);
+      color: white;
+      font: 700 0.72rem/1 var(--mono);
+      letter-spacing: 0.15em;
+    }
+    .broadcast-slug span {
+      transform: rotate(-90deg);
+      font: 700 clamp(3.1rem, 7vw, 7.5rem)/0.78 var(--condensed);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .broadcast-title-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-block: 1px solid var(--ink);
+      padding: 1.25rem 0 1.5rem;
+    }
+    .broadcast-title {
+      margin: 0;
+      max-width: 12ch;
+      font: 900 clamp(3.2rem, 8.5vw, 9rem)/0.78 var(--display);
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+    .broadcast-subhead {
+      margin: 2rem 0 0;
+      max-width: 53rem;
+      font: 700 clamp(1.15rem, 2.2vw, 2.05rem)/1.02 var(--condensed);
+      text-transform: uppercase;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      margin-top: clamp(3rem, 6vw, 6rem);
+    }
+    .about-copy {
+      column-count: 2;
+      column-gap: clamp(1.5rem, 4vw, 4rem);
+      font-family: var(--body);
+      font-size: clamp(1rem, 1.25vw, 1.18rem);
+      line-height: 1.78;
+    }
+    .about-copy p { margin: 0 0 1.25rem; }
+    .about-copy p:first-child::first-letter {
+      float: left;
+      margin: 0.08em 0.12em 0 0;
+      color: var(--signal-red);
+      font: 900 4.7em/0.72 var(--display);
+    }
+
+    .lower-third {
+      align-self: start;
+      border: 1px solid var(--ink);
+      background: white;
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+    .lower-third-name {
+      padding: 1.2rem 1.25rem;
+      background: var(--cobalt);
+      color: white;
+      font: 700 clamp(1.6rem, 3vw, 3rem)/0.95 var(--condensed);
+      text-transform: uppercase;
+    }
+    .lower-third-role {
+      padding: 0.9rem 1.25rem;
+      font: 600 0.73rem/1.45 var(--mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .lower-third-list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--ink);
+    }
+    .lower-third-list li {
+      display: grid;
+      grid-template-columns: 3.75rem 1fr;
+      gap: 1rem;
+      padding: 0.88rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.86rem;
+    }
+    .lower-third-list li:last-child { border-bottom: 0; }
+    .lower-third-list b {
+      color: var(--signal-red);
+      font: 600 0.65rem/1.45 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metrics {
+      background: var(--ink);
+      color: var(--paper-hot);
+      padding: 1px 0;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-left: 1px solid rgba(255,255,255,0.25);
+    }
+    .metric {
+      min-height: 13rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: clamp(1.3rem, 3vw, 2.5rem);
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+    .metric-number {
+      font: 900 clamp(3rem, 6vw, 6.5rem)/0.85 var(--display);
+      letter-spacing: -0.06em;
+    }
+    .metric:nth-child(2) .metric-number { color: var(--signal-red); }
+    .metric:nth-child(3) .metric-number { color: #5e88ff; }
+    .metric:nth-child(4) .metric-number { color: var(--gold); }
+    .metric-label {
+      max-width: 22ch;
+      font: 600 0.73rem/1.4 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.67);
+    }
+
+    .experience {
+      background: var(--soft-ink);
+      padding: clamp(5rem, 9vw, 9rem) 0;
+    }
+
+    .section-number {
+      margin: 0 0 1rem;
+      color: var(--signal-red);
+      font: 600 0.73rem/1 var(--mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .section-display {
+      margin: 0 0 clamp(3rem, 7vw, 6rem);
+      font: 900 clamp(4rem, 10vw, 10rem)/0.78 var(--display);
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .chapter-list { display: grid; gap: 1.25rem; }
+    .chapter {
+      display: grid;
+      grid-template-columns: minmax(6rem, 0.24fr) minmax(0, 1fr) minmax(230px, 0.38fr);
+      min-height: 19rem;
+      border: 1px solid rgba(255,255,255,0.26);
+      background: var(--ink);
+      color: white;
+    }
+    .chapter:nth-child(even) {
+      background: var(--paper-hot);
+      color: var(--ink);
+      border-color: var(--paper-hot);
+    }
+    .chapter-index {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid currentColor;
+      font: 900 clamp(3rem, 5vw, 5.5rem)/0.8 var(--display);
+      color: var(--signal-red);
+    }
+    .chapter-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(1.5rem, 4vw, 3.5rem);
+    }
+    .chapter-company {
+      margin: 0;
+      font: 900 clamp(2.6rem, 6vw, 6.7rem)/0.78 var(--display);
+      letter-spacing: -0.058em;
+      text-transform: uppercase;
+    }
+    .chapter-title {
+      margin: 1rem 0 0;
+      font: 700 clamp(1rem, 2vw, 1.7rem)/1 var(--condensed);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .chapter-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid currentColor;
+      font: 500 0.68rem/1.4 var(--mono);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .chapter-copy {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      padding: clamp(1.5rem, 3vw, 2.4rem);
+      border-left: 1px solid currentColor;
+      font-size: 0.96rem;
+      line-height: 1.68;
+    }
+    .chapter-copy ul { margin: 0; padding: 0; list-style: none; }
+    .chapter-copy li {
+      position: relative;
+      padding: 0.85rem 0 0.85rem 1.4rem;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    }
+    .chapter-copy li:last-child { border-bottom: 0; }
+    .chapter-copy li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 1.02rem;
+      color: var(--signal-red);
+      font-size: 0.55rem;
+    }
+
+    .portfolio {
+      background: var(--paper);
+      color: var(--ink);
+      padding: clamp(5rem, 9vw, 9rem) 0;
+    }
+    .portfolio .section-number { color: var(--cobalt); }
+    .portfolio .section-display { margin-bottom: 2rem; }
+    .portfolio-intro {
+      max-width: 58rem;
+      margin: 0 0 clamp(3rem, 6vw, 5rem);
+      font: 700 clamp(1.2rem, 2.4vw, 2rem)/1.08 var(--condensed);
+      text-transform: uppercase;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+    .project {
+      min-height: 24rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(1.3rem, 3vw, 2.5rem);
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      overflow: hidden;
+      position: relative;
+    }
+    .project::before {
+      content: attr(data-mark);
+      position: absolute;
+      right: -0.02em;
+      bottom: -0.22em;
+      z-index: 0;
+      color: rgba(0,0,0,0.065);
+      font: 900 clamp(8rem, 21vw, 21rem)/0.7 var(--display);
+      letter-spacing: -0.08em;
+    }
+    .project > * { position: relative; z-index: 1; }
+    .project:nth-child(1) { grid-column: span 7; background: var(--cobalt); color: white; }
+    .project:nth-child(2) { grid-column: span 5; background: var(--paper-hot); }
+    .project:nth-child(3) { grid-column: span 5; background: var(--signal-red); color: white; }
+    .project:nth-child(4) { grid-column: span 7; background: #f4d8a6; }
+    .project:nth-child(5) { grid-column: span 12; min-height: 19rem; background: var(--wine); color: white; }
+
+    .project-label {
+      font: 600 0.69rem/1.4 var(--mono);
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .project h3 {
+      max-width: 10ch;
+      margin: 2rem 0 1.2rem;
+      font: 900 clamp(2.5rem, 5vw, 5.5rem)/0.82 var(--display);
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+    .project p { max-width: 40rem; margin: 0; font-size: 0.96rem; }
+    .project-evidence {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .project-evidence span {
+      padding: 0.38rem 0.55rem;
+      border: 1px solid currentColor;
+      font: 500 0.63rem/1 var(--mono);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
+    }
+    .project-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+      padding: 0.65rem 0.8rem;
+      border: 1px solid currentColor;
+      font: 600 0.68rem/1.2 var(--mono);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+    .project-links a:hover { transform: translateY(-2px); background: var(--ink); color: var(--paper-hot); }
+    .project:nth-child(1) .project-links a:hover,
+    .project:nth-child(3) .project-links a:hover,
+    .project:nth-child(5) .project-links a:hover { background: var(--paper-hot); color: var(--ink); }
+
+    .work-archive { margin-top: clamp(3rem, 7vw, 6rem); border-top: 2px solid var(--ink); }
+    .work-archive summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      min-height: 5rem;
+      cursor: pointer;
+      list-style: none;
+      font: 700 clamp(1.2rem, 2.2vw, 2rem)/1 var(--condensed);
+      text-transform: uppercase;
+    }
+    .work-archive summary::-webkit-details-marker { display: none; }
+    .work-archive summary::after { content: "+"; font: 400 2rem/1 var(--mono); }
+    .work-archive[open] summary::after { content: "−"; }
+    .archive-intro { max-width: 65ch; margin: 0 0 2rem; }
+    .archive-group { padding: 2rem 0 2.5rem; border-top: 1px solid var(--rule); }
+    .archive-group h3 { margin: 0 0 0.45rem; font: 900 clamp(1.8rem, 3.6vw, 3.5rem)/0.95 var(--display); text-transform: uppercase; }
+    .archive-group > p { max-width: 65ch; margin: 0 0 1.4rem; }
+    .archive-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
+    .archive-gallery a { display: block; color: inherit; font: 600 0.67rem/1.35 var(--mono); text-decoration: none; }
+    .archive-gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--ink); background: var(--paper-dim); }
+    .archive-gallery span { display: block; padding-top: 0.45rem; }
+    .archive-docs { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .archive-docs a { padding: 0.75rem 0.9rem; border: 1px solid var(--ink); font: 600 0.68rem/1.3 var(--mono); text-decoration: none; text-transform: uppercase; }
+
+    .playbill {
+      background: #e9dcc7;
+      color: #17110f;
+      padding: clamp(5rem, 9vw, 9rem) 0;
+    }
+    .playbill-frame {
+      position: relative;
+      padding: clamp(1.4rem, 4vw, 4rem);
+      border: 3px double #3c2923;
+      outline: 1px solid #3c2923;
+      outline-offset: -0.65rem;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(111,23,51,0.08), transparent 26%),
+        radial-gradient(circle at 86% 82%, rgba(201,154,69,0.12), transparent 30%),
+        #efe4d2;
+    }
+    .playbill-pretitle {
+      margin: 0;
+      text-align: center;
+      font: 600 0.72rem/1 var(--mono);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+    .playbill-title {
+      margin: 0.9rem 0 0;
+      text-align: center;
+      font: 900 clamp(3.6rem, 9vw, 9rem)/0.8 var(--display);
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+    .playbill-subtitle {
+      max-width: 44rem;
+      margin: 1.3rem auto 3rem;
+      text-align: center;
+      font: 700 clamp(1rem, 1.7vw, 1.4rem)/1.2 var(--condensed);
+      text-transform: uppercase;
+    }
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin: 1.5rem 0 2.5rem;
+      color: var(--wine);
+    }
+    .ornament::before, .ornament::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid #3c2923;
+      border-bottom: 1px solid #3c2923;
+    }
+    .skill-column {
+      padding: clamp(1.25rem, 3vw, 2.4rem);
+      border-right: 1px solid #3c2923;
+    }
+    .skill-column:last-child { border-right: 0; }
+    .skill-column h3 {
+      margin: 0 0 1.2rem;
+      color: var(--wine);
+      font: 900 clamp(1.75rem, 3vw, 3rem)/0.9 var(--display);
+      text-transform: uppercase;
+    }
+    .skill-column ul { list-style: none; margin: 0; padding: 0; }
+    .skill-column li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.72rem 0;
+      border-bottom: 1px dotted rgba(23,17,15,0.46);
+      font: 600 0.92rem/1.3 var(--condensed);
+      text-transform: uppercase;
+    }
+    .skill-column li::after { content: "◆"; color: var(--gold); font-size: 0.55rem; padding-top: 0.35rem; }
+
+    .contact {
+      min-height: 95svh;
+      display: grid;
+      align-items: center;
+      background:
+        linear-gradient(90deg, transparent 49.93%, rgba(255,255,255,0.08) 50%, transparent 50.07%),
+        var(--ink);
+      padding: 5rem 0 2rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: clamp(2rem, 7vw, 8rem);
+      align-items: end;
+    }
+    .contact-copy h2 {
+      margin: 0;
+      font: 900 clamp(3rem, 8vw, 8rem)/0.78 var(--display);
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+    .contact-copy p {
+      max-width: 36rem;
+      margin: 1.5rem 0 2.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+    }
+    .contact-links { display: grid; gap: 0.75rem; }
+    .contact-links a {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.34);
+      text-decoration: none;
+      font: 600 0.77rem/1.4 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .contact-links a:hover span:last-child,
+    .contact-links a:focus-visible span:last-child { color: var(--signal-red); }
+
+    .fin {
+      text-align: right;
+      font: italic 900 clamp(8rem, 23vw, 24rem)/0.6 var(--display);
+      letter-spacing: -0.09em;
+      color: var(--paper-hot);
+    }
+    .fin-dot { color: var(--signal-red); }
+
+    .footer-line {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: clamp(4rem, 10vh, 8rem);
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.55);
+      font: 500 0.65rem/1.45 var(--mono);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 550ms ease, transform 550ms cubic-bezier(.2,.7,.2,1);
+    }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .rail-status { display: none; }
+      .site-rail { grid-template-columns: auto 1fr; }
+      .rail-nav { justify-self: end; }
+      .hero-grid,
+      .broadcast-heading,
+      .about-grid,
+      .contact-grid { grid-template-columns: 1fr; }
+      .hero-deck { max-width: 34rem; }
+      .broadcast-slug { min-height: 8rem; }
+      .broadcast-slug span { transform: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .archive-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chapter { grid-template-columns: 5rem 1fr; }
+      .chapter-copy { grid-column: 1 / -1; border-left: 0; border-top: 1px solid currentColor; }
+      .project:nth-child(n) { grid-column: span 6; }
+      .project:nth-child(5) { grid-column: span 12; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-column { border-right: 0; border-bottom: 1px solid #3c2923; }
+      .skill-column:last-child { border-bottom: 0; }
+      .fin { text-align: left; }
+    }
+
+    @media (max-width: 680px) {
+      .site-rail { display: block; min-height: 3.35rem; padding-inline: 0; }
+      .rail-mark, .rail-status { display: none; }
+      .rail-nav { width: 100vw; max-width: 100vw; justify-content: flex-start; gap: 0; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: thin; }
+      .rail-nav a { min-height: 2.75rem; padding: 0 0.85rem; white-space: nowrap; }
+      .hero { padding-top: 5.4rem; }
+      .hero-title { font-size: clamp(4rem, 20vw, 7.3rem); line-height: 0.76; }
+      .hero-title .askew { margin-left: 0; }
+      .hero-caption, .footer-line { flex-direction: column; }
+      .about-copy { column-count: 1; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric { min-height: 10rem; }
+      .archive-gallery { grid-template-columns: 1fr; }
+      .chapter { grid-template-columns: 3.2rem 1fr; }
+      .chapter-index { padding-inline: 0.4rem; font-size: 2.35rem; }
+      .chapter-main { padding: 1.3rem; }
+      .chapter-meta { flex-direction: column; }
+      .project-grid { display: block; }
+      .project { min-height: 21rem; margin-bottom: 1rem; }
+      .playbill-frame { outline-offset: -0.4rem; }
+      .contact { min-height: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-<button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">
-  <span></span>
-</button>
-
-<header class="mobile-header">
-  <div class="mobile-header-avatar">
-    <div class="mobile-header-avatar-inner">
-      <img src="img/avatar.png" alt="Taylor Askew Ritchie">
-    </div>
-  </div>
-  <div class="mobile-header-name">Taylor Askew<br>Ritchie</div>
-</header>
-
-<div class="layout">
-
-  <!-- ============ SIDEBAR ============ -->
-  <aside class="sidebar">
-    <div class="avatar-ring">
-      <div class="avatar">
-        <img src="img/avatar.png" alt="Taylor Askew Ritchie" loading="eager">
-      </div>
-    </div>
-
-    <div class="name-block">
-      <div class="name">Taylor Askew<br>Ritchie</div>
-    </div>
-
-    <div class="divider"></div>
-
-    <nav class="nav" id="nav">
-      <a href="#about" class="active"><span class="nav-icon"></span>About</a>
-      <a href="#resume"><span class="nav-icon"></span>Resume</a>
-      <a href="#portfolio"><span class="nav-icon"></span>Portfolio</a>
-      <a href="#contact"><span class="nav-icon"></span>Contact</a>
+  <header class="site-rail" aria-label="Site navigation">
+    <div class="rail-mark">TAR / Portfolio / MMXXVI</div>
+    <nav class="rail-nav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Work</a>
+      <a href="#skills">Capabilities</a>
+      <a href="#contact">Contact</a>
+      <a href="resume/TaylorRitchie_Resume.pdf">Résumé</a>
     </nav>
+    <div class="rail-status">Rome, Georgia · Available</div>
+  </header>
 
-    <div class="divider"></div>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="section-shell hero-grid">
+        <div>
+          <p class="hero-kicker" data-reveal>A personal portfolio in five acts</p>
+          <h1 class="hero-title" id="hero-title" data-reveal>
+            <span>Taylor</span>
+            <span class="askew">Askew</span>
+            <span class="ritchie">Ritchie</span>
+          </h1>
+        </div>
 
-    <div class="contact-block">
-      <div class="contact-item">
-        <span class="contact-label">Loc</span>
-        <span>Georgia</span>
+        <aside class="hero-deck" data-reveal aria-label="Professional positioning">
+          <strong>Operations · Systems · Brand</strong>
+          <p>I build the infrastructure behind ambitious work: data systems, development operations, reporting, communications, and the processes that keep all of it moving.</p>
+        </aside>
+
+        <div class="hero-caption">
+          <span>Nonprofit administration / Power Platform / development systems</span>
+          <span>Scroll to begin →</span>
+        </div>
       </div>
-      <a href="mailto:taylor.ritchie14@gmail.com" class="contact-item">
-        <span class="contact-label">Mail</span>
-        <span>taylor.ritchie14@gmail.com</span>
-      </a>
-      <a href="tel:+17065090098" class="contact-item">
-        <span class="contact-label">Tel</span>
-        <span>(706) 509-0098</span>
-      </a>
-      <a href="https://linkedin.com/in/taylor-askew-ritchie" target="_blank" rel="noopener" class="contact-item">
-        <span class="contact-label">In</span>
-        <span>/taylor-askew-ritchie</span>
-      </a>
-      <a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener" class="contact-item">
-        <span class="contact-label">Git</span>
-        <span>/TheLittlestAskew</span>
-      </a>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Systems that work · reports that explain · brands people trust · operations that hold</span>
+        <span>Systems that work · reports that explain · brands people trust · operations that hold</span>
+      </div>
     </div>
 
-    <div class="sidebar-footer">
-      © 2026 T.A.R.
-    </div>
-  </aside>
+    <section class="broadcast" id="about" aria-labelledby="about-title">
+      <div class="section-shell">
+        <div class="broadcast-topline"><span>Special report · Professional profile</span></div>
 
-  <!-- ============ MAIN ============ -->
-  <main class="main">
-
-    <!-- ABOUT -->
-    <section id="about" class="section">
-      <div class="hero">
-        <div class="section-label">// About</div>
-        <h1 class="hero-tagline">
-          Operations <span class="dot">·</span><br>
-          <span class="accent">Systems</span> <span class="dot">·</span><br>
-          Storytelling
-        </h1>
-        <p class="hero-bio">
-          Systems-minded operations professional who designs, builds, and runs the technology that keeps a nonprofit functioning: Power Platform apps, Dataverse architecture, grant reporting, donor systems, employee handbooks. The same person who writes the JavaScript also writes the SOP.
-        </p>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-num">3+</div>
-            <div class="stat-label">Years Power Platform</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num">21+</div>
-            <div class="stat-label">JS Web Resources</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num">4+</div>
-            <div class="stat-label">Years of Bookkeeping</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num">100%</div>
-            <div class="stat-label">Your Girl Behind the Screens</div>
+        <div class="broadcast-heading">
+          <div class="broadcast-slug" data-reveal><span>About</span></div>
+          <div class="broadcast-title-wrap" data-reveal>
+            <h2 class="broadcast-title" id="about-title">The systems work.</h2>
+            <p class="broadcast-subhead">Because the person building them understands the mission, the money, the data, the message, and the people doing the work.</p>
           </div>
         </div>
 
-        <div class="what-i-do-title">// What I Do</div>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-num">01</div>
-            <div class="service-title">Systems Development</div>
-            <div class="service-desc">Model-driven and canvas Power Apps, Dataverse architecture, JavaScript web resources, and REST API integrations; built from scratch as sole developer.</div>
+        <div class="about-grid">
+          <div class="about-copy" data-reveal>
+            <p>I build the systems that make fundraising and nonprofit operations work — the donor databases, grant-tracking frameworks, reporting infrastructure, automations, brand standards, and operating procedures that turn scattered activity into something visible and usable.</p>
+            <p>As the sole systems developer and operations administrator for a homeless-services nonprofit, I designed and ran the data environment behind more than $855,000 in annual revenue while managing donor operations, grant reporting, communications, privacy responsibilities, and cross-functional process design.</p>
+            <p>My work sits where technical architecture meets human judgment. I can map a Dataverse relationship, write a board-ready report, reconcile a payment workflow, shape a campaign, document the process, and explain why the system should exist in the first place.</p>
           </div>
-          <div class="service-card">
-            <div class="service-num">02</div>
-            <div class="service-title">Nonprofit Operations</div>
-            <div class="service-desc">Operations manuals, employee handbooks, SOP development, case management systems, and cross-functional workflow design for a multi-site shelter.</div>
-          </div>
-          <div class="service-card">
-            <div class="service-num">03</div>
-            <div class="service-title">Donor & Grant Systems</div>
-            <div class="service-desc">Full donor lifecycle administration, Stripe integrations, tax letter automation, capital campaign tracking, and grant reporting compliance.</div>
-          </div>
-          <div class="service-card">
-            <div class="service-num">04</div>
-            <div class="service-title">Data & Reporting</div>
-            <div class="service-desc">KPI dashboards, impact reporting, field-level security, data migration, and Power BI visualizations built to actually get read.</div>
-          </div>
-          <div class="service-card">
-            <div class="service-num">05</div>
-            <div class="service-title">Brand & Communications</div>
-            <div class="service-desc">Brand standards, donor communications, social strategy across Instagram, Facebook, and LinkedIn, and mission storytelling that converts.</div>
-          </div>
-          <div class="service-card">
-            <div class="service-num">06</div>
-            <div class="service-title">AI & Automation</div>
-            <div class="service-desc">Custom MCP servers, Claude skill authoring, prompt engineering, and human-in-the-loop workflows that save real hours per week.</div>
-          </div>
+
+          <aside class="lower-third" data-reveal aria-label="Professional summary">
+            <div class="lower-third-name">Taylor Askew Ritchie</div>
+            <div class="lower-third-role">Systems builder · development operations · communications</div>
+            <ul class="lower-third-list">
+              <li><b>Base</b><span>Rome, Georgia · Remote-ready</span></li>
+              <li><b>Build</b><span>Power Apps, Dataverse, Power Automate, Power BI</span></li>
+              <li><b>Run</b><span>Fundraising operations, grants, reporting, compliance</span></li>
+              <li><b>Shape</b><span>Brand systems, campaigns, documentation, programs</span></li>
+            </ul>
+          </aside>
         </div>
       </div>
     </section>
 
-    <!-- RESUME -->
-    <section id="resume" class="section">
-      <div class="section-label">// Resume</div>
-      <h2 class="section-title">Experience<br>& Background</h2>
-      <p class="section-subtitle">Eleven years spanning nonprofit operations, community-facing coordination, and self-taught enterprise development; all reinforcing the same instinct: if the system is broken, build a better one.</p>
+    <section class="metrics" aria-label="Selected impact metrics">
+      <div class="section-shell metrics-grid">
+        <article class="metric" data-reveal>
+          <div class="metric-number">$855K+</div>
+          <div class="metric-label">Annual revenue supported through systems and reporting</div>
+        </article>
+        <article class="metric" data-reveal>
+          <div class="metric-number">379</div>
+          <div class="metric-label">Donor records managed in the CRM</div>
+        </article>
+        <article class="metric" data-reveal>
+          <div class="metric-number">~199</div>
+          <div class="metric-label">Dataverse tables architected across the environment</div>
+        </article>
+        <article class="metric" data-reveal>
+          <div class="metric-number">$80K</div>
+          <div class="metric-label">Grant supported by a custom KPI and outcomes framework</div>
+        </article>
+      </div>
+    </section>
 
-      <div class="resume-grid">
+    <section class="experience" id="experience" aria-labelledby="experience-title">
+      <div class="section-shell">
+        <p class="section-number">Act II · Selected experience</p>
+        <h2 class="section-display" id="experience-title" data-reveal>Work,<br>in chapters.</h2>
 
-        <!-- LEFT COLUMN -->
-        <div>
-          <div class="resume-block">
-            <div class="resume-heading">Experience</div>
-            <div class="timeline">
-
-              <div class="timeline-item">
-                <div class="timeline-date">Sept 2022 to Present</div>
-                <div class="timeline-role">Development Administrator</div>
-                <div class="timeline-org">William S. Davies Homeless Shelters, Inc.</div>
-                <ul class="timeline-bullets">
-                  <li>Sole systems developer, operations administrator, and Privacy Officer for a nonprofit operating two shelters on a 24/365 schedule.</li>
-                  <li>Built enterprise-grade Power Platform environment from scratch: 21+ JavaScript web resources, Model-Driven and Canvas apps, Dataverse with field-level security.</li>
-                  <li>Migrated 483+ Stripe payout records with a 4-tier matching algorithm; achieved 89.7% auto-match and eliminated manual reconciliation.</li>
-                  <li>Authored the organization's Operations Manual and Employee Handbook from scratch.</li>
-                  <li>Secured and managed an $80,000 Atrium Health Floyd-Polk Foundation grant including mid-year impact reporting.</li>
-                  <li>Developed a custom Model Context Protocol (MCP) server in Python for AI-assisted operations workflows.</li>
-                </ul>
+        <div class="chapter-list">
+          <article class="chapter" data-reveal>
+            <div class="chapter-index">I</div>
+            <div class="chapter-main">
+              <div>
+                <h3 class="chapter-company">Davies<br>Shelters</h3>
+                <p class="chapter-title">Development Administrator</p>
               </div>
+              <div class="chapter-meta"><span>September 2022 — April 2026</span><span>Rome, Georgia</span></div>
+            </div>
+            <div class="chapter-copy">
+              <ul>
+                <li>Built and administered the Power Platform and Dataverse environment supporting donor, grant, program, shelter, and reporting workflows.</li>
+                <li>Ran annual giving operations, donor records, gift processing, acknowledgments, campaign communications, and reconciliation.</li>
+                <li>Designed KPI frameworks, dashboards, mid-year reports, final reports, operating manuals, and brand systems.</li>
+                <li>Served as Privacy Officer and translated policy into practical staff workflows and documentation.</li>
+              </ul>
+            </div>
+          </article>
 
-              <div class="timeline-item">
-                <div class="timeline-date">Oct 2021 to May 2022</div>
-                <div class="timeline-role">Community Resource Navigator</div>
-                <div class="timeline-org">United Way of Rome / Floyd County</div>
-                <ul class="timeline-bullets">
-                  <li>Operated the community resource line, intaking high volumes of crisis calls and matching residents to services.</li>
-                  <li>Built and maintained the organization-information database used to track community service gaps and need trends.</li>
-                  <li>Presented trend findings to partner organizations to inform their programming decisions.</li>
-                </ul>
+          <article class="chapter" data-reveal>
+            <div class="chapter-index">II</div>
+            <div class="chapter-main">
+              <div>
+                <h3 class="chapter-company">United<br>Way</h3>
+                <p class="chapter-title">Community Resource Navigator</p>
               </div>
+              <div class="chapter-meta"><span>October 2021 — May 2022</span><span>Rome, Georgia</span></div>
+            </div>
+            <div class="chapter-copy">
+              <ul>
+                <li>Operated the community resource line, connecting residents in crisis with appropriate services and partner agencies.</li>
+                <li>Built and maintained the partner-organization database used to match callers with resources and identify community-need trends.</li>
+                <li>Converted frontline service knowledge into structured, searchable operational information.</li>
+              </ul>
+            </div>
+          </article>
 
-              <div class="timeline-item">
-                <div class="timeline-date">June 2019 to Sept 2021</div>
-                <div class="timeline-role">Programs Coordinator</div>
-                <div class="timeline-org">Rome Floyd Chamber</div>
-                <ul class="timeline-bullets">
-                  <li>Planned and produced the Chamber's annual Business Expo, a multi-day event with 100-booth floor and networking program.</li>
-                  <li>Managed Leadership Rome and High School Leadership Rome, coordinating curriculum, speakers, and logistics.</li>
-                  <li>Developed a new Diversity & Inclusion strategic plan for the Chamber's programming.</li>
-                </ul>
+          <article class="chapter" data-reveal>
+            <div class="chapter-index">III</div>
+            <div class="chapter-main">
+              <div>
+                <h3 class="chapter-company">Rome Floyd<br>Chamber</h3>
+                <p class="chapter-title">Programs Coordinator</p>
               </div>
-
-              <div class="timeline-item">
-                <div class="timeline-date">May 2017 to June 2019</div>
-                <div class="timeline-role">Receptionist</div>
-                <div class="timeline-org">Rome Floyd Chamber</div>
-                <ul class="timeline-bullets">
-                  <li>Managed front-desk operations: phones, mail, member records, and walk-in information requests.</li>
-                  <li>Processed deposits and tracked financial records; connected community members with resources and demographic data.</li>
-                </ul>
-              </div>
-
-              <div class="timeline-item">
-                <div class="timeline-date">June 2015 to March 2017</div>
-                <div class="timeline-role">Project Coach</div>
-                <div class="timeline-org">Afni, Inc.</div>
-                <ul class="timeline-bullets">
-                  <li>Managed daily operations and performance for up to 16 customer service agents.</li>
-                  <li>Delivered coaching and performance feedback; trained agents on frequent program updates.</li>
-                </ul>
-              </div>
-
+              <div class="chapter-meta"><span>June 2019 — September 2021</span><span>Rome, Georgia</span></div>
             </div>
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN -->
-        <div>
-
-          <div class="resume-block">
-            <div class="resume-heading">Skills</div>
-
-            <div class="skills-category">
-              <div class="skills-category-title">Platforms & Systems</div>
-              <div class="skills-tags">
-                <span class="skill-tag">Power Apps</span>
-                <span class="skill-tag">Power Automate</span>
-                <span class="skill-tag">Power BI</span>
-                <span class="skill-tag">Dataverse</span>
-                <span class="skill-tag">SharePoint</span>
-                <span class="skill-tag">M365 Admin</span>
-                <span class="skill-tag">Azure AD</span>
-                <span class="skill-tag">Supabase</span>
-              </div>
+            <div class="chapter-copy">
+              <ul>
+                <li>Planned and produced a multi-day, 100-booth business expo with sponsorship, vendor, marketing, and event logistics.</li>
+                <li>Managed leadership programs, curriculum, speakers, sponsors, and participant communications.</li>
+                <li>Designed a Diversity &amp; Inclusion program framework and carried it through public events and community engagement.</li>
+              </ul>
             </div>
-
-            <div class="skills-category">
-              <div class="skills-category-title">Data & Reporting</div>
-              <div class="skills-tags">
-                <span class="skill-tag">Power BI</span>
-                <span class="skill-tag">Data Annotation</span>
-                <span class="skill-tag">KPI Dashboards</span>
-                <span class="skill-tag">Impact Reporting</span>
-                <span class="skill-tag">Data Migration</span>
-                <span class="skill-tag">Excel &amp; Pivot Tables</span>
-                <span class="skill-tag">SQL Querying</span>
-                <span class="skill-tag">Database Design</span>
-                <span class="skill-tag">Data Validation</span>
-                <span class="skill-tag">Field-Level Security</span>
-              </div>
-            </div>
-
-            <div class="skills-category">
-              <div class="skills-category-title">Operations & Program</div>
-              <div class="skills-tags">
-                <span class="skill-tag">SOP Development</span>
-                <span class="skill-tag">Workflow Automation</span>
-                <span class="skill-tag">Case Management</span>
-                <span class="skill-tag">Volunteer Coordination</span>
-                <span class="skill-tag">HIPAA-Adjacent Ops</span>
-              </div>
-            </div>
-
-            <div class="skills-category">
-              <div class="skills-category-title">Fundraising & Donor Systems</div>
-              <div class="skills-tags">
-                <span class="skill-tag">Grant Writing</span>
-                <span class="skill-tag">Grant Reporting</span>
-                <span class="skill-tag">Donor Stewardship</span>
-                <span class="skill-tag">Givebutter</span>
-                <span class="skill-tag">ProPay</span>
-                <span class="skill-tag">Capital Campaigns</span>
-              </div>
-            </div>
-
-            <div class="skills-category">
-              <div class="skills-category-title">Communications & Design</div>
-              <div class="skills-tags">
-                <span class="skill-tag">Brand Standards</span>
-                <span class="skill-tag">Social Strategy</span>
-                <span class="skill-tag">Canva</span>
-                <span class="skill-tag">Mailchimp</span>
-                <span class="skill-tag">WordPress / Divi</span>
-                <span class="skill-tag">Content Planning</span>
-              </div>
-            </div>
-
-            <div class="skills-category">
-              <div class="skills-category-title">AI & Automation</div>
-              <div class="skills-tags">
-                <span class="skill-tag">Prompt Engineering</span>
-                <span class="skill-tag">Custom Claude Skills</span>
-                <span class="skill-tag">Generative AI QA</span>
-                <span class="skill-tag">Human-in-the-Loop Design</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="resume-block">
-            <div class="resume-heading">Education</div>
-
-            <div class="edu-item">
-              <div class="edu-degree">Graduate Coursework in Nonprofit Management</div>
-              <div class="edu-school">University of West Georgia · Carrollton, GA</div>
-              <div class="edu-date">2023 to 2024 · Graduate Coursework</div>
-              <div class="edu-detail">POLS 5215 · Management of Nonprofit Organizations | POLS 6200 · Public Budgeting & Financial Management</div>
-            </div>
-
-            <div class="edu-item">
-              <div class="edu-degree">Bachelor of Arts</div>
-              <div class="edu-school">Auburn University · Auburn, AL</div>
-              <div class="edu-date">May 2012</div>
-            </div>
-          </div>
-
-          <div class="resume-block">
-            <div class="resume-heading">Certifications</div>
-
-            <div class="cert-item">
-              <div class="cert-title">Fundamentals of Grant Writing I</div>
-              <div class="cert-meta">University of Georgia · Oct 2022 · 24 hrs / 2.4 CEU</div>
-            </div>
-
-            <div class="cert-item">
-              <div class="cert-title">Diversity Professional (CDP)<span class="lapsed-badge">Lapsed</span></div>
-              <div class="cert-meta">Institute for Diversity Certification · 2021</div>
-            </div>
-          </div>
-
-          <div class="resume-block">
-            <div class="resume-heading">Board Service</div>
-
-            <div class="board-item">
-              <div class="cert-title">Northwest Georgia Center for Independent Living</div>
-              <div class="cert-meta">Board of Directors · Current</div>
-            </div>
-
-            <div class="board-item">
-              <div class="cert-title">Romanos Unidos</div>
-              <div class="cert-meta">Board of Directors · 2017 · 2020</div>
-            </div>
-
-            <div class="board-item">
-              <div class="cert-title">NAACP Rome Branch</div>
-              <div class="cert-meta">Board of Directors · 2021</div>
-            </div>
-
-            <div class="board-item">
-              <div class="cert-title">City of Rome Housing Committee</div>
-              <div class="cert-meta">Committee Member · 2021</div>
-            </div>
-          </div>
-
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- PORTFOLIO -->
-    <section id="portfolio" class="section">
-      <div class="section-label">// Portfolio</div>
-      <h2 class="section-title">Selected Work</h2>
-      <p class="section-subtitle">A mix of public-facing design, internal systems I built from scratch, brand work, and long-form writing. Some projects live online; others live behind the login of a 24/365 shelter operation, so they're described rather than shown.</p>
+    <section class="portfolio" id="work" aria-labelledby="work-title">
+      <div class="section-shell">
+        <p class="section-number">Act III · Evidence</p>
+        <h2 class="section-display" id="work-title" data-reveal>Selected<br>work.</h2>
+        <p class="portfolio-intro" data-reveal>The portfolio is not a gallery of disconnected deliverables. It is evidence that I can design the system, run the work, measure the result, and communicate what happened.</p>
 
-      <!-- Filter Tabs -->
-      <div class="portfolio-filters" id="portfolioFilters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="dev">Development</button>
-        <button class="filter-btn" data-filter="web">Web Design</button>
-        <button class="filter-btn" data-filter="brand">Brand</button>
-        <button class="filter-btn" data-filter="social">Social</button>
-        <button class="filter-btn" data-filter="ops">Operations</button>
-        <button class="filter-btn" data-filter="data">Data</button>
-      </div>
-
-      <!-- ========== DEVELOPMENT ========== -->
-      <div class="portfolio-category collapsed" data-category="dev">
-        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-          <span class="collapse-icon"></span>
-          <h3 class="category-title">Development Projects</h3>
-          <span class="category-count">// 04</span>
-        </div>
-        <div class="category-body">
-          <p class="category-desc">Enterprise-grade systems built as sole developer: Dataverse architecture, Power Platform apps, custom integrations, and AI tooling.</p>
-
-          <div class="placeholder-card">
-            <div class="placeholder-icon">// COMING SOON</div>
-            <div class="placeholder-title">Development Cards in Progress</div>
-            <div class="placeholder-desc">SystemHorizon · Stripe → Dataverse Migration · Power Platform Environment · Custom MCP Server</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========== WEB DESIGN ========== -->
-      <div class="portfolio-category collapsed" data-category="web">
-        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-          <span class="collapse-icon"></span>
-          <h3 class="category-title">Web Design</h3>
-          <span class="category-count">// 01</span>
-        </div>
-        <div class="category-body">
-        <p class="category-desc">Full redesign of The Davies Shelters' public website; built from the ground up to balance mission storytelling, accessible resource navigation, and donor trust-building. Seventeen pages total across three information architectures.</p>
-
-        <!-- Sub: Main Site Pages -->
-        <div class="subproject collapsed">
-        <div class="project-subheader" onclick="toggleSubproject(this, event)">
-          <span class="project-subheader-line"></span>
-          <span class="project-subheader-title">Main Site Pages</span>
-          <span class="project-subheader-count">11 pages</span>
-          <span class="subproject-chevron"></span>
-        </div>
-        <div class="subproject-body">
-
-        <div class="portfolio-grid">
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-home1.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-home1.png" alt="Davies Shelters Homepage" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Homepage</div>
-              <div class="browser-caption-desc">Hero with mission statement, shelter facilities, program overview, and donor CTAs.</div>
+        <div class="project-grid">
+          <article class="project" data-mark="01" data-reveal>
+            <div>
+              <div class="project-label">Systems &amp; operations</div>
+              <h3>Nonprofit Power Platform Ecosystem</h3>
+              <p><strong>Need:</strong> replace scattered records and manual work with a governed system. <strong>Build:</strong> Model-Driven and Canvas apps, Dataverse architecture, field-level security, flows, dashboards, and JavaScript resources. <strong>Value:</strong> one connected environment for intake, case management, fundraising, grants, and finance.</p>
             </div>
-          </div>
+            <div class="project-evidence"><span>Dataverse</span><span>Power Apps</span><span>Power Automate</span><span>Power BI</span></div>
+            <div class="project-links"><a href="systemhorizon/">View SystemHorizon</a><a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener noreferrer">Explore GitHub</a></div>
+          </article>
 
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-donate1.1.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/donate</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-donate1.1.png" alt="Davies Shelters Donate page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Donate</div>
-              <div class="browser-caption-desc">Recurring & one-time giving, Neighbor's Society + Builder's Society tiers, wishlist integrations.</div>
+          <article class="project" data-mark="02" data-reveal>
+            <div>
+              <div class="project-label">Development finance</div>
+              <h3>Annual Giving Revenue Engine</h3>
+              <p><strong>Need:</strong> make annual giving visible from campaign plan through reconciliation. <strong>Build:</strong> a repeatable operating model connecting donor records, payment channels, stewardship, calendars, and reporting. <strong>Value:</strong> development and finance work from the same evidence trail.</p>
             </div>
-          </div>
+            <div class="project-evidence"><span>CRM</span><span>Reconciliation</span><span>Stewardship</span></div>
+          </article>
 
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-aboutus2.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/about-us</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-aboutus2.png" alt="Davies Shelters About Us page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">About Us</div>
-              <div class="browser-caption-desc">Mission, history timeline, guiding principles, and community partnerships.</div>
+          <article class="project" data-mark="03" data-reveal>
+            <div>
+              <div class="project-label">Grants &amp; measurement</div>
+              <h3>Grant KPI Framework</h3>
+              <p><strong>Need:</strong> turn grant promises into auditable measurement. <strong>Build:</strong> twenty measures around nine required KPIs, with targets, methods, live capture, and reporting logic. <strong>Value:</strong> staff activity, outcomes, and funder reports stay connected.</p>
             </div>
-          </div>
+            <div class="project-evidence"><span>Outcomes</span><span>Grant reporting</span><span>Data model</span></div>
+          </article>
 
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-whoweare3.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/who-we-are</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-whoweare3.png" alt="Davies Shelters Who We Are page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Who We Are</div>
-              <div class="browser-caption-desc">Executive staff, board of directors, and the organization's namesake, Bill Davies.</div>
+          <article class="project" data-mark="04" data-reveal>
+            <div>
+              <div class="project-label">Branding &amp; communications</div>
+              <h3>Brand System &amp; Campaign Design</h3>
+              <p><strong>Need:</strong> create a coherent public identity across channels. <strong>Build:</strong> brand standards, voice, web information architecture, donor messaging, and campaign templates. <strong>Value:</strong> consistent communication staff could apply without a full agency.</p>
             </div>
-          </div>
+            <div class="project-evidence"><span>Brand strategy</span><span>Copy</span><span>Campaigns</span><span>Design</span></div>
+            <div class="project-links"><a href="#work-archive">View design evidence</a></div>
+          </article>
 
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-whatwedo4.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/what-we-do</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-whatwedo4.png" alt="Davies Shelters What We Do page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">What We Do</div>
-              <div class="browser-caption-desc">Programs at a glance: shelter, case management, counseling, Davies Farm, Bus Fare.</div>
+          <article class="project" data-mark="05" data-reveal>
+            <div>
+              <div class="project-label">Program &amp; community design</div>
+              <h3>Diversity &amp; Inclusion Program</h3>
+              <p><strong>Need:</strong> move inclusion work from intention to programming. <strong>Build:</strong> a stakeholder-informed framework spanning directory, roundtable, summit, attraction, retention, and public events. <strong>Value:</strong> a practical program structure the Chamber could operate.</p>
             </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-whywedoit5.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/why-we-do-it</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-whywedoit5.png" alt="Davies Shelters Why We Do It page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Why We Do It</div>
-              <div class="browser-caption-desc">Board-game metaphor for navigating homelessness, using LIFE cards to teach empathy and reframe the crisis.</div>
-            </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-getinvolved6.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/get-involved</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-getinvolved6.png" alt="Davies Shelters Get Involved page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Get Involved</div>
-              <div class="browser-caption-desc">Volunteer flows, meal signups, donation drop-offs, and MealTrain integration.</div>
-            </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-busfare6.1.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/bus-fare</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-busfare6.1.png" alt="Davies Shelters Bus Fare program page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Bus Fare</div>
-              <div class="browser-caption-desc">Community program landing page with its own brand treatment, schedule, and volunteer signup.</div>
-            </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-resourcemain7.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/resources</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-resourcemain7.png" alt="Davies Shelters Resource Library hub" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Resource Library Hub</div>
-              <div class="browser-caption-desc">Gateway to 7 category pages covering every aspect of community support, plus national crisis hotlines.</div>
-            </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-needshelter8.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/need-shelter</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-needshelter8.png" alt="Davies Shelters Need Shelter page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Need Shelter</div>
-              <div class="browser-caption-desc">Intake information, THOR program details, shelter facilities tour, and "How It Works" walkthrough.</div>
-            </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-contact9.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/contact-us</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-contact9.png" alt="Davies Shelters Contact Us page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Contact Us</div>
-              <div class="browser-caption-desc">Contact info, intake guidance, FAQ, and mission reinforcement through the Sacred Worth artwork.</div>
-            </div>
-          </div>
-
+            <div class="project-evidence"><span>Program design</span><span>Stakeholder engagement</span><span>Event delivery</span></div>
+          </article>
         </div>
 
-        </div><!-- /subproject-body -->
-        </div><!-- /subproject Main Site Pages -->
+        <details class="work-archive" id="work-archive">
+          <summary>Additional work and supporting evidence</summary>
+          <p class="archive-intro">The featured cases explain the operating problem and Taylor’s role. This archive preserves representative public-facing artifacts from the broader portfolio without loading every full-resolution image at page start.</p>
 
-        <!-- Sub: Resource Library -->
-        <div class="subproject collapsed">
-        <div class="project-subheader" onclick="toggleSubproject(this, event)">
-          <span class="project-subheader-line"></span>
-          <span class="project-subheader-title">Resource Library · Category Pages</span>
-          <span class="project-subheader-count">7 pages · 4 shown</span>
-          <span class="subproject-chevron"></span>
-        </div>
-        <div class="subproject-body">
-
-        <p class="category-desc" style="margin-bottom:20px">A scalable category system; each page follows a consistent template that makes it easy to add, update, or reorganize resources without redesign. Four representative pages shown below.</p>
-
-        <div class="portfolio-grid">
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-resourcebasichumanneeds7.2.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/resources/basic-human-needs</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-resourcebasichumanneeds7.2.png" alt="Basic Human Needs resource page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Basic Human Needs</div>
-              <div class="browser-caption-desc">Food, clothing, and emergency support; 15 organizations curated and contact-verified.</div>
+          <section class="archive-group" aria-labelledby="web-archive">
+            <h3 id="web-archive">Web and information architecture</h3>
+            <p>Selected pages from the Davies Shelters website redesign, including donor, program, and community-resource journeys.</p>
+            <div class="archive-gallery">
+              <a href="img/portfolio/davies/web-home1.png"><img src="img/portfolio/davies/web-home1.png" width="1920" height="4615" alt="Davies Shelters homepage redesign" loading="lazy" decoding="async"><span>Homepage and mission framing</span></a>
+              <a href="img/portfolio/davies/web-donate1.1.png"><img src="img/portfolio/davies/web-donate1.1.png" width="1920" height="4615" alt="Davies Shelters donation page redesign" loading="lazy" decoding="async"><span>Donation journey</span></a>
+              <a href="img/portfolio/davies/web-resourcemain7.png"><img src="img/portfolio/davies/web-resourcemain7.png" width="1920" height="5455" alt="Davies Shelters community resource library" loading="lazy" decoding="async"><span>Resource library architecture</span></a>
+              <a href="img/portfolio/davies/web-needshelter8.png"><img src="img/portfolio/davies/web-needshelter8.png" width="1920" height="4415" alt="Davies Shelters emergency shelter information page" loading="lazy" decoding="async"><span>Need-shelter pathway</span></a>
             </div>
-          </div>
+          </section>
 
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-resourceshealth7.7.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/resources/health-recovery</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-resourceshealth7.7.png" alt="Physical & Mental Health resource page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Physical & Mental Health & Recovery</div>
-              <div class="browser-caption-desc">Largest category, with 30+ providers spanning primary care, mental health, substance recovery, and support networks.</div>
+          <section class="archive-group" id="brand-archive" aria-labelledby="brand-archive-title">
+            <h3 id="brand-archive-title">Brand and campaign systems</h3>
+            <p>Representative social and campaign applications across nonprofit, civic, and community organizations.</p>
+            <div class="archive-gallery">
+              <a href="img/portfolio/daviessocials/sacredworth.png"><img src="img/portfolio/daviessocials/sacredworth.png" width="1080" height="1350" alt="Davies Shelters Sacred Worth campaign graphic" loading="lazy" decoding="async"><span>Davies campaign system</span></a>
+              <a href="img/portfolio/daviessocials/values.png"><img src="img/portfolio/daviessocials/values.png" width="1080" height="1080" alt="Davies Shelters organizational values graphic" loading="lazy" decoding="async"><span>Mission and values series</span></a>
+              <a href="img/portfolio/bonny4ga/4.png"><img src="img/portfolio/bonny4ga/4.png" width="1080" height="1080" alt="Bonny 4 Georgia civic campaign graphic" loading="lazy" decoding="async"><span>Civic campaign design</span></a>
+              <a href="img/portfolio/mba/mba_events.png"><img src="img/portfolio/mba/mba_events.png" width="1080" height="1080" alt="Northwest Georgia Minority Business Association events graphic" loading="lazy" decoding="async"><span>Community event communications</span></a>
             </div>
-          </div>
+          </section>
 
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-resourceschildrenfamily7.4.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/resources/children-family</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-resourceschildrenfamily7.4.png" alt="Children & Family resource page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Children & Family</div>
-              <div class="browser-caption-desc">Birthday programs, youth services, advocacy, and family support organizations.</div>
+          <section class="archive-group" aria-labelledby="docs-archive">
+            <h3 id="docs-archive">Operations documentation</h3>
+            <p>Long-form systems evidence retained as downloadable PDFs. These are archival work samples and may contain historical organizational language.</p>
+            <div class="archive-docs">
+              <a href="img/portfolio/davieswritings/WDS_Operations_Manual_26.pdf">Operations Manual · PDF</a>
+              <a href="img/portfolio/davieswritings/WDS_Employee_Handbook.pdf">Employee Handbook · PDF</a>
             </div>
-          </div>
-
-          <div class="browser-card" onclick="openLightbox('img/portfolio/davies/web-resourcebusinessemployment7.3.png')">
-            <div class="browser-chrome"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-url">daviesshelter.com/resources/business-employment</span></div>
-            <img class="browser-screenshot" src="img/portfolio/davies/web-resourcebusinessemployment7.3.png" alt="Business & Employment resource page" loading="lazy">
-            <div class="browser-caption">
-              <div class="browser-caption-title">Business & Employment</div>
-              <div class="browser-caption-desc">Workforce, staffing agencies, disability accommodations, and vocational rehabilitation.</div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Additional resource pages as compact tiles -->
-        <div class="tile-grid">
-          <div class="tile-card" onclick="openLightbox('img/portfolio/davies/web-resourceadultsspecial7.1.png')">
-            <span class="tile-dot"></span>
-            <span class="tile-label">Adults w/ Special Needs & Seniors</span>
-          </div>
-          <div class="tile-card" onclick="openLightbox('img/portfolio/davies/web-resourcecivic7.5.png')">
-            <span class="tile-dot"></span>
-            <span class="tile-label">Civic Organizations</span>
-          </div>
-          <div class="tile-card" onclick="openLightbox('img/portfolio/davies/web-resourcescommunity7.6.png')">
-            <span class="tile-dot"></span>
-            <span class="tile-label">Community Engagement</span>
-          </div>
-        </div>
-
-        </div><!-- /subproject-body -->
-        </div><!-- /subproject Resource Library -->
-
-        </div>
-      </div>
-
-      <!-- ========== BRAND ========== -->
-      <div class="portfolio-category collapsed" data-category="brand">
-        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-          <span class="collapse-icon"></span>
-          <h3 class="category-title">Brand Identity</h3>
-          <span class="category-count">// 03</span>
-        </div>
-        <div class="category-body">
-          <p class="category-desc">Visual identity work: logo systems, brand standards, and sub-brand development that holds up across print, web, and social.</p>
-
-          <div class="placeholder-card">
-            <div class="placeholder-icon">// COMING SOON</div>
-            <div class="placeholder-title">Brand Work in Progress</div>
-            <div class="placeholder-desc">Davies Shelters rebrand · Bus Fare sub-brand · Davies Farm identity</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========== SOCIAL MEDIA ========== -->
-      <div class="portfolio-category collapsed" data-category="social">
-        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-          <span class="collapse-icon"></span>
-          <h3 class="category-title">Social Media / Creative</h3>
-          <span class="category-count">// 03</span>
-        </div>
-        <div class="category-body">
-          <p class="category-desc">Content designed for nonprofit, political, and community-organization clients: mission storytelling, donor appeals, event promotion, and community engagement across Instagram, Facebook, and LinkedIn.</p>
-
-          <!-- Sub: The Davies Shelters -->
-          <div class="subproject collapsed">
-          <div class="project-subheader" onclick="toggleSubproject(this, event)">
-            <span class="project-subheader-line"></span>
-            <span class="project-subheader-title">The Davies Shelters</span>
-            <span class="project-subheader-count">10 posts shown</span>
-            <span class="subproject-chevron"></span>
-          </div>
-          <div class="subproject-body">
-
-          <p class="category-desc" style="margin-bottom:20px">Ongoing social media management for a two-shelter nonprofit, including the Sacred Worth / Restorative Journey / Welcome Community mission pillars, program highlights, and donor appeals.</p>
-
-          <div class="social-grid">
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/sacredworth.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/sacredworth.png" alt="Davies Sacred Worth post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Sacred Worth</div>
-                <div class="social-caption-overlay-desc">Mission pillar series</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/hope.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/hope.png" alt="Davies Hope post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Hope</div>
-                <div class="social-caption-overlay-desc">Mission storytelling</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/values.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/values.png" alt="Davies Values post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Values</div>
-                <div class="social-caption-overlay-desc">Organizational values callout</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/counseling.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/counseling.png" alt="Davies Counseling services post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Counseling</div>
-                <div class="social-caption-overlay-desc">Program spotlight</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/davies1.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/davies1.png" alt="Davies Shelters social post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Davies Post</div>
-                <div class="social-caption-overlay-desc">Community engagement</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/davies2.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/davies2.png" alt="Davies Shelters social post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Davies Post</div>
-                <div class="social-caption-overlay-desc">Community engagement</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/davies3.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/davies3.png" alt="Davies Shelters social post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Davies Post</div>
-                <div class="social-caption-overlay-desc">Community engagement</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/davies4.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/davies4.png" alt="Davies Shelters social post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Davies Post</div>
-                <div class="social-caption-overlay-desc">Community engagement</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/davies5.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/davies5.png" alt="Davies Shelters social post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Davies Post</div>
-                <div class="social-caption-overlay-desc">Community engagement</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/daviessocials/davies6.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/daviessocials/davies6.png" alt="Davies Shelters social post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Davies Post</div>
-                <div class="social-caption-overlay-desc">Community engagement</div>
-              </div>
-            </div>
-          </div>
-
-          </div><!-- /subproject-body -->
-          </div><!-- /subproject Davies social -->
-
-          <!-- Sub: Bonny 4 GA Campaign -->
-          <div class="subproject collapsed">
-          <div class="project-subheader" onclick="toggleSubproject(this, event)">
-            <span class="project-subheader-line"></span>
-            <span class="project-subheader-title">Bonny 4 GA · City Commissioner Campaign</span>
-            <span class="project-subheader-count">2020 &amp; 2024 cycles</span>
-            <span class="subproject-chevron"></span>
-          </div>
-          <div class="subproject-body">
-
-          <p class="category-desc" style="margin-bottom:20px">Campaign social media for a local city commissioner race; designed across two election cycles. Won the 2020 race, ran again in 2024.</p>
-
-          <div class="social-grid">
-            <div class="social-card" onclick="openLightbox('img/portfolio/bonny4ga/2.png')">
-              <span class="platform-badge">Facebook</span>
-              <img src="img/portfolio/bonny4ga/2.png" alt="Bonny 4 GA campaign post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Campaign Post</div>
-                <div class="social-caption-overlay-desc">Commissioner race</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/bonny4ga/3.png')">
-              <span class="platform-badge">Facebook</span>
-              <img src="img/portfolio/bonny4ga/3.png" alt="Bonny 4 GA campaign post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Campaign Post</div>
-                <div class="social-caption-overlay-desc">Commissioner race</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/bonny4ga/4.png')">
-              <span class="platform-badge">Facebook</span>
-              <img src="img/portfolio/bonny4ga/4.png" alt="Bonny 4 GA campaign post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Campaign Post</div>
-                <div class="social-caption-overlay-desc">Commissioner race</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/bonny4ga/6.png')">
-              <span class="platform-badge">Facebook</span>
-              <img src="img/portfolio/bonny4ga/6.png" alt="Bonny 4 GA campaign post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Campaign Post</div>
-                <div class="social-caption-overlay-desc">Commissioner race</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/bonny4ga/7.png')">
-              <span class="platform-badge">Facebook</span>
-              <img src="img/portfolio/bonny4ga/7.png" alt="Bonny 4 GA campaign post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Campaign Post</div>
-                <div class="social-caption-overlay-desc">Commissioner race</div>
-              </div>
-            </div>
-          </div>
-
-          </div><!-- /subproject-body -->
-          </div><!-- /subproject Bonny 4 GA -->
-
-          <!-- Sub: NW GA Minority Business Association -->
-          <div class="subproject collapsed">
-          <div class="project-subheader" onclick="toggleSubproject(this, event)">
-            <span class="project-subheader-line"></span>
-            <span class="project-subheader-title">NW GA Minority Business Association</span>
-            <span class="project-subheader-count">Consulting</span>
-            <span class="subproject-chevron"></span>
-          </div>
-          <div class="subproject-body">
-
-          <p class="category-desc" style="margin-bottom:20px">Social content for a regional minority business advocacy organization. Former board member; now consulting on communications.</p>
-
-          <div class="social-grid">
-            <div class="social-card" onclick="openLightbox('img/portfolio/mba/mba_mission.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/mba/mba_mission.png" alt="NW GA MBA mission post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Mission</div>
-                <div class="social-caption-overlay-desc">Organizational mission statement</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/mba/mba_events.png')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/mba/mba_events.png" alt="NW GA MBA events post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Events</div>
-                <div class="social-caption-overlay-desc">Event promotion</div>
-              </div>
-            </div>
-            <div class="social-card" onclick="openLightbox('img/portfolio/mba/mbajoin.jpg')">
-              <span class="platform-badge">Instagram</span>
-              <img src="img/portfolio/mba/mbajoin.jpg" alt="NW GA MBA join-us post" loading="lazy">
-              <div class="social-caption-overlay">
-                <div class="social-caption-overlay-title">Join Us</div>
-                <div class="social-caption-overlay-desc">Membership callout</div>
-              </div>
-            </div>
-          </div>
-
-          </div><!-- /subproject-body -->
-          </div><!-- /subproject MBA -->
-
-        </div>
-      </div>
-
-      <!-- ========== OPERATIONS ========== -->
-      <div class="portfolio-category collapsed" data-category="ops">
-        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-          <span class="collapse-icon"></span>
-          <h3 class="category-title">Operations & Writing</h3>
-          <span class="category-count">// 02</span>
-        </div>
-        <div class="category-body">
-          <p class="category-desc">Long-form documentation built from scratch as a one-person operations department: policy frameworks, procedural standards, and the institutional knowledge that keeps a 24/365 shelter running. These are full documents, not summaries.</p>
-
-          <div class="doc-grid">
-
-            <!-- Operations Manual -->
-            <div class="doc-card">
-              <div class="doc-card-badge">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                PDF Document
-              </div>
-              <div class="doc-card-title">Operations Manual</div>
-              <div class="doc-card-desc">Comprehensive operational framework for William S. Davies Homeless Shelters, covering shelter procedures, intake workflows, case management protocols, facility operations, safety standards, and program guidelines across two shelter sites.</div>
-              <div class="doc-card-meta">
-                <span class="doc-meta-tag">Policy & Procedure</span>
-                <span class="doc-meta-tag">Sole Author</span>
-              </div>
-              <a href="img/portfolio/davieswritings/WDS_Operations_Manual_26.pdf" target="_blank" rel="noopener" class="doc-card-btn">
-                <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                View Document
-              </a>
-            </div>
-
-            <!-- Employee Handbook -->
-            <div class="doc-card">
-              <div class="doc-card-badge">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                PDF Document
-              </div>
-              <div class="doc-card-title">Employee Handbook</div>
-              <div class="doc-card-desc">Complete employee reference covering organizational policies, employment standards, code of conduct, benefits administration, leave policies, disciplinary procedures, and workplace expectations for all shelter staff.</div>
-              <div class="doc-card-meta">
-                <span class="doc-meta-tag">HR & Governance</span>
-                <span class="doc-meta-tag">Sole Author</span>
-              </div>
-              <a href="img/portfolio/davieswritings/WDS_Employee_Handbook.pdf" target="_blank" rel="noopener" class="doc-card-btn">
-                <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                View Document
-              </a>
-            </div>
-
-          </div>
-
-          <div class="placeholder-card">
-            <div class="placeholder-icon">// COMING SOON</div>
-            <div class="placeholder-title">Grant Writing Samples</div>
-            <div class="placeholder-desc">$80K Grant Proposal & Mid-Year Impact Report</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ========== DATA ANNOTATION ========== -->
-      <div class="portfolio-category collapsed" data-category="data">
-        <div class="category-header" onclick="toggleCategory(this.parentElement)">
-          <span class="collapse-icon"></span>
-          <h3 class="category-title">Data Annotation Projects</h3>
-          <span class="category-count">// 05</span>
-        </div>
-        <div class="category-body">
-          <p class="category-desc">Contributions to AI training datasets and evaluation work.</p>
-
-          <div class="placeholder-card">
-            <div class="placeholder-icon">// COMING SOON</div>
-            <div class="placeholder-title">Data Work in Progress</div>
-            <div class="placeholder-desc">Details to follow · project summaries and contribution scope</div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="section">
-      <div class="section-label">// Contact</div>
-      <h2 class="section-title">Let's Talk</h2>
-      <p class="section-subtitle">Interested in talking systems, nonprofit operations, Power Platform, or just swapping notes on building things that actually work? The fastest way to reach me is email; I read every message.</p>
-
-      <div class="contact-grid">
-        <a href="mailto:taylor.ritchie14@gmail.com" class="contact-card">
-          <div class="contact-card-label">Email</div>
-          <div class="contact-card-value">taylor.ritchie14@gmail.com</div>
-          <div class="contact-card-note">Best for longer messages or project inquiries.</div>
-        </a>
-
-        <a href="https://linkedin.com/in/taylor-askew-ritchie" target="_blank" rel="noopener" class="contact-card">
-          <div class="contact-card-label">LinkedIn</div>
-          <div class="contact-card-value">/taylor-askew-ritchie</div>
-          <div class="contact-card-note">Connect, message, or check my work history.</div>
-        </a>
-
-        <a href="tel:+17065090098" class="contact-card">
-          <div class="contact-card-label">Phone</div>
-          <div class="contact-card-value">(706) 509-0098</div>
-          <div class="contact-card-note">Text or call; I screen unknown numbers.</div>
-        </a>
-
-        <a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener" class="contact-card">
-          <div class="contact-card-label">GitHub</div>
-          <div class="contact-card-value">/TheLittlestAskew</div>
-          <div class="contact-card-note">Code, projects, and works-in-progress.</div>
-        </a>
-      </div>
-
-      <div class="contact-cta">
-        <div class="contact-cta-title">Say Hello</div>
-        <div class="contact-cta-text">Whether you're hiring, collaborating, or just curious how a single person ended up running a homeless shelter's technology stack, send a note. I'll write back.</div>
-        <a href="mailto:taylor.ritchie14@gmail.com?subject=Hello%20from%20your%20site" class="email-btn">Send Email</a>
+          </section>
+        </details>
       </div>
     </section>
 
+    <section class="playbill" id="skills" aria-labelledby="skills-title">
+      <div class="section-shell">
+        <div class="playbill-frame" data-reveal>
+          <p class="playbill-pretitle">For one professional engagement only</p>
+          <h2 class="playbill-title" id="skills-title">Presenting</h2>
+          <p class="playbill-subtitle">A repertory of systems, development operations, communications, and practical organizational infrastructure</p>
+          <div class="ornament" aria-hidden="true">◆ ◇ ✦ ◇ ◆</div>
+
+          <div class="skills-grid">
+            <section class="skill-column" aria-labelledby="systems-heading">
+              <h3 id="systems-heading">Systems</h3>
+              <ul>
+                <li>Power Apps</li>
+                <li>Dataverse architecture</li>
+                <li>Power Automate</li>
+                <li>Power BI</li>
+                <li>SharePoint</li>
+                <li>Process documentation</li>
+              </ul>
+            </section>
+
+            <section class="skill-column" aria-labelledby="development-heading">
+              <h3 id="development-heading">Development</h3>
+              <ul>
+                <li>Annual giving</li>
+                <li>Donor operations</li>
+                <li>Gift processing</li>
+                <li>Grant administration</li>
+                <li>KPI frameworks</li>
+                <li>Revenue reporting</li>
+              </ul>
+            </section>
+
+            <section class="skill-column" aria-labelledby="craft-heading">
+              <h3 id="craft-heading">Craft</h3>
+              <ul>
+                <li>Brand systems</li>
+                <li>Campaign strategy</li>
+                <li>Donor communications</li>
+                <li>Editorial design</li>
+                <li>Program design</li>
+                <li>Cross-functional support</li>
+              </ul>
+            </section>
+          </div>
+
+          <div class="ornament" aria-hidden="true">◆ ◇ ✦ ◇ ◆</div>
+          <p class="playbill-pretitle">Designed, built, documented, operated</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="section-shell contact-grid">
+        <div class="contact-copy" data-reveal>
+          <p class="section-number">Act V · The close</p>
+          <h2 id="contact-title">Let’s build something that holds.</h2>
+          <p>I am interested in roles where systems thinking, development operations, communications, reporting, and practical execution belong in the same job.</p>
+
+          <div class="contact-links">
+            <a href="mailto:taylor.ritchie14@gmail.com"><span>Email</span><span>taylor.ritchie14@gmail.com ↗</span></a>
+            <a href="https://www.linkedin.com/in/taylor-askew-ritchie-126618133" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span>/in/taylor-askew-ritchie ↗</span></a>
+            <a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span>/TheLittlestAskew ↗</span></a>
+            <a href="resume/TaylorRitchie_Resume.pdf"><span>Résumé</span><span>View current PDF ↗</span></a>
+            <a href="tel:+17067677196"><span>Phone</span><span>706&#8209;767&#8209;7196&nbsp;↗</span></a>
+            <a href="systemhorizon/"><span>Technical work</span><span>SystemHorizon ↗</span></a>
+          </div>
+        </div>
+
+        <div class="fin" data-reveal>Fin<span class="fin-dot">.</span></div>
+
+        <footer class="footer-line">
+          <span>© 2026 Taylor Askew Ritchie</span>
+          <span>Operations · Systems · Brand</span>
+          <span>Rome, Georgia</span>
+        </footer>
+      </div>
+    </section>
   </main>
 
-</div>
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"ProfilePage","dateModified":"2026-07-20","mainEntity":{"@type":"Person","name":"Taylor Askew Ritchie","url":"https://tayloraritchie.com/","description":"Operations and business systems professional","image":"https://tayloraritchie.com/img/avatar.png","email":"mailto:taylor.ritchie14@gmail.com","telephone":"+1-706-767-7196","sameAs":["https://www.linkedin.com/in/taylor-askew-ritchie-126618133","https://github.com/TheLittlestAskew"],"jobTitle":"Operations and business systems professional","homeLocation":{"@type":"Place","name":"Rome, Georgia"}}}
+  </script>
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox(event)">×</button>
-  <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
-</div>
+  <script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-<script>
-  // Scroll-spy nav highlighting
-  const sections = document.querySelectorAll('.section');
-  const navLinks = document.querySelectorAll('#nav a');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
         });
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
 
-  sections.forEach(s => observer.observe(s));
-
-  // Close mobile menu on link click
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        document.querySelector('.sidebar').classList.remove('open');
-      }
-    });
-  });
-
-  // Portfolio filter tabs
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const categories = document.querySelectorAll('.portfolio-category');
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const filter = btn.dataset.filter;
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      categories.forEach(cat => {
-        if (filter === 'all' || cat.dataset.category === filter) {
-          cat.classList.remove('hidden');
-        } else {
-          cat.classList.add('hidden');
-        }
-      });
-    });
-  });
-
-  // Collapsible categories
-  function toggleCategory(categoryEl) {
-    categoryEl.classList.toggle('collapsed');
-  }
-
-  // Collapsible sub-projects (inside categories)
-  function toggleSubproject(headerEl, event) {
-    if (event) event.stopPropagation();
-    headerEl.parentElement.classList.toggle('collapsed');
-  }
-
-  // Lightbox
-  function openLightbox(src) {
-    const lb = document.getElementById('lightbox');
-    const img = document.getElementById('lightboxImg');
-    img.src = src;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox(e) {
-    if (e) e.stopPropagation();
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLightbox();
-  });
-</script>
-
+      document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+    } else {
+      document.querySelectorAll('[data-reveal]').forEach((element) => element.classList.add('revealed'));
+    }
+  </script>
 </body>
 </html>

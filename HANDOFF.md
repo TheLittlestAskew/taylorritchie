@@ -4,12 +4,19 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-Review the completed production homepage in PR #1, confirm the final visual details, then merge to `main` to publish through GitHub Pages. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+Verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/`, including the homepage, résumé download, and `systemhorizon/` subroute. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-20 · Codex
+- **Changed:** Taylor explicitly approved merging PR #1. Updated the return point from pre-merge review to post-merge GitHub Pages verification.
+- **Commit:** `docs: set post-merge deployment return point`
+- **Tests:** No source changes; the production implementation remains covered by the validation recorded below.
+- **Unresolved:** GitHub Pages deployment must finish before the live URL can be verified.
+- **Next:** Merge PR #1, then verify the homepage, résumé, and SystemHorizon production routes.
 
 ### 2026-07-20 · Codex
 - **Changed:** Promoted the approved editorial prototype into `index.html`; removed the superseded root-level concept copy; added production navigation, SEO/Open Graph metadata, `ProfilePage` structured data, keyboard focus treatment, reduced-motion behavior, and mobile navigation; rewrote featured work as evidence-led cases; added a native-details secondary archive using representative existing assets; preserved the `systemhorizon/`, tracker, portfolio document, and image routes; and added the current Business Systems & CRM Operations résumé at the canonical public path `resume/TaylorRitchie_Resume.pdf`.

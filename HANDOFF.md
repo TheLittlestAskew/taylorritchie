@@ -12,6 +12,12 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
 ### 2026-07-21 · Codex
+- **Changed:** Rebuilt only Section 2, Contents, as the next first-person beat in the house journey. The viewer stands at the open rain-damp doorway looking into an amber foyer; a staircase and two lit interior doorways provide the visual metaphor for choosing where to go next. Live chapter navigation occupies the quiet aubergine wall on the right. No other section changed.
+- **Asset:** Generated with the built-in image-generation tool using the approved house hero as the architecture, palette, lighting, and style-continuity reference. Optimized to a 58.8 KB WebP at `img/storybook/contents-entry-v1.webp`. The superseded `contents-book-v1.webp` project copy was removed; its original generation remains archived.
+- **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).
+- **Next:** Taylor reviews the entering-the-house contents scene in draft PR #2. Continue one section at a time after approval.
+
+### 2026-07-21 · Codex
 - **Changed:** Reframed the approved narrative architecture beginning with the hero only: a first-person approach toward a warmly lit house in rainy woods. The composition keeps the house on the right, a wet reflected path leading toward the door, and calm dark space on the left for Taylor's name. Used Taylor's supplied palette (`#0A100E`, `#272832`, `#413251`, `#5C4077`, `#755E90`, `#B9B8E2`) with amber reserved for the windows and path reflection. No later section changed.
 - **Asset:** Generated with the built-in image-generation tool from Taylor's house reference, palette reference, and the prior simplified hero as the style-density reference. Optimized to an 86.4 KB WebP at `img/storybook/hero-house-v1.webp`. The superseded `hero-forest-v3.webp` project copy was removed; its original generation remains archived.
 - **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).

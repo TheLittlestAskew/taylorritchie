@@ -11,6 +11,12 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-07-21 · Codex
+- **Changed:** Revised only the storybook prototype hero after Taylor requested a section-by-section process. Replaced the original threshold scene with a new full-bleed Contemporary Editorial Storybook Illustration forest landscape, composed with quiet left-side space for the title and a radiant path plus owl focal point drawing the eye deeper. Removed the uncommitted chapter-spread experiments so all sections below the hero remain at the previous draft state.
+- **Asset:** Generated with the built-in image-generation tool from Taylor's forest reference and optimized to a 209.9 KB WebP at `img/storybook/hero-forest-v2.webp`.
+- **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).
+- **Next:** Taylor reviews the hero composition in draft PR #2. If approved, choose the next single section to redesign. Do not redesign the remaining sections as a batch.
+
 ### 2026-07-20 · Codex
 - **Changed:** Created a standalone storybook-architecture prototype on `codex/storybook-architecture`. Added a semi-monochromatic radiant palette that deepens through blue-green, indigo, and moss chapters with apricot-gold contrast; an original threshold illustration; chapter-based evidence cards; a dedicated creative-systems section connecting D&D work to professional systems practice; restrained GSAP ScrollTrigger parallax on desktop; and a static reduced-motion experience. The live `index.html` is unchanged.
 - **Asset:** Generated an original editorial watercolor/cut-paper threshold scene with the built-in image-generation tool, then optimized it from a 2.8 MB PNG to a 287.9 KB WebP at `img/storybook/threshold-radiance.webp`.

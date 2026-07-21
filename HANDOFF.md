@@ -12,6 +12,12 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
 ### 2026-07-21 · Codex
+- **Changed:** Reframed the approved narrative architecture beginning with the hero only: a first-person approach toward a warmly lit house in rainy woods. The composition keeps the house on the right, a wet reflected path leading toward the door, and calm dark space on the left for Taylor's name. Used Taylor's supplied palette (`#0A100E`, `#272832`, `#413251`, `#5C4077`, `#755E90`, `#B9B8E2`) with amber reserved for the windows and path reflection. No later section changed.
+- **Asset:** Generated with the built-in image-generation tool from Taylor's house reference, palette reference, and the prior simplified hero as the style-density reference. Optimized to an 86.4 KB WebP at `img/storybook/hero-house-v1.webp`. The superseded `hero-forest-v3.webp` project copy was removed; its original generation remains archived.
+- **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).
+- **Next:** Taylor reviews the house approach hero in draft PR #2. Continue the journey one section at a time only after hero approval.
+
+### 2026-07-21 · Codex
 - **Changed:** Redesigned only the contents section as the second approved section-by-section pass. Recreated Taylor's reference composition with a simplified illustrated open book and broad ribbons of light on the left, plus a quiet ochre field containing live, clickable chapter navigation on the right. The book is an object inside the scene; there is no site-wide page frame or center crease. All later sections remain unchanged.
 - **Asset:** Generated with the built-in image-generation tool using Taylor's book-spread reference plus the approved simplified hero as the style-density reference. Optimized to a 50.4 KB WebP at `img/storybook/contents-book-v1.webp`.
 - **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).

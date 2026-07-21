@@ -12,6 +12,12 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
 ### 2026-07-21 · Codex
+- **Changed:** Redesigned only the contents section as the second approved section-by-section pass. Recreated Taylor's reference composition with a simplified illustrated open book and broad ribbons of light on the left, plus a quiet ochre field containing live, clickable chapter navigation on the right. The book is an object inside the scene; there is no site-wide page frame or center crease. All later sections remain unchanged.
+- **Asset:** Generated with the built-in image-generation tool using Taylor's book-spread reference plus the approved simplified hero as the style-density reference. Optimized to a 50.4 KB WebP at `img/storybook/contents-book-v1.webp`.
+- **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).
+- **Next:** Taylor reviews the contents composition in draft PR #2. If approved, choose the next single section. Do not redesign later sections as a batch.
+
+### 2026-07-21 · Codex
 - **Changed:** Simplified only the storybook hero illustration after Taylor found the prior landscape too busy. The replacement uses broad pine silhouettes, a few atmospheric depth planes, one cyan clearing, and sparse peach-gold grasses. Removed the owl, path, dense foliage, and micro-texture. All later sections remain unchanged.
 - **Asset:** Generated with the built-in image-generation tool from Taylor's three simplified forest references and optimized to a 55.9 KB WebP at `img/storybook/hero-forest-v3.webp`. Replaced the superseded project copy of `hero-forest-v2.webp`; its original generation remains in Codex's generated-images archive.
 - **Next:** Taylor reviews the simplified hero in draft PR #2. Continue section-by-section only after hero approval.

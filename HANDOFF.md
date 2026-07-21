@@ -12,6 +12,11 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
 ### 2026-07-21 · Codex
+- **Changed:** Simplified only the storybook hero illustration after Taylor found the prior landscape too busy. The replacement uses broad pine silhouettes, a few atmospheric depth planes, one cyan clearing, and sparse peach-gold grasses. Removed the owl, path, dense foliage, and micro-texture. All later sections remain unchanged.
+- **Asset:** Generated with the built-in image-generation tool from Taylor's three simplified forest references and optimized to a 55.9 KB WebP at `img/storybook/hero-forest-v3.webp`. Replaced the superseded project copy of `hero-forest-v2.webp`; its original generation remains in Codex's generated-images archive.
+- **Next:** Taylor reviews the simplified hero in draft PR #2. Continue section-by-section only after hero approval.
+
+### 2026-07-21 · Codex
 - **Changed:** Revised only the storybook prototype hero after Taylor requested a section-by-section process. Replaced the original threshold scene with a new full-bleed Contemporary Editorial Storybook Illustration forest landscape, composed with quiet left-side space for the title and a radiant path plus owl focal point drawing the eye deeper. Removed the uncommitted chapter-spread experiments so all sections below the hero remain at the previous draft state.
 - **Asset:** Generated with the built-in image-generation tool from Taylor's forest reference and optimized to a 209.9 KB WebP at `img/storybook/hero-forest-v2.webp`.
 - **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).

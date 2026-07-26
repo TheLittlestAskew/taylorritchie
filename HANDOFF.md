@@ -1,4 +1,4 @@
-﻿# HANDOFF — taylorritchie
+# HANDOFF — taylorritchie
 
 > Resume / portfolio site (GitHub Pages, served at tayloraritchie.com) — index.html, resume/, tracker.html, systemhorizon/.
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
@@ -10,6 +10,12 @@ Verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-26 11:44 ET · Claude Code
+- **Changed:** Added the Handoff Contract to `AGENTS.md` so Codex follows it. Codex reads `AGENTS.md`, never `~/.claude/skills/`, so it had no handoff instructions at all before this.
+- **Commit:** `4d70829`
+- **Next:** Unchanged. See the block above this log.
+- **Watch out:** Log entries must now carry a tool label (`Claude Code` / `Claude desktop` / `Codex` / `ChatGPT`). Do not restructure this file; the dashboard parses it.
 
 ### 2026-07-20 · Codex
 - **Changed:** Taylor explicitly approved merging PR #1. Updated the return point from pre-merge review to post-merge GitHub Pages verification.

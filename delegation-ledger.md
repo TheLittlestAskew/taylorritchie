@@ -330,8 +330,84 @@ it is a real gate rather than an eyeball check.
 | T8 | XIII + XIV specs | Sonnet | **DONE** | 0 |
 | T9 | XII spec (text-free, well-exempt) | Haiku | superseded by T10 | 1 |
 | TF1–3 | Fix the verso compiler | Opus | **DONE** — all 6 criteria re-verified | 0 |
-| T10 | XII `text_free` flag + stale `output_dir` in I and II | Haiku | DISPATCHED (wave 2) | 0 |
-| T11 | Re-enable the welcoming clause on the 5 specs that dodged it | Sonnet | DISPATCHED (wave 2) | 0 |
+| T10 | XII `text_free` flag + stale `output_dir` in I and II | Haiku | **DONE** — follow-up dispatched | 0 |
+| T11 | Re-enable the welcoming clause on the 5 specs that dodged it | Sonnet | **DONE** | 0 |
+| T1b | Reconcile the cover's single-window conflict | Opus | DISPATCHED | 0 |
+| T10b | Copy the 2 missing files into the vault + sweep all paths | Haiku | **DONE** — found more | 0 |
+| T10c | Fix 6 stale paths the sweep found in III and IV | Haiku | DISPATCHED | 0 |
+
+### T10b — the sweep found the bug had propagated
+
+Both missing files copied and **SHA256-verified against the OneDrive originals**, which are intact.
+Chapter I's derivation chain is whole again.
+
+The path sweep then found **six more unresolved paths**, in `03_III` and `04_IV`:
+
+```
+03_III  output_dir  resume art/III/                                  UNRESOLVED
+03_III  style_ref   resume art/II/chapter-II-misty-morning-v2.png    UNRESOLVED
+03_III  style_ref   resume art/I/chapter-I-trailhead-v4.png          UNRESOLVED
+04_IV   output_dir  resume art/IV/                                   UNRESOLVED
+04_IV   style_ref   resume art/II/chapter-II-misty-morning-v2.png    UNRESOLVED
+04_IV   style_ref   resume art/I/chapter-I-above-the-trees-v13.png   UNRESOLVED
+```
+
+**The propagation mechanism is worth naming, because it will recur.** T3 wrote III and IV in wave 1
+by reading `01_I` and `02_II` as worked examples — *before* T10 corrected them in wave 2. It
+faithfully copied the naming that was there at the time. **A data bug inside a reference example
+propagates into everything written from it**, silently and correctly-looking, because copying the
+example is exactly what the brief asked for.
+
+Two consequences already applied: T6 and T7 were given the correct on-disk paths **explicitly** in
+their briefs rather than being told to follow the examples, so VIII–XI should be clean; and T5's
+VI/VII and T8's XIII/XIV already resolve. After T10c, every spec should resolve.
+
+**Standing lesson for Phase 3 and beyond: fix a worked example before fanning out from it, or state
+the contested values literally in the brief.** The sweep found more than the original fix did.
+
+### T10 / T11 — verified
+
+**T10 — PASS.** XII now compiles at **exit 0** with no well at all; the text-free path works end to
+end. Nine stale path values corrected across `01_I` and `02_II`. Chapter I's notes intact at 5,117
+characters, `grade_brief` still present, audit clean.
+
+🎉 **The cross-palette guard now fires — for the first time in this project's history.** Tested both
+directions after the fix: a warm-on-warm reference chain **exits 1**, and VI anchored on the cool
+exteriors I and II **exits 0**. Before today it was silently inert on every spread.
+
+**T10 flagged a blocker that is more serious than it first reads.** Two referenced files do not exist
+in the vault: `chapter-i-gen-v5.png` (a style ref) and — the important one —
+`chapter-i-gen-v12.png`, which is **Chapter I's derivation base**. Its master is *v12 plus one
+targeted edit*, recorded in `generation.derivation` precisely so the master is reproducible as a
+two-step instead of being an orphan nobody can regenerate. With v12 absent from the canonical
+location, **that reproducibility is broken.** Both files survive in the OneDrive working copy and are
+being copied in (T10b), along with a sweep of every path value in the other nine specs.
+
+**T11 — PASS.** All five specs compile at exit 0 with `apply_welcoming_clause: true`, no golden-hour
+language, and `target` / `value_class` / `treatment` / `status` byte-identical. It removed prose from
+**only one** file (cover) and correctly kept scene-specific detail in the rest — VI's mug "set down
+and left" and VII's floor "worn pale along the line people walk" are composition, not clause
+duplication. Erring toward keeping prose was the right instinct.
+
+### 🛑 The re-enabled clause immediately caught a latent problem on the Cover
+
+T11 flagged, correctly, that it could not fix this within its scope. The cover's scene commissions
+the cabin with **exactly one** lit window — *"one window facing the path"*, *"that window is the only
+bright core in the picture"* — while the newly-enabled clause emits *"several of its windows are lit,
+never a single one."* Both now sit in the **same compiled prompt**, so the generator receives
+contradictory instructions, which is worse than either alone.
+
+This is not a nit. A single lit window in deep indigo mist with no other occupancy **is** the horror
+shot, both governing skills name it explicitly, and this is the first spread anyone sees. It is also
+evidence for re-enabling the clause at all: **the hand-written workaround was masking a real
+horror-grammar problem on the cover.** Four workers dodging the same clause meant four spreads whose
+occupancy language nobody was checking centrally.
+
+Resolution dispatched to T1b, and deliberately not "delete the bright core" — that core is
+load-bearing twice over, carrying the LDH bright-cores band (1–5%) and serving as the push-in target
+for the two-path aperture transition. The fix is **several lit windows with one clearly dominant**:
+the dominant one stays the brightest core and the transition target, the others break the horror
+grammar. Added light must not cross the well at `x[4,44]`.
 
 ### Review results, verified by the orchestrator (not taken on worker report)
 

@@ -321,14 +321,49 @@ it is a real gate rather than an eyeball check.
 | # | Task | Tier | Status | Retries |
 |---|---|---|---|---:|
 | T1 | Cover spec + `icon_anchors` (4 copy jobs on one deep zone) | Opus | DISPATCHED | 0 |
-| T2 | I — re-target well to ≈62 words + grade brief | Sonnet | DISPATCHED | 0 |
-| T3 | III + IV specs | Sonnet | DISPATCHED | 0 |
-| T4 | V spec + **strip near-HIPAA from the copy deck** | Sonnet | DISPATCHED | 0 |
+| T2 | I — re-target well to ≈62 words + grade brief | Sonnet | **DONE** | 0 |
+| T3 | III + IV specs | Sonnet | **DONE** | 0 |
+| T4 | V spec + **strip near-HIPAA from the copy deck** | Sonnet | **DONE** | 0 |
 | T5 | VI + VII specs — first dawn-lit interiors, sets the pattern | Opus | DISPATCHED | 0 |
 | T6 | VIII + IX specs | Opus | BLOCKED on T5 | 0 |
 | T7 | X + XI specs | Sonnet | BLOCKED on T5 | 0 |
 | T8 | XIII + XIV specs | Sonnet | DISPATCHED | 0 |
-| T9 | XII spec (text-free, well-exempt) | Haiku | DISPATCHED | 0 |
+| T9 | XII spec (text-free, well-exempt) | Haiku | **IN REVIEW** — sent back | 1 |
+
+### Review results, verified by the orchestrator (not taken on worker report)
+
+Every criterion re-run independently. `compile_prompt.py` exit 0 on all five returned specs.
+
+- **T2 (I) — PASS.** Correctly **left the target unchanged** at 40.0% × 56.0% and justified it with
+  a real line budget rather than churning: at the master's native 2389×1344 the well is a 956×753px
+  box, and thesis + tagline + paragraph gap needs ≈400–650px. Appended to `well.notes` without
+  destroying the 5,117 characters of existing findings. `measure_well.py --audit` still clean, so
+  its `status: verified` legitimately stands — **I is the one spec that should NOT read `specified`**,
+  because an image exists and was measured. A blanket "must be specified" check flags it falsely;
+  that rule is for the 13 spreads with no image.
+- **T3 (III, IV) — PASS.** III at the 45% ceiling, IV at 40%. Both moved their wells **off Taylor's
+  sketched trunk positions onto smooth planes** (III onto shaded forest floor, IV onto open sky),
+  which is composition rule 2 applied correctly rather than copying a sketch that would have failed
+  the gate. III's `camera.movement_from_previous` names II's foreshadow explicitly.
+- **T4 (V) — PASS, including the copy-deck edit.** Verified independently: **zero occurrences of
+  "HIPAA" remain anywhere in the deck**, the Privacy Officer credential survives, and a bolded
+  "RULED CHANGE, 2026-07-31" note sits above the Chapter V role line so the diff cannot read as
+  drift. Well at the 45% ceiling, `apply_welcoming_clause: true`, three lit openings plus a lantern —
+  the "several lit windows, never one" rule applied without being restated.
+- **T9 (XII) — FAIL, returned for revision (round 1 of 2).** Asserted a real well on a text-free
+  spread: `value_class: pale`, `treatment: narrow`, and `target: {x:[0,100], y:[0,100]}` — a
+  full-frame target claims the *entire image* is a text well, the opposite of exempt. Its
+  `material`, "the whole frame, measurement exempt", is a meta-statement about measuring rather
+  than scene prose naming a surface under a light, and would leak into a prompt as nonsense.
+
+### ⚠️ Doc conflict found during review — `schema.md` vs the copy deck
+
+`verso/references/schema.md` line 62 states "**XII–XIV are exempt and run near 25%**", implying XII
+carries a narrow well. `spread-loop.md` and the copy deck both say XII has **no well at all** — the
+deck verbatim: "**NO TEXT.** The image carries this spread alone. No well required; measurement
+exempt." **The copy deck wins**; it is the LOCKED INPUT and it is unambiguous. This conflict is what
+sent T9 wrong, so it is a documentation defect and not purely a worker error. `schema.md` line 62
+should be corrected in Phase 7 housekeeping so the next reader does not re-derive it.
 
 **Ruled by Taylor 2026-07-31:** the copy deck's Chapter V clause *"operating close to HIPAA
 standards"* is **stripped** — it conflicts with her standing rule against near-HIPAA phrasing,

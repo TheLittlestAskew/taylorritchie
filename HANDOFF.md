@@ -4,14 +4,23 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-🟢 **Phase 2 is nearly closed. 15 of 15 spreads have specs; the last reviews are outstanding.** The verso compiler is fixed and verified. Next real phase is **3 — generation**, which is where the cost lives.
+🟢 **PHASE 2 IS COMPLETE. All 15 spreads are specced and independently verified — every spec compiles at exit 0 with zero golden-hour language. Nothing is blocked.**
+
+**▶ Start Phase 3 — generation.** 13 spreads to make (II is kept as-is, I needs only a colour grade). This is the bulk of the remaining cost and the phase most likely to overrun: Chapter I alone took 13 versions.
 
 **`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
 
-**Resume point, in order:**
-1. **Re-verify every returned spec yourself.** A worker's claim is not evidence. `compile_prompt.py` must **exit 0**, JSON must be valid, `well.status` must be exactly `specified`, and the compiled prompt must contain **no** `golden` / `last hour` / `dusk` / `blue hour`. **Chapter I is the one legitimate `verified`** — an image exists and was measured, and `--audit` confirms it.
-2. **Fix Chapter X's well class.** The copy deck header reads *"(finance; dark text on whiteboard)"*, which specifies a **pale** well carrying `#1B1B3A`. X was built `deep` because the brief said so — an orchestrator error, over-applying the warm-budget rule. Pale costs no warm budget, so it was never in tension. The whiteboard is the ideal well surface anyway; the marker marks must sit outside the well region, since nothing may cross a well.
-3. **Then Phase 3 — generation.** 13 spreads. ≤2 Sonnet retries each, then Opus escalation, and **Opus adjusts the spec, never the gate.** Run BOTH gates on every master: `check_palette.py` (structural) and `check_dawn_balance.py` (LDH area budget). Passing the first is not sufficient — it is profile-agnostic by design, so golden-hour art sails through it.
+**How Phase 3 runs:** `/spread-loop <NUMERAL>` per chapter. **Hard cap 3 generation attempts, never a 4th** — exit `RETRY-EXHAUSTED` with the measurement history instead, because an unwinnable gate is information, not a reason to keep spending. ≤2 Sonnet retries then Opus escalation, and **Opus adjusts the spec, never the gate.**
+
+**Run BOTH gates on every master.** `check_palette.py` is structural and **profile-agnostic by design**, so golden-hour art sails straight through it — Chapter VIII scored a perfect 0.0% muddy and is a night corridor. `check_dawn_balance.py` measures the LDH area budget (cool 55–72%, violet-rose bridge 12–24%, warm 18–32%, bright cores 1–5%, plus crushed-black). Passing the first is not sufficient.
+
+**Triage before spending:** colour, value and warmth problems are **gradeable** — prefer a targeted edit, which is cheaper and lower-risk than regenerating. Composition, depth ladder and firefly placement need **regeneration**; no grade adds a depth plane. Every edit prompt ends *"The art style should be fully preserved."* — that clause measurably works. Re-measure with `check_edit.py`; an edited image is not trusted until re-measured.
+
+**Known Phase 3 hazards, all already paid for:**
+- ⚠️ **Never put meta-instructions in a prompt.** Appending `"Test image only."` makes the model return **no image at all**, with no error. If a generation returns "No image returned from model", suspect prompt phrasing before the API, the key, or the quota.
+- ⚠️ **Crop bias is not taste.** On Chapter I the same source measured **11.68:1 on the right window and 1.0:1 on the centre window**.
+- ⚠️ **Cover has two on-sight rejection conditions** recorded in its notes: a secondary window rivalling the primary kills the push-in target, and any warm light left of x 48 puts a value ramp in the text band.
+- ⚠️ 4K masters stay in the **vault**. Only WebP/AVIF enter git — irreversible in history otherwise.
 
 **Standing rules — decided, do not re-litigate:**
 - **Luminous dawn haze governs all 15 spreads.** Golden hour is retired; "dusk" is not a lighting word here.
@@ -32,6 +41,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 00:05 ET · Claude Code
+- **Changed:** **Closed Phase 2.** All 15 spreads are specced and independently verified — a sweep run directly against every file (not taken from worker reports) shows 15/15 compiling at exit 0 with **zero** golden-hour language, only I and II holding `verified` and both legitimately, III/V/X at the 45% ceiling, XIII/XIV narrow at 25%, and XII carrying no well at all. Final two items landed: **T12** corrected both remaining stale lines in `schema.md`, and **T7b** rebuilt Chapter X as a pale whiteboard well at 45%, marks confined to the board's left and centre thirds with the well on the wiped clean right two-thirds, surface specified cool white-grey rather than cream. Also rewrote the DO NEXT block into a Phase 3 operating brief and cleaned a self-contradicting status header in the ledger.
+- **Commit:** `3644c1b`
+- **Friction:** gen-fail — a `git` call failed with "not a git repository" because an earlier command in the session had `cd`'d into the verso skill directory and the shell's working directory persists between calls. Harmless here and fixed by an explicit `cd` back, but it would silently commit to the wrong repo in a session that touched two. **Use absolute paths or an explicit `cd` in any command that writes**, rather than relying on inherited cwd.
+- **Next:** Phase 3 — generation. 13 spreads. See the DO NEXT block, which is now a Phase 3 operating brief.
+- **Watch out:** 🛑 **Phase 3 is the phase most likely to overrun, by a wide margin.** Chapter I alone took 13 versions to land, and 13 spreads now need generating — 7 regenerations plus 6 built from Taylor's sketches. The 3-attempt hard cap per chapter exists precisely so an unwinnable gate reports itself instead of consuming the budget; **honour it and exit `RETRY-EXHAUSTED` with the numbers**. Also note the mitigation that arrived late: every from-scratch chapter has Taylor's own layout sketch in its folder, so none of them start from prose alone.
 
 ### 2026-07-31 23:15 ET · Claude Code
 - **Changed:** Closed out most of Phase 2 wave 2. **XII is unblocked** — it compiles at exit 0 with no well at all, so the `text_free` path works end to end. **The cross-palette guard now fires for the first time in this project's history**: tested both directions after the path fix, a warm-on-warm chain exits 1 and a cool anchor exits 0. It had been silently inert on every spread. **Chapter I's derivation chain is repaired** — `chapter-i-gen-v12.png`, the base its master was edited from, did not exist in the vault, so the master was not reproducible from the canonical location; copied in and SHA256-verified. The welcoming clause is re-enabled on all five specs that had dodged it, and the Cover's single-window conflict is reconciled to three lit windows with the tall path-side one as the brightest core, preserving both the 1–5% bright-cores band and the aperture push-in target. Also trimmed the live log to the contract's 15 entries, archiving June to `handoff-archive/2026-06.md`, and rewrote the DO NEXT block, which had accumulated stale paragraphs still claiming VI/IX/X were blocked and a decision was pending — both resolved hours earlier.

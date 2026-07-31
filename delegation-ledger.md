@@ -10,8 +10,10 @@
 >
 > **Branch:** `feat/among-trees-storybook` · `main` and the live site stay untouched mid-build.
 
-**Status:** Phases 0, 1 and **2 COMPLETE** — all 15 spreads specced and verified. **Interior ruling made (dawn-lit interiors) — nothing is
-blocked.** Phase 2 in progress: specs for 13 spreads. Run mode: autonomous delegation.
+**Status:** Phases 0, 1 and **2 are COMPLETE.** All 15 spreads are specced and independently
+verified — every spec compiles at exit 0 with zero golden-hour language. Nothing is blocked.
+**Next is Phase 3 — generation**, which is the bulk of the remaining cost: 13 spreads to make.
+Run mode: autonomous delegation.
 **Last updated:** 2026-07-31 · Claude Code
 
 **Canonical art root:** `…\Septentrion\Constellations\Resume Site\resume art\<NN>_<NUMERAL>\`

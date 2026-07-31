@@ -10,7 +10,7 @@
 >
 > **Branch:** `feat/among-trees-storybook` · `main` and the live site stay untouched mid-build.
 
-**Status:** Phase 0 complete. Phase 1 not started.
+**Status:** Phase 0 complete (`5d46f2b`, pushed). Phase 1 not started.
 **Last updated:** 2026-07-31 · Claude Code
 
 ---

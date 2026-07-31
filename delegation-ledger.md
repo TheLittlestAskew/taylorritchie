@@ -334,7 +334,93 @@ it is a real gate rather than an eyeball check.
 | T11 | Re-enable the welcoming clause on the 5 specs that dodged it | Sonnet | **DONE** | 0 |
 | T1b | Reconcile the cover's single-window conflict | Opus | DISPATCHED | 0 |
 | T10b | Copy the 2 missing files into the vault + sweep all paths | Haiku | **DONE** — found more | 0 |
-| T10c | Fix 6 stale paths the sweep found in III and IV | Haiku | DISPATCHED | 0 |
+| T10c | Fix 6 stale paths the sweep found in III and IV | Haiku | **DONE** | 0 |
+| T6 | VIII + IX specs | Opus | **DONE** | 0 |
+| T7 | X + XI specs | Sonnet | **DONE** — X returning for a pale well | 1 |
+| T1b | Cover single-window reconcile | Opus | **DONE** | 0 |
+| T7b | X → pale whiteboard well (**orchestrator error**) | Sonnet | DISPATCHED | — |
+| T12 | Fix 2 stale lines in `schema.md` | Haiku | DISPATCHED | 0 |
+
+---
+
+## ✅ Phase 2 verification sweep — all 15 specs
+
+Run directly against every spec, not taken from worker reports. **Zero problem rows.**
+
+| ch | exit | status | value_class | width | welcoming | text_free |
+|---|---|---|---|---|---|---|
+| cover | 0 | specified | deep | 40 | true | — |
+| 01_I | 0 | **verified** | pale | 40 | true | — |
+| 02_II | 0 | **verified** | deep | 40 | true | — |
+| 03_III | 0 | specified | deep | **45** | true | — |
+| 04_IV | 0 | specified | pale | 40 | true | — |
+| 05_V | 0 | specified | deep | **45** | true | — |
+| 06_VI | 0 | specified | saturated_warm | 39 | true | — |
+| 07_VII | 0 | specified | deep | 40 | true | — |
+| 08_VIII | 0 | specified | deep | 40 | true | — |
+| 09_IX | 0 | specified | deep | 40 | true | — |
+| 10_X | 0 | specified | deep → **pale** | **45** | true | — |
+| 11_XI | 0 | specified | deep | 40 | true | — |
+| 12_XII | 0 | specified | — | — | false | **true** |
+| 13_XIII | 0 | specified | deep | 25 | true | — |
+| 14_XIV | 0 | specified | pale | 25 | true | — |
+
+Every spec compiles at exit 0 with **no** `golden` / `last hour` / `dusk` / `blue hour` anywhere.
+Only I and II hold `verified`, both legitimately. III/V/X take the 45% ceiling, XIII/XIV run narrow
+at 25%, XII carries no well at all.
+
+### T6, T1b — verified
+
+- **T6 (VIII, IX) — PASS**, and both compile with `--siblings 01_I 02_II`, which VI and VII could not
+  before TF3. **VIII escapes the tunnel** by turning the camera ~30° off the corridor axis so nothing
+  converges on frame centre, ending the hall at a wide landing with two curtain-open casements whose
+  light reaches back to the boards under the camera, the route carrying on past them and bleeding off
+  the right edge, plus a second open door, a worn runner, a bench, laundry, a book and boots. That is
+  a compositional fix, which is the only kind that works on horror grammar.
+  Its warm-band judgement is worth keeping: with a **deep** well and a spill-only warm source, the
+  real risk inverts — falling **under** the 18% warm floor rather than over the 32% ceiling — so it
+  added one narrow sun-cream horizon band through the glass, diverging deliberately from VI/VII's
+  cool-only glazing.
+- **T1b (Cover) — PASS.** Now three lit windows, the tall path-side one explicitly the **brightest**
+  core, the other two dimmer and deeper "so they read as a household awake rather than as a lamp
+  burning alone". Both load-bearing jobs survive: the 1–5% bright-cores band and the aperture push-in
+  target. `well.target`, `value_class`, `treatment`, `status` and the entire `icon_anchors` block are
+  byte-identical. It also recorded two on-sight rejection conditions for Phase 3 — a secondary window
+  rivalling the primary kills the push-in target, and warm light left of x 48 puts a value ramp in
+  the text band.
+
+### 🛑 Orchestrator error — Chapter X's well class
+
+**Mine, not the worker's.** I briefed X and XI as `deep` wells, over-applying T5's budget rule. That
+rule is about **warm** wells specifically — a warm well costs 19–27% of the 32-point warm ceiling, so
+an interior takes a warm well or a warm room. **A pale well costs no warm budget at all**, so the
+rule never applied to a pale option and there was no tension to resolve.
+
+The copy deck's X header reads *"(finance; **dark text on whiteboard**)"* — a well instruction
+specifying a **pale** surface carrying `#1B1B3A`. The worker flagged the conflict and deferred to the
+brief, which is correct behaviour; the brief was wrong.
+
+Re-dispatched as T7b, and not as a one-line flip: nothing may cross a well, so the board's abstract
+marker marks must cluster to one side with the well on the clean wiped area, and the surface must
+read **cool** pale rather than cream — a large low-chroma warm field is exactly what warm-neutral
+drift measures, and it tripped that gate at 19.9% on Chapter I once already.
+
+**Lesson: read the copy deck's per-chapter annotations before specifying a well class.** They carry
+layout intent, not just content.
+
+### ⚠️ A third stale doc line, found by T6
+
+`references/schema.md` also states *"the hallway is dark and the office window stays dark until
+XIII"*, which contradicts the dawn-lit ruling for IX — a dark hallway is the tunnel composition VIII
+just failed on. T6 kept the true half (all warmth traces to the desk lamp), overrode the rest, and
+recorded the conflict rather than silently following stale documentation. Assigned to T12 along with
+the XII exemption line.
+
+**That is three stale-doc defects in one session** — `verso/SKILL.md`'s golden-hour ruling,
+`schema.md` line 62 on XII, and now this. Each was written correctly for a ruling that has since been
+retired, and each misled at least one worker. When a ruling changes, grep the whole skill for the
+retired vocabulary; changing the governing document is not the same as changing the documents that
+quote it.
 
 ### T10b — the sweep found the bug had propagated
 

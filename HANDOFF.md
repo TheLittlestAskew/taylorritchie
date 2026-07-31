@@ -4,13 +4,14 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-🟢 **Phase 2 wave 1 is COMPLETE — 9 of 15 spreads specced and verified. One Opus task (TF1–TF3) is in flight fixing the verso compiler; T6, T7 and T9 are queued behind it.**
+🟢 **The verso compiler is FIXED and verified. Phase 2 wave 2 is in flight — four workers (T6, T7, T10, T11). When they clear, all 15 spreads are specced and Phase 2 closes.**
 
-**Resume point, in order:**
-1. **Verify TF1–TF3** against the six acceptance criteria in `delegation-ledger.md`. The regression check matters most: an ordinary spec with a thin `well.material` must **still be refused** with a non-zero exit. That refusal is verso's main job and is the thing TF2 is most likely to break.
-2. **Re-verify the five affected specs** (I, II, III, IV, V) against the fixed compiler, and re-enable `apply_welcoming_clause: true` on the four chapters whose workers set it `false` to dodge the bug (Cover, VI, VII, XIII, XIV) — their hand-written occupancy prose should give way to the compiled clause.
-3. **Dispatch T6 (VIII + IX) and T7 (X + XI)** using T5's interior pattern, recorded in the ledger.
-4. **Re-dispatch T9 (XII)** once TF2 gives it an honest way to declare a text-free spread.
+**Resume point: review the four wave-2 outputs, then Phase 3 (generation).**
+
+1. **Check JSON validity first**, before anything else. There is a known read-write race: T11 edits `06_VI`/`07_VII` while T6 and T7 read them as their pattern reference. If a worker reports an unexplained parse failure on VI or VII, that is the cause and a **re-run** fixes it — do not re-spec. (Sequencing T11 after T6/T7 would have avoided this; do that next time.)
+2. **Re-verify each spec yourself**: `compile_prompt.py` exits 0, valid JSON, `well.status` exactly `specified`, and the compiled prompt contains **no** `golden`/`last hour`/`dusk`/`blue hour`. Chapter I is the one legitimate `verified`.
+3. **Confirm T10's path fix actually resolves** — after it lands, the cross-palette guard should be able to fire for the first time on this project. Test it: a `warm_pocket` spec whose refs all point at other `warm_pocket` chapters must exit 1.
+4. **Then Phase 3.** This is where the real cost lives — 13 spreads to generate, ≤2 Sonnet retries each before Opus escalation, and Opus adjusts the spec, never the gate.
 
 **Review contract — do not skip.** Re-verify every returned spec yourself; a worker's claim that it passed is not evidence. `compile_prompt.py` must **exit 0**, JSON must be valid, and `well.status` must be exactly `specified` on the 13 new spreads. **Chapter I is the one legitimate exception** — it holds `verified` because an image exists and was measured, and `measure_well.py --audit` confirms it.
 
@@ -42,6 +43,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-31 22:05 ET · Claude Code
+- **Changed:** Fixed the three verso compiler defects that were blocking generation, then dispatched Phase 2 wave 2. **TF1** rewrote `WELCOMING_CLAUSE` in dawn language — all ten chapters now compile clean, with zero occurrences of `golden`/`last hour`/`dusk`/`blue hour` where five previously carried them. **TF2** added a first-class top-level `"text_free": true`, deliberately not a fourth `treatment` value, since `treatment` describes the shape of a well that exists while the claim here is about the spread. **TF3** inverted the cross-palette guard rather than deleting it: it now refuses warm-on-warm reference chaining while permitting a cool exterior anchor for an interior, which the dawn-lit ruling makes correct. All six acceptance criteria re-verified independently. Wave 2 dispatched: T6 (VIII+IX), T7 (X+XI), T10 (stale paths + XII's flag), T11 (re-enable the welcoming clause on the five specs that dodged the bug).
+- **Commit:** `48b5358`
+- **Friction:** misread — sequenced wave 2 wrong. T11 edits `06_VI` and `07_VII` while T6 and T7 read those same files as their pattern reference, so a mid-write read could throw a JSON parse error. Low risk and caught before review rather than after, but avoidable: T11 should have run *after* T6/T7, since the readers depend on files the writer is changing. Recorded in the ledger as a check-at-review item. When fanning out, map reads as well as writes before choosing waves — non-overlapping **writes** is not the same as no conflict.
+- **Next:** Review the four wave-2 outputs, checking JSON validity first, then Phase 3 generation. See the DO NEXT block.
+- **Watch out:** 🛑 **The cross-palette guard has never once fired on this project.** Surfaced because the TF worker reported that one of its own *passing* criteria passed for the wrong reason. `01_I` and `02_II` record `output_dir` with the OneDrive naming (`resume art/I/`) while every other chapter references them by the vault naming (`resume art/01_I/`), so the references never resolve and the guard stays silent. This is the **same OneDrive-vs-vault split** that caused the "no art at all" error earlier in the session — third time it has bitten, so treat any path in a spec as suspect until resolved against the vault. `output_dir` is also the write target for generated masters, so Phase 3 would have written into the wrong directory. T10 is fixing it; **verify the guard can actually fire afterwards** rather than assuming.
 
 ### 2026-07-31 21:10 ET · Claude Code
 - **Changed:** Ran **Phase 2 wave 1** to completion under the delegation protocol — 7 workers dispatched concurrently, every returned spec re-verified by the orchestrator rather than accepted on the worker's report. **6 of 7 passed; 9 of 15 spreads are now specced and verified** (Cover, I, III, IV, V, VI, VII, XIII, XIV). T5 produced the reusable dawn-lit interior pattern for the remaining four, including the budget arithmetic that makes it tractable: **a warm well costs 19–27% of the 32-point warm ceiling by itself, so an interior gets a warm well OR a warm room, never both.** Then found and dispatched fixes for **three defects in the verso compiler** that were blocking generation outright. Full detail, verdicts and the review evidence are in `delegation-ledger.md`.

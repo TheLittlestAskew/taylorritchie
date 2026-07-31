@@ -4,12 +4,22 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-Verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/`, including the homepage, résumé download, and `systemhorizon/` subroute. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+Clear the two remaining human blockers on `SlashGoal_AmongTrees_Ship.md` before the delegation run can start: (1) install the run-persistence plugin — `/plugin install ralph-loop@claude-plugins-official` (it exists in the local marketplace clone but is NOT installed, so no `/ralph-loop` command resolves); (2) decide what `tayls-voice` is — the plan names it as the authority for all narrative chapter copy in Phase 2.2, but it does not exist anywhere in `~/.claude` or the Septentrion vault. Then run Phase 0.1: verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/` (homepage, résumé download, `systemhorizon/` subroute) — still the plan's first task. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+- Prereq for the whole run: source the CC0 ambient night-audio loop to `audio/night-loop.{ogg,mp3}`. Claude cannot generate or license audio.
+- All storybook work belongs on `feat/among-trees-storybook`. `main` must stay untouched mid-build.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-31 · Claude Code
+- **Changed:** Preflight for `SlashGoal_AmongTrees_Ship.md` (the Among Trees storybook ship goal). Created `feat/among-trees-storybook`; added the repo's first `.gitignore`; added `package.json` + lockfile with `playwright`, `@axe-core/playwright`, and `sharp-cli@5.2.0` so the Phase 6 gates resolve tooling from the repo instead of a machine-global install. Outside this repo: installed three missing skills into `~/.claude/skills` — `luminous-dawn-haze` (the plan's #1 authority, incl. `scripts/compile_dawn.py`), `cynosure`, and `delegation-protocol` (its 4 worker agents were already in `.claude/agents`). Verified the Playwright+axe toolchain end-to-end against a page with a seeded missing `alt` and 1.9:1 text; axe caught both (`image-alt[critical]`, `color-contrast[serious]`), screenshots and console capture work.
+- **Commit:** `f888e94`
+- **Friction:** misread — reported `compile_dawn.py` as "does not exist anywhere on your machine" and called it a hard blocker; the search only walked extracted directories and never looked inside the uninstalled `.skill` bundles, which are plain zips. It was in `luminous-dawn-haze.skill` the whole time. Extracting bundles to a temp dir before declaring anything missing is the fix.
+- **Friction:** gen-fail — the first axe smoke test threw `Error: Please use browser.newContext()`. `@axe-core/playwright` rejects a page created by `browser.newPage()`; it requires an explicit `browser.newContext()` first. Worked immediately once the context was created.
+- **Next:** See the DO NEXT block above — two human blockers (ralph-loop plugin, tayls-voice) before Phase 0.
+- **Watch out:** `npm audit` reports 3 high-sev findings in this repo (`sharp@0.34.2` libvips CVEs, `glob@11.0.3` CLI command injection). Do NOT run `npm audit fix` — `sharp-cli@5.2.0` is the latest published and npm's proposed "fix" is a semver-major *downgrade* to 4.2.0. Closing the libvips CVEs would need an npm `overrides` pin to `sharp@^0.35.0`, untested against sharp-cli 5. Separately, `tests/site-audit.mjs` still imports Playwright through a hardcoded absolute path into a Codex runtime cache (`C:/Users/theli/.cache/codex-runtimes/...`); now that Playwright is a real repo dependency that line should become `import { chromium } from 'playwright'`.
 
 ### 2026-07-26 22:52 ET · Claude Code
 - **Changed:** Added `systemhorizon/PROJECTS_CONTENT_SPEC.md` — reconciled all claude.ai Projects + the documented portfolio into per-project page/dashboard content for the SystemHorizon `projects` view, plus a schema extension and display-pattern library. Also built a `septentrion-sync` → Supabase heartbeat (script + wrapper hook live in `~/.claude/skills/septentrion-sync/`, outside this repo) that auto-stamps project status.

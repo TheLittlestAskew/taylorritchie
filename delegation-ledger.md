@@ -304,10 +304,36 @@ frames (`cover-frame.png` / `.svg`).
 
 | # | Task | Tier | Status |
 |---|---|---|---|
-| 2.1 | Write/repair `spec.json` for Cover + I–XIV | Sonnet | **TODO** — 13 of 15 missing |
-| 2.1b | Cover deep zone sized for **four** copy jobs + `icon_anchors` block | Sonnet | **TODO** |
-| 2.2 | Lock copy per chapter from copy deck v2.1 (LOCKED INPUT) | Sonnet | **TODO** |
-| 2.2b | XII exempt · III/V/X → 45% ceiling · I re-target ≈62 words | Sonnet | **TODO** |
+| 2.1 | Write/repair `spec.json` for Cover + I–XIV | — | **DISPATCHED** — see task table |
+| 2.1b | Cover deep zone sized for **four** copy jobs + `icon_anchors` block | Opus | **DISPATCHED** (T1) |
+| 2.2 | Lock copy per chapter from copy deck v2.1 (LOCKED INPUT) | — | **DISPATCHED** — folded into each spec task |
+| 2.2b | XII exempt · III/V/X → 45% ceiling · I re-target ≈62 words | — | **DISPATCHED** (T9, T3/T4/T7, T2) |
+
+### Phase 2 task table — dispatched 2026-07-31, approved by Taylor
+
+Standards are **orchestrator-defined**, not externally sourced: the authority for this work is
+the project's own docs (`verso/references/schema.md`, the LDH area budget, `spread-loop.md`'s
+verdict table). No external web standard governs a bespoke illustrated-spread pipeline, and
+dispatching `standards-researcher` at it would have returned nothing applicable. The executable
+acceptance check is `compile_prompt.py` exiting 0 — it refuses incomplete specs by design, so
+it is a real gate rather than an eyeball check.
+
+| # | Task | Tier | Status | Retries |
+|---|---|---|---|---:|
+| T1 | Cover spec + `icon_anchors` (4 copy jobs on one deep zone) | Opus | DISPATCHED | 0 |
+| T2 | I — re-target well to ≈62 words + grade brief | Sonnet | DISPATCHED | 0 |
+| T3 | III + IV specs | Sonnet | DISPATCHED | 0 |
+| T4 | V spec + **strip near-HIPAA from the copy deck** | Sonnet | DISPATCHED | 0 |
+| T5 | VI + VII specs — first dawn-lit interiors, sets the pattern | Opus | DISPATCHED | 0 |
+| T6 | VIII + IX specs | Opus | BLOCKED on T5 | 0 |
+| T7 | X + XI specs | Sonnet | BLOCKED on T5 | 0 |
+| T8 | XIII + XIV specs | Sonnet | DISPATCHED | 0 |
+| T9 | XII spec (text-free, well-exempt) | Haiku | DISPATCHED | 0 |
+
+**Ruled by Taylor 2026-07-31:** the copy deck's Chapter V clause *"operating close to HIPAA
+standards"* is **stripped** — it conflicts with her standing rule against near-HIPAA phrasing,
+and this ships on a public page rather than into an ATS. The Privacy Officer credential itself
+stays. T4 owns the edit; it is the **only** task permitted to write to the copy deck.
 
 ⚠️ **The cover well is the highest-risk spec in the book.** It carries name/identity, two
 icon buttons, their labels, *and* the one-shot interstitial line — four contrast-passing

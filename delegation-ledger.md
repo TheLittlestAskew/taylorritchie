@@ -324,11 +324,12 @@ it is a real gate rather than an eyeball check.
 | T2 | I — re-target well to ≈62 words + grade brief | Sonnet | **DONE** | 0 |
 | T3 | III + IV specs | Sonnet | **DONE** | 0 |
 | T4 | V spec + **strip near-HIPAA from the copy deck** | Sonnet | **DONE** | 0 |
-| T5 | VI + VII specs — first dawn-lit interiors, sets the pattern | Opus | DISPATCHED | 0 |
-| T6 | VIII + IX specs | Opus | BLOCKED on T5 | 0 |
-| T7 | X + XI specs | Sonnet | BLOCKED on T5 | 0 |
-| T8 | XIII + XIV specs | Sonnet | DISPATCHED | 0 |
-| T9 | XII spec (text-free, well-exempt) | Haiku | **IN REVIEW** — sent back | 1 |
+| T5 | VI + VII specs — first dawn-lit interiors, sets the pattern | Opus | **DONE** | 0 |
+| T6 | VIII + IX specs | Opus | held for TF1–TF3 | 0 |
+| T7 | X + XI specs | Sonnet | held for TF1–TF3 | 0 |
+| T8 | XIII + XIV specs | Sonnet | **DONE** | 0 |
+| T9 | XII spec (text-free, well-exempt) | Haiku | **BLOCKED on TF2** — tooling gap, not worker failure | 1 |
+| TF1–3 | Fix the verso compiler (see below) | Opus | DISPATCHED | 0 |
 
 ### Review results, verified by the orchestrator (not taken on worker report)
 
@@ -404,18 +405,65 @@ retired with golden hour on 2026-07-31; the code did not follow.
 prose by hand is exactly the hand-authoring that causes drift across separately generated chapters.
 Fix the clause, then flip the flag back on.
 
-### Two tool fixes now blocking Phase 3
+### Measured blast radius
+
+Scanned every compiled prompt directly. **Five chapters currently compile golden-hour prompts:**
+
+| Chapter | `golden` / `last hour` in compiled prompt |
+|---|---|
+| I, II, III, IV, V | **YES** — all five set `apply_welcoming_clause: true` |
+| Cover, VI, VII, XIII, XIV | no — but only because their workers set the flag `false` to dodge the bug |
+
+That second row is the tell. Four separate workers independently disabled a clause whose job is
+**anti-horror occupancy**, and each hand-wrote replacement prose. Hand-authoring is the drift
+mechanism the compiler exists to eliminate, so the workaround is itself a slow failure.
+
+> ⚠️ **Process note on how this was measured.** A first scan using a shell loop reported all ten
+> prompts clean. That was a **false negative** — the compile was silently failing inside the
+> subshell and `grep -c` counted zero on empty output. The result was reported to Taylor before it
+> was caught. Re-run in Python with explicit exit-code checking, it showed five failures. Any scan
+> that reports "all clean" must prove the command actually ran; counting matches in output you
+> never confirmed exists will always return zero.
+
+### Three tool fixes, dispatched to Opus as one task
 
 | # | Fix | Blocks |
 |---|---|---|
-| TF1 | `WELCOMING_CLAUSE` → LDH dawn language (raised ambient floor, lived-in, several lit windows) | **Every** welcoming exterior: Cover, I, II, V, and the night-exterior set |
-| TF2 | Schema + compiler support for a text-free spread with no well | XII only |
+| TF1 | `WELCOMING_CLAUSE` → LDH dawn language, keeping the anti-horror job and "several lit windows, never one" | I, II, III, IV, V — and the four chapters currently working around it |
+| TF2 | First-class text-free / well-exempt spread; fix `schema.md` line 62 | XII |
+| TF3 | Cross-palette guard rejects I and II as anchors for any `warm_pocket` spec — it encodes the retired warm-dominant reading, so the only two on-palette anchors in the project are unusable for every interior | VI–XI |
 
-Both live in `~/.claude/skills/verso/`. **Deliberately held until T5 and T8 return** — those workers
-execute `compile_prompt.py` to validate their own specs, and editing it underneath them could fail
-their validation for reasons that have nothing to do with their work.
+All three live in `~/.claude/skills/verso/`. **Sequenced deliberately:** held until T5 and T8
+returned so no worker was executing `compile_prompt.py` while it was edited, and T6/T7 are held
+until the fixes land so the four remaining interiors are written against a correct compiler
+instead of inheriting the workaround. The acceptance criteria include a **regression check** that
+an ordinary spec with a thin `well.material` is still refused — that refusal is the skill's main
+job and is the thing most likely to be broken by TF2.
 
 ---
+
+- **T5 (VI, VII) — PASS, and it produced the interior pattern.** VI `saturated_warm` 39% × 53%,
+  VII `deep` 40% × 54%, both `specified`, both with a real curtain-open window in frame carrying
+  the cool share and the violet-rose bridge named explicitly in scene prose. VI's well is
+  commissioned on **the wash of firelight up the pale plaster above the mantel**, not on the fire —
+  the distinction that decided VI once already. It also moved VI's window **off Taylor's sketched
+  left wall onto the right**, because the sketch as drawn puts both light sources on one wall,
+  which is precisely the room v10 produced.
+  **The pattern for VIII–XI, in T5's words:** every interior gets a real visible window as the
+  named cool 55–72% carrier, with the hearth or lamp as a pocket that *stops mid-room and is
+  stated to stop*; and since the compiler's `warm_pocket` clause never says violet, lavender or
+  rose, **the bridge must be hand-written into `scene` on every interior** — named hues, named
+  surfaces, a direction. Plus the budget arithmetic that makes it tractable: **a warm well costs
+  19–27% of the 32-point warm ceiling by itself, so an interior gets a warm well OR a warm room,
+  never both.** VI takes the warm well, VII takes a deep one; VIII–IX should follow VII.
+- **T8 (XIII, XIV) — PASS.** Both `narrow` at 25%, both `specified`. They deliberately share one
+  wall and one target, flipping `deep` → `pale` across the pair to literalise the night-to-dawn
+  arc, and T8 flagged the consequence unprompted: the text colour reverses between them
+  (`#EAF6F2` → `#1B1B3A`) and must not be copy-pasted backward. It also caught that
+  `13_XIII\chapter 13 layout.png` is **an unrelated Aftermath Meridian website mockup showing a
+  two-page book spread with a visible spine** — the exact physical-book depiction this project
+  forbids — and refused to use it. A less careful worker would have copied the forbidden thing
+  straight from a file sitting in the chapter's own folder. Likely misfiled; worth moving.
 
 ### ⚠️ Doc conflict found during review — `schema.md` vs the copy deck
 

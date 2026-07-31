@@ -71,10 +71,22 @@ python ~/.claude/skills/verso/scripts/measure_well.py MASTER.png \
 ```
 Exit 0 = viable well, 1 = none, 2 = bad input.
 
-### 5. Palette check
+### 5. Palette check — **both** gate sets, they measure different things
+
 ```bash
 python ~/.claude/skills/verso/scripts/check_palette.py MASTER.png
+python ~/.claude/skills/luminous-dawn-haze/scripts/check_dawn_balance.py MASTER.png --verbose
 ```
+
+🛑 **Running only the first one cannot tell you whether the image is on-profile.**
+`check_palette.py`'s two gates are structural and profile-agnostic *by design* — that
+blindness is what lets the coral sky be as loud as it likes. A golden-hour spread with
+clean darks and cool neutrals passes it and is still not luminous dawn haze. Chapter VIII
+scores a perfect 0.0% muddy / 0.2% drift and is a night corridor.
+
+`check_dawn_balance.py` measures the area budget the verdict table below asks for. It
+also reports `crushed` (dark **and** colourless), which is the real reading of "nothing
+goes to black" — deep chromatic silhouettes are correct and will not trip it.
 
 ### 6. Verdict
 
@@ -85,8 +97,16 @@ python ~/.claude/skills/verso/scripts/check_palette.py MASTER.png
 | Well position | within ±10 pts of target |
 | Muddy middle | low — references run 0.1–0.7%; drifted spreads run 12–29% |
 | LDH areas | cool 55–72% · violet-rose bridge 12–24% **present** · warm 18–32% · bright cores 1–5% |
-| Value floor | nothing colder than `#152552` reads as black; no `#000` |
+| Value floor | `crushed` ≤ 2% — dark **and** colourless. Deep chromatic silhouettes are fine |
 | Fireflies | sparse, dim, irregular. Neon or grid-spaced = regenerate |
+
+🛑 **Interiors are DAWN-LIT interiors** (ruled 2026-07-31). VI–XI take the same single
+budget as the exteriors: cool dawn light through windows does the atmospheric work and
+carries the cool 55–72% share, while the hearth or lamp stays a **local** warm pocket
+inside the 18–32% band. Do not commission an interior as warm-dominant — that was the
+old `warm_pocket` reading and it fails the cool floor and the bridge band every time.
+The violet-rose bridge is where cool window light meets warm lamplight across the room,
+and it is mandatory indoors exactly as it is outdoors.
 
 Exit **PASS** (write `well.measured` + `status: verified` back to the spec) or
 **RETRY-EXHAUSTED** with every attempt's numbers. Never exit silently.

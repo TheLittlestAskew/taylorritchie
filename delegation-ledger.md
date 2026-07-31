@@ -10,9 +10,13 @@
 >
 > **Branch:** `feat/among-trees-storybook` · `main` and the live site stay untouched mid-build.
 
-**Status:** Phase 0 complete (`5d46f2b`, pushed). **Phase 1 complete.** Phase 2 blocked on
-the interior/exterior ruling below — exteriors can proceed, interiors cannot.
+**Status:** Phases 0 and 1 complete. **Interior ruling made (dawn-lit interiors) — nothing is
+blocked.** Phase 2 in progress: specs for 13 spreads. Run mode: autonomous delegation.
 **Last updated:** 2026-07-31 · Claude Code
+
+**Canonical art root:** `…\Septentrion\Constellations\Resume Site\resume art\<NN>_<NUMERAL>\`
+(the vault). The OneDrive `PORTFOLIO\resume art\<NUMERAL>\` tree is a working copy — shared
+files verified byte-identical by SHA256 on 2026-07-31, but **write to the vault**.
 
 ---
 
@@ -201,11 +205,69 @@ a re-roll. Its well is good — protect it.
 **Blocked on the interior ruling (3):** VI (base `v10`), IX (base **`v1`**, not v2 — v1 passes
 both structural gates, v2 fails both), X (base `v1`, and note its bridge 16.8% is in band).
 
-**No art at all — generate from scratch (6):** Cover spread, III, IV, XII, XIII, XIV.
+**Generate from scratch, but NOT from nothing (6):** Cover spread, III, IV, XII, XIII, XIV.
+See the correction directly below — these carry Taylor's own layout sketches.
+
+### ⚠️ Correction to 1.1, found while verifying the run's paths
+
+The audit above was first run against `OneDrive\PORTFOLIO\resume art\<NUMERAL>\`. The
+**canonical root is the vault** — `…\Septentrion\Constellations\Resume Site\resume art\<NN>_<NUMERAL>\`
+— which is what `spread-loop.md` already points at. Both copies were compared by SHA256:
+**every shared master and both `spec.json` files are byte-identical**, so the verdict table
+stands unchanged. Four things the vault shows that OneDrive did not:
+
+1. **"No art at all" was wrong.** III, IV, XII, XIII, XIV and V/VI carry **Taylor's own layout
+   sketches and composition references** — `chapter 03/04/13 layout`, `sketch of the cabin.png`,
+   `sketch of the living room.png`, `sketch of chapter 12.png`, `reference-cardigan-collection.jpg`.
+   No generated masters, but real composition input in her hand. **Generation should start from
+   her layouts, not from prose alone.** This materially improves the odds on the six.
+2. **V and VI's masters were never promoted to the vault** — they exist only in the OneDrive
+   working copy. Consistent with both being rejected; it also means the vault currently has
+   *no* master for either. Their **sketches are there**, which is the better starting point anyway.
+3. `14_XIV/nano-banana-f7917…png` is a **pencil-sketch monitor mockup**, an asset for the
+   contact spread, not a spread master. **N/A**, not a failing image.
+4. Two more retirements: `07_VII/nano-banana-63210…png` (drift 87.8%) and `11_XI/public.webp`
+   (muddy 23.4%, drift 98.9% — a derivative of the old site, not a master).
 
 ---
 
-## 🛑 Phase 1 finding — the interior/exterior gap (needs Taylor)
+## ✅ RULED 2026-07-31 by Taylor — dawn-lit interiors
+
+**Option (b). One budget governs all 15 spreads.** Interiors VI–XI are re-conceived as
+**dawn-lit interiors**: cool dawn light through windows does the atmospheric work and carries
+the cool 55–72% share, while the hearth or lamp stays a **local** warm pocket inside the
+18–32% band. The violet-rose bridge is where cool window light meets warm lamplight across
+the room — **mandatory indoors exactly as outdoors**.
+
+Rationale, recorded so it is not re-litigated: the entire point of a style bible is that
+separately generated chapters read as one world. A second interior band set would have been a
+second source of truth for colour, the same failure mode already rejected when hue boundaries
+were dropped in favour of nearest-anchor classification.
+
+**Consequences, all applied:**
+
+- VI / IX / X move from **BLOCKED → REGENERATE**. They cannot be graded into compliance;
+  dawn-lit is a re-staging, not a colour pass.
+- `palette_mode: warm_pocket` no longer means "warm dominates from VI onward". It means the
+  warm pocket grows in **size and nearness** across the threshold, never in share of palette —
+  which is what `verso/SKILL.md` already said in its own warning, and is now literally true.
+- Written into `.claude/commands/spread-loop.md` §6 so every worker resolves it identically.
+
+**Run mode ruled: resume the autonomous delegation run.**
+
+### Revised scope — 13 of 15 spreads need generation
+
+| Disposition | Count | Chapters |
+|---|---:|---|
+| Keep as-is | 1 | II |
+| Grade only | 1 | I |
+| Regenerate (master exists) | 4 | V, VII, VIII, XI |
+| Regenerate (dawn-lit re-stage) | 3 | VI, IX, X |
+| Generate from sketches | 6 | Cover, III, IV, XII, XIII, XIV |
+
+---
+
+## Superseded — the interior/exterior gap as originally raised
 
 **LDH's area budget is written for dawn *exteriors* and has no interior variant, while
 verso switches `palette_mode` to `warm_pocket` from VI onward.** A fireplace room, a closet,
@@ -214,16 +276,9 @@ a 12–24% violet-rose mist bridge and still be interiors. **All six interior ch
 cool floor and the bridge band on that mismatch alone**, which is a spec conflict, not a
 verdict on the art.
 
-This will deadlock Phase 3 on six chapters the moment a worker reaches VI. It needs a ruling
-before generation starts, not during. Options as put to Taylor:
-
-- **(a)** LDH governs exteriors; author a `warm_pocket` interior budget as a second band set.
-- **(b)** Re-conceive the interiors as **dawn-lit** interiors (cool window light doing the
-  atmospheric work, warm pocket local to the lamp/hearth) so one budget covers the book.
-- **(c)** LDH governs exteriors only; interiors stay on the retired golden-hour/warm-pocket
-  language.
-
-Until this is answered, VI / IX / X hold at **BLOCKED** and no interior spec should be written.
+This would have deadlocked Phase 3 on six chapters the moment a worker reached VI.
+**Answered above: option (b), dawn-lit interiors.** Kept only so a future session
+understands why the interiors were re-staged rather than graded.
 
 ### Known art inventory (from the vault, 2026-07-31)
 
@@ -304,12 +359,15 @@ re-voice them; only Cover, I, XIII, XIV are narrative.
 8. **`tests/site-audit.mjs` imports Playwright via a hardcoded absolute path** into a Codex
    runtime cache. Now that Playwright is a real repo dependency, that line should become
    `import { chromium } from 'playwright'`. Phase 6 gate 8 extends this file, so fix it there.
-9. **The interior/exterior colour-budget gap** — see the Phase 1 finding above. Six chapters
-   blocked. Highest-priority open decision in the run.
-10. **Art volume is larger than the ledger implied.** Only **2 of 15** spreads survive Phase 1
-    (I graded, II kept). Four regenerate, three are blocked, and **six have no art at all**.
-    Phase 3 was scoped as a retry loop over existing masters; it is closer to a from-scratch
-    generation phase for two thirds of the book. Chapter I alone took 13 versions.
+9. **RESOLVED 2026-07-31** — the interior/exterior colour-budget gap. Ruled: dawn-lit
+   interiors, one budget for all 15 spreads. VI/IX/X regenerate rather than grade.
+10. **Art volume is larger than the ledger implied — this is the top delivery risk.** Only
+    **2 of 15** spreads survive Phase 1 (I graded, II kept); **13 need generation**. Phase 3
+    was scoped as a retry loop over existing masters and is really a from-scratch generation
+    phase for most of the book. Chapter I alone took 13 versions to land, and the interior
+    ruling means VI–XI are re-staged rather than re-graded. Mitigating factor found late:
+    Taylor's own layout sketches exist for the six "no art" chapters, so they start from her
+    composition rather than from prose.
 11. **`check_dawn_balance.py` lives in the skill, not the repo**, like the verso scripts. It is
     calibrated off one exemplar image. If a band ever disagrees with Taylor's eye, re-check the
     calibration before re-rolling art against it — the same warning `check_palette.py` carries

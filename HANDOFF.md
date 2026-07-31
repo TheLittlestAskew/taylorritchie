@@ -4,11 +4,17 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-**All tooling prereqs for `SlashGoal_AmongTrees_Ship.md` are now met.** Restart the Claude Code session so the newly installed `ralph-loop` plugin registers its commands (`/ralph-loop` will not resolve until then), then launch Phase 0. Phase 0.1 is still the plan's first task: verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/` (homepage, résumé download, `systemhorizon/` subroute). The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+🔴 **The Among Trees storybook run is IN FLIGHT. This file is not the live state — `delegation-ledger.md` is.** Read the ledger for current phase, task status, and the regeneration queue. This DO NEXT block is deliberately frozen for the duration of the run and will not track per-iteration progress.
 
-Two decisions Taylor must make at launch, both of which the run cannot make for itself:
-- **Stop-hook contention.** `handoff-guard.ps1` and ralph-loop's `stop-hook.sh` are both on `Stop`. A build run keeps the tree dirty, so the handoff guard fires every iteration and eats the 25-iteration cap on bookkeeping. If the loop should build instead of bank, Taylor must explicitly authorize writing `.git/claude-handoff-skip` (the handoff skill forbids Claude writing it unprompted).
-- **Voice mode for chapter copy (Phase 2.2).** `tayls-voice` defines three modes and forbids blending them, but has no row for storybook chapter copy. Mode 1 (Personal, professional end) keeps the 40-second recruiter screen alive; Mode 3 (Fiction) matches the plan's "narrative lines" language but is gated to creative writing. Recommendation on record: Mode 1 governing, with Mode 3 rhythm devices as a named exception, written into each `spec.json` copy block so it is not re-litigated 14 times.
+**The handoff guard is SUSPENDED.** `.git\claude-handoff-skip` is present and intentionally **blank**, which suppresses the guard for every session, not just one. It was written blank on purpose: the session-scoped form (file containing a session id) dies on the session restart that `ralph-loop` registration requires, so it could not have covered the run.
+
+🛑 **Delete `.git\claude-handoff-skip` in Phase 7, before the merge.** The ship itself must happen under the normal guard and produce a real handoff entry. Until that file is gone this repo is silent about unbanked work — that is the whole risk of the blank form, and the deletion is load-bearing, not housekeeping.
+
+Rationale for suspending rather than feeding it: a ralph iteration is not a unit of work, a phase is. Twenty-five bookkeeping entries would also pollute the log the Septentrion dashboard parses. If the run dies mid-way, `delegation-ledger.md` is the recovery point by design.
+
+**Ruling on Phase 2.2 voice — decided, do not re-litigate:** chapter copy uses `tayls-voice` **Mode 1 (Personal Voice, professional end)**. Mode 3 (Fiction) is not used. Write the ruling into each `spec.json` copy block so all 14 chapters resolve it identically.
+
+Phase 0.1 remains the run's first task: verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/` (homepage, résumé download, `systemhorizon/` subroute). The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
 
 - All storybook work belongs on `feat/among-trees-storybook`. `main` must stay untouched mid-build.
 
@@ -16,6 +22,12 @@ Two decisions Taylor must make at launch, both of which the run cannot make for 
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-31 · Claude Code
+- **Changed:** Among Trees storybook run in flight; live state is `delegation-ledger.md`; handoff guard suspended via `.git\claude-handoff-skip` for the duration. Recorded the Phase 2.2 voice ruling: `tayls-voice` Mode 1 (Personal Voice, professional end) governs all chapter copy; Mode 3 is not used. This is the last banked entry before the suspension; the run itself will not write per-iteration entries, by design — a ralph iteration is not a unit of work, a phase is, and 25 bookkeeping entries would pollute the log the Septentrion dashboard parses.
+- **Commit:** `6dc2926`
+- **Next:** See the DO NEXT block above. Recovery point mid-run is `delegation-ledger.md`, not this file.
+- **Watch out:** The skip file is **blank**, not session-scoped. `Test-SkipRequested` in `handoff-guard.ps1` returns true unconditionally for an empty file (`if (-not $held) { return $true }`) and only compares ids when the file has content — so the session-id form would have died on the session restart that `ralph-loop` registration requires. Blank was the only form that covers the run, and the cost is that this repo is silent about unbanked work in **every** session until the file is deleted. Phase 7 must delete it before the merge. A companion `.git\claude-handoff-skip.why` explains this locally for any session that finds the flag and does not have this context.
 
 ### 2026-07-31 · Claude Code
 - **Changed:** Closed the last two prereqs for `SlashGoal_AmongTrees_Ship.md`. Installed the `ralph-loop` plugin (via `claude plugin install`, scope user) and `jq` 1.8.2 via scoop — ralph's Stop hook calls `jq` under `set -euo pipefail`, so with `jq` absent it died at exit 127 instead of the exit 2 that blocks a turn, meaning the loop would have silently never looped. Installed the `tayls-voice` skill from its bundle. Added `audio/night-loop.{ogg,mp3}` (96 s, 714 KB / 1.1 MB) plus `audio/CREDITS.md` carrying the mandatory Pixabay attribution HTML.

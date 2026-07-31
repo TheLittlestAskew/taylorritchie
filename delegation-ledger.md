@@ -325,11 +325,13 @@ it is a real gate rather than an eyeball check.
 | T3 | III + IV specs | Sonnet | **DONE** | 0 |
 | T4 | V spec + **strip near-HIPAA from the copy deck** | Sonnet | **DONE** | 0 |
 | T5 | VI + VII specs — first dawn-lit interiors, sets the pattern | Opus | **DONE** | 0 |
-| T6 | VIII + IX specs | Opus | held for TF1–TF3 | 0 |
-| T7 | X + XI specs | Sonnet | held for TF1–TF3 | 0 |
+| T6 | VIII + IX specs | Opus | DISPATCHED (wave 2) | 0 |
+| T7 | X + XI specs | Sonnet | DISPATCHED (wave 2) | 0 |
 | T8 | XIII + XIV specs | Sonnet | **DONE** | 0 |
-| T9 | XII spec (text-free, well-exempt) | Haiku | **BLOCKED on TF2** — tooling gap, not worker failure | 1 |
-| TF1–3 | Fix the verso compiler (see below) | Opus | DISPATCHED | 0 |
+| T9 | XII spec (text-free, well-exempt) | Haiku | superseded by T10 | 1 |
+| TF1–3 | Fix the verso compiler | Opus | **DONE** — all 6 criteria re-verified | 0 |
+| T10 | XII `text_free` flag + stale `output_dir` in I and II | Haiku | DISPATCHED (wave 2) | 0 |
+| T11 | Re-enable the welcoming clause on the 5 specs that dodged it | Sonnet | DISPATCHED (wave 2) | 0 |
 
 ### Review results, verified by the orchestrator (not taken on worker report)
 
@@ -464,6 +466,66 @@ job and is the thing most likely to be broken by TF2.
   two-page book spread with a visible spine** — the exact physical-book depiction this project
   forbids — and refused to use it. A less careful worker would have copied the forbidden thing
   straight from a file sitting in the chapter's own folder. Likely misfiled; worth moving.
+
+### TF1–TF3 — DONE, all six criteria re-verified by the orchestrator
+
+| # | Criterion | Result |
+|---|---|---|
+| 1 | `--self-test` on all verso scripts | ✓ `compile_prompt`, `measure_well`, `check_palette`, `check_edit` all exit 0 |
+| 2 | 10 specs compile, no golden-hour language | ✓ **all 10 exit 0, zero hits** for `golden`/`last hour`/`dusk`/`blue hour` |
+| 3 | Text-free spread compiles with no well clause | ✓ exit 0, zero well-clause markers in the prompt |
+| 4 | **Regression: a thin well is still refused** | ✓ all 5 adversarial cases exit 1 (below) |
+| 5 | `measure_well --audit` still clean | ✓ 0 unsupported claims; text-free spread correctly exempt |
+| 6 | `warm_pocket` + `--siblings` on I/II | ✓ exit 0 |
+
+**Criterion 4 is the one that mattered** — TF2 made `well` optional, which is exactly the change most
+likely to blow a hole in the tool's main job. Tested adversarially against real VII-derived specs:
+missing material, a two-word material, an empty-string material, a mid-teal `value_class`, and
+`text_free: true` on a spec that still carries a real well — **all five refused**. That last case is
+the important one: it makes the exact fiction T9 originally produced (a full-frame well on a
+text-free spread) impossible to express.
+
+**TF1's replacement clause** keeps the anti-horror job in dawn language: sun 2–10° above the horizon,
+cool chromatic atmosphere with warmth as a localised pale peach-gold pocket, raised ambient floor so
+shadows stay readable rather than going to black, visible signs of habitation, and — carried over
+because it is load-bearing — *"wherever a dwelling shows in the frame, several of its windows are
+lit, never a single one."*
+
+**TF2's mechanism** is a top-level `"text_free": true`, deliberately **not** a fourth `treatment`
+value. The reasoning is right: `treatment` describes the shape of a well that exists, and `narrow`
+would have claimed a narrow well exists. The claim here is about the spread.
+
+**TF3** inverted the guard rather than deleting it — it now refuses a spread whose refs *all* resolve
+to `warm_pocket` chapters, so warm-on-warm chaining is still caught while a cool exterior anchor is
+now permitted for an interior. Warm drift from chained references is a documented failure here and
+still needs a guard.
+
+### ⚠️ Pre-existing data bug, surfaced by TF3 — stale `output_dir`
+
+The worker flagged, honestly and unprompted, that criterion 6 **passed trivially**. Confirmed:
+
+```
+01_I  output_dir = 'resume art/I/'      <- OneDrive naming
+02_II output_dir = 'resume art/II/'     <- OneDrive naming
+06_VI style_refs = ['resume art/01_I/…', 'resume art/02_II/…']   <- vault naming
+```
+
+The refs cannot resolve, so the cross-palette guard **silently never fires** — it has never fired on
+this project. Same OneDrive-vs-vault split that made the Phase 1 "no art at all" error. `output_dir`
+is also where generated masters get written, so a generation run would write into a directory that is
+not the chapter's own. Assigned to **T10**.
+
+> A worker reporting that its own passing criterion passed for the wrong reason is worth more than the
+> pass. The brief asked for evidence rather than a claim, and that is what surfaced this.
+
+### ⚠️ Known concurrency risk in wave 2 — check at review
+
+T11 edits `06_VI` and `07_VII` while T6 and T7 **read** those same files as their pattern reference.
+Writes should be atomic enough that a reader sees either the old or new file, and T11's changes are a
+boolean plus generic-prose trimming that do not alter the pattern being copied. But a mid-write read
+could produce a JSON parse error in T6/T7. **Verify JSON validity on all four wave-2 outputs at
+review time**; if a worker reports an unexplained parse failure on VI or VII, this is why, and the fix
+is a re-run rather than a re-spec. Sequencing T11 after T6/T7 would have avoided it.
 
 ### ⚠️ Doc conflict found during review — `schema.md` vs the copy deck
 

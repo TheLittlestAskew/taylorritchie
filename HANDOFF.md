@@ -25,7 +25,8 @@ Phase 0.1 remains the run's first task: verify the GitHub Pages deployment from 
 
 ### 2026-07-31 · Claude Code
 - **Changed:** Among Trees storybook run in flight; live state is `delegation-ledger.md`; handoff guard suspended via `.git\claude-handoff-skip` for the duration. Recorded the Phase 2.2 voice ruling: `tayls-voice` Mode 1 (Personal Voice, professional end) governs all chapter copy; Mode 3 is not used. This is the last banked entry before the suspension; the run itself will not write per-iteration entries, by design — a ralph iteration is not a unit of work, a phase is, and 25 bookkeeping entries would pollute the log the Septentrion dashboard parses.
-- **Commit:** `6dc2926`
+- **Commit:** `fa92167`
+- **Friction:** gen-fail — wrote this entry with a `<this entry's commit>` placeholder, then amended to fill in the sha, which changed the sha and left the entry citing a commit that no longer existed. Self-inflicted circular reference. The fix is to commit the entry first, read the sha, then correct it in a small follow-up commit; never amend to insert a sha into the file being committed.
 - **Next:** See the DO NEXT block above. Recovery point mid-run is `delegation-ledger.md`, not this file.
 - **Watch out:** The skip file is **blank**, not session-scoped. `Test-SkipRequested` in `handoff-guard.ps1` returns true unconditionally for an empty file (`if (-not $held) { return $true }`) and only compares ids when the file has content — so the session-id form would have died on the session restart that `ralph-loop` registration requires. Blank was the only form that covers the run, and the cost is that this repo is silent about unbanked work in **every** session until the file is deleted. Phase 7 must delete it before the merge. A companion `.git\claude-handoff-skip.why` explains this locally for any session that finds the flag and does not have this context.
 

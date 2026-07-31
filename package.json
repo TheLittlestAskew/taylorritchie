@@ -1,0 +1,30 @@
+{
+  "name": "taylorritchie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheLittlestAskew/taylorritchie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TheLittlestAskew/taylorritchie/issues"
+  },
+  "homepage": "https://github.com/TheLittlestAskew/taylorritchie#readme",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
+    "playwright": "^1.62.1",
+    "sharp-cli": "^5.2.0"
+  }
+}

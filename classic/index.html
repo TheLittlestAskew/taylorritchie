@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Taylor Askew Ritchie builds the systems, CRM operations, reporting, and communications infrastructure behind mission-driven work.">
+  <meta name="theme-color" content="#070707">
+  <link rel="canonical" href="https://tayloraritchie.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Taylor Askew Ritchie · Operations, Systems, and Development Infrastructure">
+  <meta property="og:description" content="Systems, CRM operations, reporting, and communications infrastructure for mission-driven work.">
+  <meta property="og:url" content="https://tayloraritchie.com/">
+  <meta property="og:image" content="https://tayloraritchie.com/img/avatar.png">
+  <meta property="og:image:alt" content="Portrait of Taylor Askew Ritchie">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Taylor Askew Ritchie · Operations, Systems, and Development Infrastructure">
+  <meta name="twitter:description" content="Systems, CRM operations, reporting, and communications infrastructure for mission-driven work.">
+  <meta name="twitter:image" content="https://tayloraritchie.com/img/avatar.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 fill=%22%23070707%22/><text x=%2232%22 y=%2243%22 text-anchor=%22middle%22 font-family=%22Georgia%22 font-size=%2235%22 font-weight=%22700%22 fill=%22%23fff9ec%22>T</text><circle cx=%2253%22 cy=%2252%22 r=%225%22 fill=%22%23ef233c%22/></svg>">
+  <title>Taylor Askew Ritchie · Operations, Systems &amp; Development</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo+Narrow:ital,wght@0,400;0,600;0,700;1,600&family=Bodoni+Moda:opsz,ital,wght@6..96,400;6..96,600;6..96,700;6..96,900;6..96,600&family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #070707;
+      --soft-ink: #171717;
+      --paper: #f2eadc;
+      --paper-hot: #fff9ec;
+      --paper-dim: #d9d0c1;
+      --signal-red: #ef233c;
+      --coral: #ff6b63;
+      --cobalt: #175cff;
+      --electric-blue: #0b72ff;
+      --wine: #6f1733;
+      --gold: #c99a45;
+      --rule: rgba(7, 7, 7, 0.22);
+      --display: "Bodoni Moda", Georgia, serif;
+      --condensed: "Archivo Narrow", "Arial Narrow", sans-serif;
+      --heavy: "Archivo Black", Impact, sans-serif;
+      --body: "Libre Franklin", Arial, sans-serif;
+      --mono: "IBM Plex Mono", Consolas, monospace;
+      --page-pad: clamp(1.15rem, 4vw, 4.5rem);
+      --content: 1440px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 4.25rem; overflow-x: clip; }
+    body {
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper-hot);
+      font-family: var(--body);
+      line-height: 1.55;
+      overflow-x: clip;
+    }
+
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 3px solid #ffffff; outline-offset: 3px; }
+    .portfolio :focus-visible, .playbill :focus-visible { outline-color: var(--cobalt); }
+    ::selection { background: var(--cobalt); color: white; }
+
+    .skip-link {
+      position: fixed;
+      left: 1rem;
+      top: -5rem;
+      z-index: 1000;
+      background: var(--paper-hot);
+      color: var(--ink);
+      padding: 0.8rem 1rem;
+      font: 600 0.8rem/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .archive-note {
+      background: var(--paper-hot);
+      color: var(--ink);
+      border-bottom: 1px solid currentColor;
+      padding: 0.85rem 1.25rem;
+    }
+    .archive-note p {
+      margin: 0 auto;
+      max-width: 60rem;
+      font: 400 0.85rem/1.5 var(--mono);
+    }
+    .archive-note a { color: inherit; }
+
+    .site-rail {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      right: 0;
+      min-height: 3.15rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem var(--page-pad);
+      background: rgba(7, 7, 7, 0.94);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      font-family: var(--mono);
+      font-size: 0.69rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      overflow: hidden;
+      contain: layout paint;
+    }
+
+    .rail-mark {
+      color: var(--signal-red);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .rail-nav {
+      min-width: 0;
+      max-width: 100%;
+      justify-self: center;
+      display: flex;
+      gap: clamp(0.8rem, 2vw, 2.2rem);
+    }
+    .rail-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      text-decoration: none;
+      color: rgba(255,255,255,0.72);
+      transition: color 160ms ease;
+    }
+    .rail-nav a:hover, .rail-nav a:focus-visible { color: white; }
+
+    .rail-status {
+      color: rgba(255,255,255,0.62);
+      white-space: nowrap;
+    }
+
+    main { display: block; }
+
+    .section-shell {
+      width: min(100%, var(--content));
+      margin-inline: auto;
+      padding-inline: var(--page-pad);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 6rem 0 3rem;
+      background:
+        linear-gradient(90deg, transparent 49.93%, rgba(255,255,255,0.09) 50%, transparent 50.07%),
+        radial-gradient(circle at 68% 18%, rgba(239,35,60,0.16), transparent 24%),
+        var(--ink);
+      isolation: isolate;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.23;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 4px);
+      mix-blend-mode: screen;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 0.31fr);
+      gap: clamp(2rem, 6vw, 7rem);
+      align-items: end;
+    }
+
+    .hero-kicker {
+      margin: 0 0 1.5rem;
+      color: var(--signal-red);
+      font: 600 clamp(0.68rem, 1vw, 0.85rem)/1.4 var(--mono);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(4.1rem, 12.2vw, 11.2rem);
+      font-weight: 900;
+      line-height: 0.73;
+      letter-spacing: -0.072em;
+      text-transform: uppercase;
+    }
+    .hero-title span { display: block; }
+    .hero-title .askew {
+      margin-left: clamp(0rem, 7vw, 7rem);
+      color: transparent;
+      -webkit-text-stroke: clamp(1px, 0.13vw, 2px) var(--paper-hot);
+      text-stroke: clamp(1px, 0.13vw, 2px) var(--paper-hot);
+    }
+    .hero-title .ritchie { color: var(--paper-hot); }
+
+    .hero-deck {
+      align-self: end;
+      padding: 1.25rem 0 0;
+      border-top: 6px solid var(--cobalt);
+    }
+    .hero-deck strong {
+      display: block;
+      margin-bottom: 0.65rem;
+      font: 700 clamp(1.25rem, 2.1vw, 2.25rem)/0.98 var(--condensed);
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+    .hero-deck p {
+      margin: 0;
+      color: rgba(255,255,255,0.73);
+      font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+    }
+
+    .hero-caption {
+      grid-column: 1 / -1;
+      margin-top: clamp(2.5rem, 8vh, 6rem);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      font: 500 0.68rem/1.45 var(--mono);
+      color: rgba(255,255,255,0.58);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .ticker {
+      contain: layout paint;
+      overflow: hidden;
+      background: var(--signal-red);
+      color: white;
+      border-block: 1px solid var(--ink);
+      font: 700 clamp(1rem, 1.8vw, 1.55rem)/1 var(--condensed);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 24s linear infinite;
+    }
+    .ticker-track span { padding: 0.85rem 2rem; white-space: nowrap; }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    .broadcast {
+      background: var(--paper-hot);
+      color: var(--ink);
+      padding: clamp(4.5rem, 8vw, 8rem) 0;
+    }
+
+    .broadcast-topline {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+      font: 600 0.68rem/1 var(--mono);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .broadcast-topline::before,
+    .broadcast-topline::after {
+      content: "";
+      height: 1px;
+      background: var(--ink);
+    }
+
+    .broadcast-heading {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      align-items: stretch;
+    }
+
+    .broadcast-slug {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 19rem;
+      overflow: hidden;
+      background: var(--cobalt);
+      color: white;
+      border: 1px solid var(--ink);
+    }
+    .broadcast-slug::before {
+      content: "LIVE";
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.38rem 0.65rem;
+      background: var(--signal-red);
+      color: white;
+      font: 700 0.72rem/1 var(--mono);
+      letter-spacing: 0.15em;
+    }
+    .broadcast-slug span {
+      transform: rotate(-90deg);
+      font: 700 clamp(3.1rem, 7vw, 7.5rem)/0.78 var(--condensed);
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .broadcast-title-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-block: 1px solid var(--ink);
+      padding: 1.25rem 0 1.5rem;
+    }
+    .broadcast-title {
+      margin: 0;
+      max-width: 12ch;
+      font: 900 clamp(3.2rem, 8.5vw, 9rem)/0.78 var(--display);
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+    .broadcast-subhead {
+      margin: 2rem 0 0;
+      max-width: 53rem;
+      font: 700 clamp(1.15rem, 2.2vw, 2.05rem)/1.02 var(--condensed);
+      text-transform: uppercase;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      margin-top: clamp(3rem, 6vw, 6rem);
+    }
+    .about-copy {
+      column-count: 2;
+      column-gap: clamp(1.5rem, 4vw, 4rem);
+      font-family: var(--body);
+      font-size: clamp(1rem, 1.25vw, 1.18rem);
+      line-height: 1.78;
+    }
+    .about-copy p { margin: 0 0 1.25rem; }
+    .about-copy p:first-child::first-letter {
+      float: left;
+      margin: 0.08em 0.12em 0 0;
+      color: var(--signal-red);
+      font: 900 4.7em/0.72 var(--display);
+    }
+
+    .lower-third {
+      align-self: start;
+      border: 1px solid var(--ink);
+      background: white;
+      box-shadow: 10px 10px 0 var(--ink);
+    }
+    .lower-third-name {
+      padding: 1.2rem 1.25rem;
+      background: var(--cobalt);
+      color: white;
+      font: 700 clamp(1.6rem, 3vw, 3rem)/0.95 var(--condensed);
+      text-transform: uppercase;
+    }
+    .lower-third-role {
+      padding: 0.9rem 1.25rem;
+      font: 600 0.73rem/1.45 var(--mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .lower-third-list {
+      display: grid;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--ink);
+    }
+    .lower-third-list li {
+      display: grid;
+      grid-template-columns: 3.75rem 1fr;
+      gap: 1rem;
+      padding: 0.88rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.86rem;
+    }
+    .lower-third-list li:last-child { border-bottom: 0; }
+    .lower-third-list b {
+      color: var(--signal-red);
+      font: 600 0.65rem/1.45 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .metrics {
+      background: var(--ink);
+      color: var(--paper-hot);
+      padding: 1px 0;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-left: 1px solid rgba(255,255,255,0.25);
+    }
+    .metric {
+      min-height: 13rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 2rem;
+      padding: clamp(1.3rem, 3vw, 2.5rem);
+      border-right: 1px solid rgba(255,255,255,0.25);
+    }
+    .metric-number {
+      font: 900 clamp(3rem, 6vw, 6.5rem)/0.85 var(--display);
+      letter-spacing: -0.06em;
+    }
+    .metric:nth-child(2) .metric-number { color: var(--signal-red); }
+    .metric:nth-child(3) .metric-number { color: #5e88ff; }
+    .metric:nth-child(4) .metric-number { color: var(--gold); }
+    .metric-label {
+      max-width: 22ch;
+      font: 600 0.73rem/1.4 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.67);
+    }
+
+    .experience {
+      background: var(--soft-ink);
+      padding: clamp(5rem, 9vw, 9rem) 0;
+    }
+
+    .section-number {
+      margin: 0 0 1rem;
+      color: var(--signal-red);
+      font: 600 0.73rem/1 var(--mono);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .section-display {
+      margin: 0 0 clamp(3rem, 7vw, 6rem);
+      font: 900 clamp(4rem, 10vw, 10rem)/0.78 var(--display);
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+
+    .chapter-list { display: grid; gap: 1.25rem; }
+    .chapter {
+      display: grid;
+      grid-template-columns: minmax(6rem, 0.24fr) minmax(0, 1fr) minmax(230px, 0.38fr);
+      min-height: 19rem;
+      border: 1px solid rgba(255,255,255,0.26);
+      background: var(--ink);
+      color: white;
+    }
+    .chapter:nth-child(even) {
+      background: var(--paper-hot);
+      color: var(--ink);
+      border-color: var(--paper-hot);
+    }
+    .chapter-index {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid currentColor;
+      font: 900 clamp(3rem, 5vw, 5.5rem)/0.8 var(--display);
+      color: var(--signal-red);
+    }
+    .chapter-main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(1.5rem, 4vw, 3.5rem);
+    }
+    .chapter-company {
+      margin: 0;
+      font: 900 clamp(2.6rem, 6vw, 6.7rem)/0.78 var(--display);
+      letter-spacing: -0.058em;
+      text-transform: uppercase;
+    }
+    .chapter-title {
+      margin: 1rem 0 0;
+      font: 700 clamp(1rem, 2vw, 1.7rem)/1 var(--condensed);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .chapter-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid currentColor;
+      font: 500 0.68rem/1.4 var(--mono);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .chapter-copy {
+      min-width: 0;
+      overflow-wrap: anywhere;
+      padding: clamp(1.5rem, 3vw, 2.4rem);
+      border-left: 1px solid currentColor;
+      font-size: 0.96rem;
+      line-height: 1.68;
+    }
+    .chapter-copy ul { margin: 0; padding: 0; list-style: none; }
+    .chapter-copy li {
+      position: relative;
+      padding: 0.85rem 0 0.85rem 1.4rem;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    }
+    .chapter-copy li:last-child { border-bottom: 0; }
+    .chapter-copy li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 1.02rem;
+      color: var(--signal-red);
+      font-size: 0.55rem;
+    }
+
+    .portfolio {
+      background: var(--paper);
+      color: var(--ink);
+      padding: clamp(5rem, 9vw, 9rem) 0;
+    }
+    .portfolio .section-number { color: var(--cobalt); }
+    .portfolio .section-display { margin-bottom: 2rem; }
+    .portfolio-intro {
+      max-width: 58rem;
+      margin: 0 0 clamp(3rem, 6vw, 5rem);
+      font: 700 clamp(1.2rem, 2.4vw, 2rem)/1.08 var(--condensed);
+      text-transform: uppercase;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1rem;
+    }
+    .project {
+      min-height: 24rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(1.3rem, 3vw, 2.5rem);
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      overflow: hidden;
+      position: relative;
+    }
+    .project::before {
+      content: attr(data-mark);
+      position: absolute;
+      right: -0.02em;
+      bottom: -0.22em;
+      z-index: 0;
+      color: rgba(0,0,0,0.065);
+      font: 900 clamp(8rem, 21vw, 21rem)/0.7 var(--display);
+      letter-spacing: -0.08em;
+    }
+    .project > * { position: relative; z-index: 1; }
+    .project:nth-child(1) { grid-column: span 7; background: var(--cobalt); color: white; }
+    .project:nth-child(2) { grid-column: span 5; background: var(--paper-hot); }
+    .project:nth-child(3) { grid-column: span 5; background: var(--signal-red); color: white; }
+    .project:nth-child(4) { grid-column: span 7; background: #f4d8a6; }
+    .project:nth-child(5) { grid-column: span 12; min-height: 19rem; background: var(--wine); color: white; }
+
+    .project-label {
+      font: 600 0.69rem/1.4 var(--mono);
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .project h3 {
+      max-width: 10ch;
+      margin: 2rem 0 1.2rem;
+      font: 900 clamp(2.5rem, 5vw, 5.5rem)/0.82 var(--display);
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+    }
+    .project p { max-width: 40rem; margin: 0; font-size: 0.96rem; }
+    .project-evidence {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .project-evidence span {
+      padding: 0.38rem 0.55rem;
+      border: 1px solid currentColor;
+      font: 500 0.63rem/1 var(--mono);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.5rem;
+    }
+    .project-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.75rem;
+      padding: 0.65rem 0.8rem;
+      border: 1px solid currentColor;
+      font: 600 0.68rem/1.2 var(--mono);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+    }
+    .project-links a:hover { transform: translateY(-2px); background: var(--ink); color: var(--paper-hot); }
+    .project:nth-child(1) .project-links a:hover,
+    .project:nth-child(3) .project-links a:hover,
+    .project:nth-child(5) .project-links a:hover { background: var(--paper-hot); color: var(--ink); }
+
+    .work-archive { margin-top: clamp(3rem, 7vw, 6rem); border-top: 2px solid var(--ink); }
+    .work-archive summary {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      min-height: 5rem;
+      cursor: pointer;
+      list-style: none;
+      font: 700 clamp(1.2rem, 2.2vw, 2rem)/1 var(--condensed);
+      text-transform: uppercase;
+    }
+    .work-archive summary::-webkit-details-marker { display: none; }
+    .work-archive summary::after { content: "+"; font: 400 2rem/1 var(--mono); }
+    .work-archive[open] summary::after { content: "−"; }
+    .archive-intro { max-width: 65ch; margin: 0 0 2rem; }
+    .archive-group { padding: 2rem 0 2.5rem; border-top: 1px solid var(--rule); }
+    .archive-group h3 { margin: 0 0 0.45rem; font: 900 clamp(1.8rem, 3.6vw, 3.5rem)/0.95 var(--display); text-transform: uppercase; }
+    .archive-group > p { max-width: 65ch; margin: 0 0 1.4rem; }
+    .archive-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.8rem; }
+    .archive-gallery a { display: block; color: inherit; font: 600 0.67rem/1.35 var(--mono); text-decoration: none; }
+    .archive-gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid var(--ink); background: var(--paper-dim); }
+    .archive-gallery span { display: block; padding-top: 0.45rem; }
+    .archive-docs { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .archive-docs a { padding: 0.75rem 0.9rem; border: 1px solid var(--ink); font: 600 0.68rem/1.3 var(--mono); text-decoration: none; text-transform: uppercase; }
+
+    .playbill {
+      background: #e9dcc7;
+      color: #17110f;
+      padding: clamp(5rem, 9vw, 9rem) 0;
+    }
+    .playbill-frame {
+      position: relative;
+      padding: clamp(1.4rem, 4vw, 4rem);
+      border: 3px double #3c2923;
+      outline: 1px solid #3c2923;
+      outline-offset: -0.65rem;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(111,23,51,0.08), transparent 26%),
+        radial-gradient(circle at 86% 82%, rgba(201,154,69,0.12), transparent 30%),
+        #efe4d2;
+    }
+    .playbill-pretitle {
+      margin: 0;
+      text-align: center;
+      font: 600 0.72rem/1 var(--mono);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+    .playbill-title {
+      margin: 0.9rem 0 0;
+      text-align: center;
+      font: 900 clamp(3.6rem, 9vw, 9rem)/0.8 var(--display);
+      letter-spacing: -0.065em;
+      text-transform: uppercase;
+    }
+    .playbill-subtitle {
+      max-width: 44rem;
+      margin: 1.3rem auto 3rem;
+      text-align: center;
+      font: 700 clamp(1rem, 1.7vw, 1.4rem)/1.2 var(--condensed);
+      text-transform: uppercase;
+    }
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin: 1.5rem 0 2.5rem;
+      color: var(--wine);
+    }
+    .ornament::before, .ornament::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid #3c2923;
+      border-bottom: 1px solid #3c2923;
+    }
+    .skill-column {
+      padding: clamp(1.25rem, 3vw, 2.4rem);
+      border-right: 1px solid #3c2923;
+    }
+    .skill-column:last-child { border-right: 0; }
+    .skill-column h3 {
+      margin: 0 0 1.2rem;
+      color: var(--wine);
+      font: 900 clamp(1.75rem, 3vw, 3rem)/0.9 var(--display);
+      text-transform: uppercase;
+    }
+    .skill-column ul { list-style: none; margin: 0; padding: 0; }
+    .skill-column li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.72rem 0;
+      border-bottom: 1px dotted rgba(23,17,15,0.46);
+      font: 600 0.92rem/1.3 var(--condensed);
+      text-transform: uppercase;
+    }
+    .skill-column li::after { content: "◆"; color: var(--gold); font-size: 0.55rem; padding-top: 0.35rem; }
+
+    .contact {
+      min-height: 95svh;
+      display: grid;
+      align-items: center;
+      background:
+        linear-gradient(90deg, transparent 49.93%, rgba(255,255,255,0.08) 50%, transparent 50.07%),
+        var(--ink);
+      padding: 5rem 0 2rem;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: clamp(2rem, 7vw, 8rem);
+      align-items: end;
+    }
+    .contact-copy h2 {
+      margin: 0;
+      font: 900 clamp(3rem, 8vw, 8rem)/0.78 var(--display);
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+    }
+    .contact-copy p {
+      max-width: 36rem;
+      margin: 1.5rem 0 2.5rem;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+    }
+    .contact-links { display: grid; gap: 0.75rem; }
+    .contact-links a {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.34);
+      text-decoration: none;
+      font: 600 0.77rem/1.4 var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .contact-links a:hover span:last-child,
+    .contact-links a:focus-visible span:last-child { color: var(--signal-red); }
+
+    .fin {
+      text-align: right;
+      font: italic 900 clamp(8rem, 23vw, 24rem)/0.6 var(--display);
+      letter-spacing: -0.09em;
+      color: var(--paper-hot);
+    }
+    .fin-dot { color: var(--signal-red); }
+
+    .footer-line {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: clamp(4rem, 10vh, 8rem);
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.55);
+      font: 500 0.65rem/1.45 var(--mono);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 550ms ease, transform 550ms cubic-bezier(.2,.7,.2,1);
+    }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    @media (max-width: 980px) {
+      .rail-status { display: none; }
+      .site-rail { grid-template-columns: auto 1fr; }
+      .rail-nav { justify-self: end; }
+      .hero-grid,
+      .broadcast-heading,
+      .about-grid,
+      .contact-grid { grid-template-columns: 1fr; }
+      .hero-deck { max-width: 34rem; }
+      .broadcast-slug { min-height: 8rem; }
+      .broadcast-slug span { transform: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .archive-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chapter { grid-template-columns: 5rem 1fr; }
+      .chapter-copy { grid-column: 1 / -1; border-left: 0; border-top: 1px solid currentColor; }
+      .project:nth-child(n) { grid-column: span 6; }
+      .project:nth-child(5) { grid-column: span 12; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-column { border-right: 0; border-bottom: 1px solid #3c2923; }
+      .skill-column:last-child { border-bottom: 0; }
+      .fin { text-align: left; }
+    }
+
+    @media (max-width: 680px) {
+      .site-rail { display: block; min-height: 3.35rem; padding-inline: 0; }
+      .rail-mark, .rail-status { display: none; }
+      .rail-nav { width: 100vw; max-width: 100vw; justify-content: flex-start; gap: 0; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: thin; }
+      .rail-nav a { min-height: 2.75rem; padding: 0 0.85rem; white-space: nowrap; }
+      .hero { padding-top: 5.4rem; }
+      .hero-title { font-size: clamp(4rem, 20vw, 7.3rem); line-height: 0.76; }
+      .hero-title .askew { margin-left: 0; }
+      .hero-caption, .footer-line { flex-direction: column; }
+      .about-copy { column-count: 1; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric { min-height: 10rem; }
+      .archive-gallery { grid-template-columns: 1fr; }
+      .chapter { grid-template-columns: 3.2rem 1fr; }
+      .chapter-index { padding-inline: 0.4rem; font-size: 2.35rem; }
+      .chapter-main { padding: 1.3rem; }
+      .chapter-meta { flex-direction: column; }
+      .project-grid { display: block; }
+      .project { min-height: 21rem; margin-bottom: 1rem; }
+      .playbill-frame { outline-offset: -0.4rem; }
+      .contact { min-height: auto; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <aside class="archive-note" role="note">
+    <p>You're viewing the <strong>archived edition</strong> of this portfolio, kept at a stable URL so older links keep working. The current site lives at <a href="/">tayloraritchie.com</a>. The résumé here is the same file as the live one.</p>
+  </aside>
+
+  <header class="site-rail" aria-label="Site navigation">
+    <div class="rail-mark">TAR / Portfolio / MMXXVI</div>
+    <nav class="rail-nav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Work</a>
+      <a href="#skills">Capabilities</a>
+      <a href="#contact">Contact</a>
+      <a href="/resume/TaylorRitchie_Resume.pdf">Résumé</a>
+    </nav>
+    <div class="rail-status">Rome, Georgia · Available</div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="section-shell hero-grid">
+        <div>
+          <p class="hero-kicker" data-reveal>A personal portfolio in five acts</p>
+          <h1 class="hero-title" id="hero-title" data-reveal>
+            <span>Taylor</span>
+            <span class="askew">Askew</span>
+            <span class="ritchie">Ritchie</span>
+          </h1>
+        </div>
+
+        <aside class="hero-deck" data-reveal aria-label="Professional positioning">
+          <strong>Operations · Systems · Brand</strong>
+          <p>I build the infrastructure behind ambitious work: data systems, development operations, reporting, communications, and the processes that keep all of it moving.</p>
+        </aside>
+
+        <div class="hero-caption">
+          <span>Nonprofit administration / Power Platform / development systems</span>
+          <span>Scroll to begin →</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Systems that work · reports that explain · brands people trust · operations that hold</span>
+        <span>Systems that work · reports that explain · brands people trust · operations that hold</span>
+      </div>
+    </div>
+
+    <section class="broadcast" id="about" aria-labelledby="about-title">
+      <div class="section-shell">
+        <div class="broadcast-topline"><span>Special report · Professional profile</span></div>
+
+        <div class="broadcast-heading">
+          <div class="broadcast-slug" data-reveal><span>About</span></div>
+          <div class="broadcast-title-wrap" data-reveal>
+            <h2 class="broadcast-title" id="about-title">The systems work.</h2>
+            <p class="broadcast-subhead">Because the person building them understands the mission, the money, the data, the message, and the people doing the work.</p>
+          </div>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-copy" data-reveal>
+            <p>I build the systems that make fundraising and nonprofit operations work — the donor databases, grant-tracking frameworks, reporting infrastructure, automations, brand standards, and operating procedures that turn scattered activity into something visible and usable.</p>
+            <p>As the sole systems developer and operations administrator for a homeless-services nonprofit, I designed and ran the data environment behind more than $855,000 in annual revenue while managing donor operations, grant reporting, communications, privacy responsibilities, and cross-functional process design.</p>
+            <p>My work sits where technical architecture meets human judgment. I can map a Dataverse relationship, write a board-ready report, reconcile a payment workflow, shape a campaign, document the process, and explain why the system should exist in the first place.</p>
+          </div>
+
+          <aside class="lower-third" data-reveal aria-label="Professional summary">
+            <div class="lower-third-name">Taylor Askew Ritchie</div>
+            <div class="lower-third-role">Systems builder · development operations · communications</div>
+            <ul class="lower-third-list">
+              <li><b>Base</b><span>Rome, Georgia · Remote-ready</span></li>
+              <li><b>Build</b><span>Power Apps, Dataverse, Power Automate, Power BI</span></li>
+              <li><b>Run</b><span>Fundraising operations, grants, reporting, compliance</span></li>
+              <li><b>Shape</b><span>Brand systems, campaigns, documentation, programs</span></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics" aria-label="Selected impact metrics">
+      <div class="section-shell metrics-grid">
+        <article class="metric" data-reveal>
+          <div class="metric-number">$855K+</div>
+          <div class="metric-label">Annual revenue supported through systems and reporting</div>
+        </article>
+        <article class="metric" data-reveal>
+          <div class="metric-number">379</div>
+          <div class="metric-label">Donor records managed in the CRM</div>
+        </article>
+        <article class="metric" data-reveal>
+          <div class="metric-number">~199</div>
+          <div class="metric-label">Dataverse tables architected across the environment</div>
+        </article>
+        <article class="metric" data-reveal>
+          <div class="metric-number">$80K</div>
+          <div class="metric-label">Grant supported by a custom KPI and outcomes framework</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="experience" id="experience" aria-labelledby="experience-title">
+      <div class="section-shell">
+        <p class="section-number">Act II · Selected experience</p>
+        <h2 class="section-display" id="experience-title" data-reveal>Work,<br>in chapters.</h2>
+
+        <div class="chapter-list">
+          <article class="chapter" data-reveal>
+            <div class="chapter-index">I</div>
+            <div class="chapter-main">
+              <div>
+                <h3 class="chapter-company">Davies<br>Shelters</h3>
+                <p class="chapter-title">Development Administrator</p>
+              </div>
+              <div class="chapter-meta"><span>September 2022 — April 2026</span><span>Rome, Georgia</span></div>
+            </div>
+            <div class="chapter-copy">
+              <ul>
+                <li>Built and administered the Power Platform and Dataverse environment supporting donor, grant, program, shelter, and reporting workflows.</li>
+                <li>Ran annual giving operations, donor records, gift processing, acknowledgments, campaign communications, and reconciliation.</li>
+                <li>Designed KPI frameworks, dashboards, mid-year reports, final reports, operating manuals, and brand systems.</li>
+                <li>Served as Privacy Officer and translated policy into practical staff workflows and documentation.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="chapter" data-reveal>
+            <div class="chapter-index">II</div>
+            <div class="chapter-main">
+              <div>
+                <h3 class="chapter-company">United<br>Way</h3>
+                <p class="chapter-title">Community Resource Navigator</p>
+              </div>
+              <div class="chapter-meta"><span>October 2021 — May 2022</span><span>Rome, Georgia</span></div>
+            </div>
+            <div class="chapter-copy">
+              <ul>
+                <li>Operated the community resource line, connecting residents in crisis with appropriate services and partner agencies.</li>
+                <li>Built and maintained the partner-organization database used to match callers with resources and identify community-need trends.</li>
+                <li>Converted frontline service knowledge into structured, searchable operational information.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="chapter" data-reveal>
+            <div class="chapter-index">III</div>
+            <div class="chapter-main">
+              <div>
+                <h3 class="chapter-company">Rome Floyd<br>Chamber</h3>
+                <p class="chapter-title">Programs Coordinator</p>
+              </div>
+              <div class="chapter-meta"><span>June 2019 — September 2021</span><span>Rome, Georgia</span></div>
+            </div>
+            <div class="chapter-copy">
+              <ul>
+                <li>Planned and produced a multi-day, 100-booth business expo with sponsorship, vendor, marketing, and event logistics.</li>
+                <li>Managed leadership programs, curriculum, speakers, sponsors, and participant communications.</li>
+                <li>Designed a Diversity &amp; Inclusion program framework and carried it through public events and community engagement.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio" id="work" aria-labelledby="work-title">
+      <div class="section-shell">
+        <p class="section-number">Act III · Evidence</p>
+        <h2 class="section-display" id="work-title" data-reveal>Selected<br>work.</h2>
+        <p class="portfolio-intro" data-reveal>The portfolio is not a gallery of disconnected deliverables. It is evidence that I can design the system, run the work, measure the result, and communicate what happened.</p>
+
+        <div class="project-grid">
+          <article class="project" data-mark="01" data-reveal>
+            <div>
+              <div class="project-label">Systems &amp; operations</div>
+              <h3>Nonprofit Power Platform Ecosystem</h3>
+              <p><strong>Need:</strong> replace scattered records and manual work with a governed system. <strong>Build:</strong> Model-Driven and Canvas apps, Dataverse architecture, field-level security, flows, dashboards, and JavaScript resources. <strong>Value:</strong> one connected environment for intake, case management, fundraising, grants, and finance.</p>
+            </div>
+            <div class="project-evidence"><span>Dataverse</span><span>Power Apps</span><span>Power Automate</span><span>Power BI</span></div>
+            <div class="project-links"><a href="/systemhorizon/">View SystemHorizon</a><a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener noreferrer">Explore GitHub</a></div>
+          </article>
+
+          <article class="project" data-mark="02" data-reveal>
+            <div>
+              <div class="project-label">Development finance</div>
+              <h3>Annual Giving Revenue Engine</h3>
+              <p><strong>Need:</strong> make annual giving visible from campaign plan through reconciliation. <strong>Build:</strong> a repeatable operating model connecting donor records, payment channels, stewardship, calendars, and reporting. <strong>Value:</strong> development and finance work from the same evidence trail.</p>
+            </div>
+            <div class="project-evidence"><span>CRM</span><span>Reconciliation</span><span>Stewardship</span></div>
+          </article>
+
+          <article class="project" data-mark="03" data-reveal>
+            <div>
+              <div class="project-label">Grants &amp; measurement</div>
+              <h3>Grant KPI Framework</h3>
+              <p><strong>Need:</strong> turn grant promises into auditable measurement. <strong>Build:</strong> twenty measures around nine required KPIs, with targets, methods, live capture, and reporting logic. <strong>Value:</strong> staff activity, outcomes, and funder reports stay connected.</p>
+            </div>
+            <div class="project-evidence"><span>Outcomes</span><span>Grant reporting</span><span>Data model</span></div>
+          </article>
+
+          <article class="project" data-mark="04" data-reveal>
+            <div>
+              <div class="project-label">Branding &amp; communications</div>
+              <h3>Brand System &amp; Campaign Design</h3>
+              <p><strong>Need:</strong> create a coherent public identity across channels. <strong>Build:</strong> brand standards, voice, web information architecture, donor messaging, and campaign templates. <strong>Value:</strong> consistent communication staff could apply without a full agency.</p>
+            </div>
+            <div class="project-evidence"><span>Brand strategy</span><span>Copy</span><span>Campaigns</span><span>Design</span></div>
+            <div class="project-links"><a href="#work-archive">View design evidence</a></div>
+          </article>
+
+          <article class="project" data-mark="05" data-reveal>
+            <div>
+              <div class="project-label">Program &amp; community design</div>
+              <h3>Diversity &amp; Inclusion Program</h3>
+              <p><strong>Need:</strong> move inclusion work from intention to programming. <strong>Build:</strong> a stakeholder-informed framework spanning directory, roundtable, summit, attraction, retention, and public events. <strong>Value:</strong> a practical program structure the Chamber could operate.</p>
+            </div>
+            <div class="project-evidence"><span>Program design</span><span>Stakeholder engagement</span><span>Event delivery</span></div>
+          </article>
+        </div>
+
+        <details class="work-archive" id="work-archive">
+          <summary>Additional work and supporting evidence</summary>
+          <p class="archive-intro">The featured cases explain the operating problem and Taylor’s role. This archive preserves representative public-facing artifacts from the broader portfolio without loading every full-resolution image at page start.</p>
+
+          <section class="archive-group" aria-labelledby="web-archive">
+            <h3 id="web-archive">Web and information architecture</h3>
+            <p>Selected pages from the Davies Shelters website redesign, including donor, program, and community-resource journeys.</p>
+            <div class="archive-gallery">
+              <a href="/img/portfolio/davies/web-home1.png"><img src="/img/portfolio/davies/web-home1.png" width="1920" height="4615" alt="Davies Shelters homepage redesign" loading="lazy" decoding="async"><span>Homepage and mission framing</span></a>
+              <a href="/img/portfolio/davies/web-donate1.1.png"><img src="/img/portfolio/davies/web-donate1.1.png" width="1920" height="4615" alt="Davies Shelters donation page redesign" loading="lazy" decoding="async"><span>Donation journey</span></a>
+              <a href="/img/portfolio/davies/web-resourcemain7.png"><img src="/img/portfolio/davies/web-resourcemain7.png" width="1920" height="5455" alt="Davies Shelters community resource library" loading="lazy" decoding="async"><span>Resource library architecture</span></a>
+              <a href="/img/portfolio/davies/web-needshelter8.png"><img src="/img/portfolio/davies/web-needshelter8.png" width="1920" height="4415" alt="Davies Shelters emergency shelter information page" loading="lazy" decoding="async"><span>Need-shelter pathway</span></a>
+            </div>
+          </section>
+
+          <section class="archive-group" id="brand-archive" aria-labelledby="brand-archive-title">
+            <h3 id="brand-archive-title">Brand and campaign systems</h3>
+            <p>Representative social and campaign applications across nonprofit, civic, and community organizations.</p>
+            <div class="archive-gallery">
+              <a href="/img/portfolio/daviessocials/sacredworth.png"><img src="/img/portfolio/daviessocials/sacredworth.png" width="1080" height="1350" alt="Davies Shelters Sacred Worth campaign graphic" loading="lazy" decoding="async"><span>Davies campaign system</span></a>
+              <a href="/img/portfolio/daviessocials/values.png"><img src="/img/portfolio/daviessocials/values.png" width="1080" height="1080" alt="Davies Shelters organizational values graphic" loading="lazy" decoding="async"><span>Mission and values series</span></a>
+              <a href="/img/portfolio/bonny4ga/4.png"><img src="/img/portfolio/bonny4ga/4.png" width="1080" height="1080" alt="Bonny 4 Georgia civic campaign graphic" loading="lazy" decoding="async"><span>Civic campaign design</span></a>
+              <a href="/img/portfolio/mba/mba_events.png"><img src="/img/portfolio/mba/mba_events.png" width="1080" height="1080" alt="Northwest Georgia Minority Business Association events graphic" loading="lazy" decoding="async"><span>Community event communications</span></a>
+            </div>
+          </section>
+
+          <section class="archive-group" aria-labelledby="docs-archive">
+            <h3 id="docs-archive">Operations documentation</h3>
+            <p>Long-form systems evidence retained as downloadable PDFs. These are archival work samples and may contain historical organizational language.</p>
+            <div class="archive-docs">
+              <a href="/img/portfolio/davieswritings/WDS_Operations_Manual_26.pdf">Operations Manual · PDF</a>
+              <a href="/img/portfolio/davieswritings/WDS_Employee_Handbook.pdf">Employee Handbook · PDF</a>
+            </div>
+          </section>
+        </details>
+      </div>
+    </section>
+
+    <section class="playbill" id="skills" aria-labelledby="skills-title">
+      <div class="section-shell">
+        <div class="playbill-frame" data-reveal>
+          <p class="playbill-pretitle">For one professional engagement only</p>
+          <h2 class="playbill-title" id="skills-title">Presenting</h2>
+          <p class="playbill-subtitle">A repertory of systems, development operations, communications, and practical organizational infrastructure</p>
+          <div class="ornament" aria-hidden="true">◆ ◇ ✦ ◇ ◆</div>
+
+          <div class="skills-grid">
+            <section class="skill-column" aria-labelledby="systems-heading">
+              <h3 id="systems-heading">Systems</h3>
+              <ul>
+                <li>Power Apps</li>
+                <li>Dataverse architecture</li>
+                <li>Power Automate</li>
+                <li>Power BI</li>
+                <li>SharePoint</li>
+                <li>Process documentation</li>
+              </ul>
+            </section>
+
+            <section class="skill-column" aria-labelledby="development-heading">
+              <h3 id="development-heading">Development</h3>
+              <ul>
+                <li>Annual giving</li>
+                <li>Donor operations</li>
+                <li>Gift processing</li>
+                <li>Grant administration</li>
+                <li>KPI frameworks</li>
+                <li>Revenue reporting</li>
+              </ul>
+            </section>
+
+            <section class="skill-column" aria-labelledby="craft-heading">
+              <h3 id="craft-heading">Craft</h3>
+              <ul>
+                <li>Brand systems</li>
+                <li>Campaign strategy</li>
+                <li>Donor communications</li>
+                <li>Editorial design</li>
+                <li>Program design</li>
+                <li>Cross-functional support</li>
+              </ul>
+            </section>
+          </div>
+
+          <div class="ornament" aria-hidden="true">◆ ◇ ✦ ◇ ◆</div>
+          <p class="playbill-pretitle">Designed, built, documented, operated</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="section-shell contact-grid">
+        <div class="contact-copy" data-reveal>
+          <p class="section-number">Act V · The close</p>
+          <h2 id="contact-title">Let’s build something that holds.</h2>
+          <p>I am interested in roles where systems thinking, development operations, communications, reporting, and practical execution belong in the same job.</p>
+
+          <div class="contact-links">
+            <a href="mailto:taylor.ritchie14@gmail.com"><span>Email</span><span>taylor.ritchie14@gmail.com ↗</span></a>
+            <a href="https://www.linkedin.com/in/taylor-askew-ritchie-126618133" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span>/in/taylor-askew-ritchie ↗</span></a>
+            <a href="https://github.com/TheLittlestAskew" target="_blank" rel="noopener noreferrer"><span>GitHub</span><span>/TheLittlestAskew ↗</span></a>
+            <a href="/resume/TaylorRitchie_Resume.pdf"><span>Résumé</span><span>View current PDF ↗</span></a>
+            <a href="tel:+17067677196"><span>Phone</span><span>706&#8209;767&#8209;7196&nbsp;↗</span></a>
+            <a href="/systemhorizon/"><span>Technical work</span><span>SystemHorizon ↗</span></a>
+          </div>
+        </div>
+
+        <div class="fin" data-reveal>Fin<span class="fin-dot">.</span></div>
+
+        <footer class="footer-line">
+          <span>© 2026 Taylor Askew Ritchie</span>
+          <span>Operations · Systems · Brand</span>
+          <span>Rome, Georgia</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"ProfilePage","dateModified":"2026-07-20","mainEntity":{"@type":"Person","name":"Taylor Askew Ritchie","url":"https://tayloraritchie.com/","description":"Operations and business systems professional","image":"https://tayloraritchie.com/img/avatar.png","email":"mailto:taylor.ritchie14@gmail.com","telephone":"+1-706-767-7196","sameAs":["https://www.linkedin.com/in/taylor-askew-ritchie-126618133","https://github.com/TheLittlestAskew"],"jobTitle":"Operations and business systems professional","homeLocation":{"@type":"Place","name":"Rome, Georgia"}}}
+  </script>
+
+  <script>
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+    } else {
+      document.querySelectorAll('[data-reveal]').forEach((element) => element.classList.add('revealed'));
+    }
+  </script>
+</body>
+</html>

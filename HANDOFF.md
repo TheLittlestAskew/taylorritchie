@@ -4,14 +4,25 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-Clear the two remaining human blockers on `SlashGoal_AmongTrees_Ship.md` before the delegation run can start: (1) install the run-persistence plugin — `/plugin install ralph-loop@claude-plugins-official` (it exists in the local marketplace clone but is NOT installed, so no `/ralph-loop` command resolves); (2) decide what `tayls-voice` is — the plan names it as the authority for all narrative chapter copy in Phase 2.2, but it does not exist anywhere in `~/.claude` or the Septentrion vault. Then run Phase 0.1: verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/` (homepage, résumé download, `systemhorizon/` subroute) — still the plan's first task. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
-- Prereq for the whole run: source the CC0 ambient night-audio loop to `audio/night-loop.{ogg,mp3}`. Claude cannot generate or license audio.
+**All tooling prereqs for `SlashGoal_AmongTrees_Ship.md` are now met.** Restart the Claude Code session so the newly installed `ralph-loop` plugin registers its commands (`/ralph-loop` will not resolve until then), then launch Phase 0. Phase 0.1 is still the plan's first task: verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/` (homepage, résumé download, `systemhorizon/` subroute). The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+
+Two decisions Taylor must make at launch, both of which the run cannot make for itself:
+- **Stop-hook contention.** `handoff-guard.ps1` and ralph-loop's `stop-hook.sh` are both on `Stop`. A build run keeps the tree dirty, so the handoff guard fires every iteration and eats the 25-iteration cap on bookkeeping. If the loop should build instead of bank, Taylor must explicitly authorize writing `.git/claude-handoff-skip` (the handoff skill forbids Claude writing it unprompted).
+- **Voice mode for chapter copy (Phase 2.2).** `tayls-voice` defines three modes and forbids blending them, but has no row for storybook chapter copy. Mode 1 (Personal, professional end) keeps the 40-second recruiter screen alive; Mode 3 (Fiction) matches the plan's "narrative lines" language but is gated to creative writing. Recommendation on record: Mode 1 governing, with Mode 3 rhythm devices as a named exception, written into each `spec.json` copy block so it is not re-litigated 14 times.
+
 - All storybook work belongs on `feat/among-trees-storybook`. `main` must stay untouched mid-build.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-31 · Claude Code
+- **Changed:** Closed the last two prereqs for `SlashGoal_AmongTrees_Ship.md`. Installed the `ralph-loop` plugin (via `claude plugin install`, scope user) and `jq` 1.8.2 via scoop — ralph's Stop hook calls `jq` under `set -euo pipefail`, so with `jq` absent it died at exit 127 instead of the exit 2 that blocks a turn, meaning the loop would have silently never looped. Installed the `tayls-voice` skill from its bundle. Added `audio/night-loop.{ogg,mp3}` (96 s, 714 KB / 1.1 MB) plus `audio/CREDITS.md` carrying the mandatory Pixabay attribution HTML.
+- **Commit:** `0d0141a`
+- **Friction:** re-run — `/plugin install ralph-loop@claude-plugins-official` was sent twice and both times arrived as chat text rather than executing; the CLI does not intercept the argument form of `/plugin`. The shell subcommand `claude plugin install ralph-loop@claude-plugins-official` worked first try. Use the shell form, or bare `/plugin` for the interactive picker.
+- **Next:** See the DO NEXT block above — restart the session, then two launch decisions.
+- **Watch out:** The supplied audio was **not loop-safe**: fade-in over the first ~5 s and a fade-out at the tail (−49.4 dB at t=0, −45.7 dB at t=140 s, against a −33 dB body), so a raw loop dips to near-silence every pass. Fixed by trimming to body `[6 s,106 s]`, swapping the halves at the midpoint and crossfading 4 s, which makes the loop point an interior moment of the recording. Seam verified under 0.6 dB variation. Separately: the source filename contains `traffic` and faint road noise may be in the bed — needs a listen on speakers before ship, and replacement rather than filtering if it reads wrong.
 
 ### 2026-07-31 · Claude Code
 - **Changed:** Preflight for `SlashGoal_AmongTrees_Ship.md` (the Among Trees storybook ship goal). Created `feat/among-trees-storybook`; added the repo's first `.gitignore`; added `package.json` + lockfile with `playwright`, `@axe-core/playwright`, and `sharp-cli@5.2.0` so the Phase 6 gates resolve tooling from the repo instead of a machine-global install. Outside this repo: installed three missing skills into `~/.claude/skills` — `luminous-dawn-haze` (the plan's #1 authority, incl. `scripts/compile_dawn.py`), `cynosure`, and `delegation-protocol` (its 4 worker agents were already in `.claude/agents`). Verified the Playwright+axe toolchain end-to-end against a page with a seeded missing `alt` and 1.9:1 text; axe caught both (`image-alt[critical]`, `color-contrast[serious]`), screenshots and console capture work.

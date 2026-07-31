@@ -320,7 +320,7 @@ it is a real gate rather than an eyeball check.
 
 | # | Task | Tier | Status | Retries |
 |---|---|---|---|---:|
-| T1 | Cover spec + `icon_anchors` (4 copy jobs on one deep zone) | Opus | DISPATCHED | 0 |
+| T1 | Cover spec + `icon_anchors` (4 copy jobs on one deep zone) | Opus | **DONE** | 0 |
 | T2 | I — re-target well to ≈62 words + grade brief | Sonnet | **DONE** | 0 |
 | T3 | III + IV specs | Sonnet | **DONE** | 0 |
 | T4 | V spec + **strip near-HIPAA from the copy deck** | Sonnet | **DONE** | 0 |
@@ -355,6 +355,67 @@ Every criterion re-run independently. `compile_prompt.py` exit 0 on all five ret
   full-frame target claims the *entire image* is a text well, the opposite of exempt. Its
   `material`, "the whole frame, measurement exempt", is a meta-statement about measuring rather
   than scene prose naming a surface under a light, and would leak into a prompt as nonsense.
+
+- **T1 (Cover) — PASS.** Well `x[4,44] y[32,90]`, 40% × 58%, `deep`, `status: specified`.
+  `icon_anchors` present with real stacking math: two 18-point columns on the well's x-centre 24,
+  icons at y 64 and labels at y 73, collapsing to a stacked arrangement below ~1100px. Eight
+  contiguous bands fill the well exactly, and the interstitial **reuses** the quiet-gap and
+  icon-row bands because it is temporally exclusive with the other three jobs — which is the
+  insight that makes four copy jobs fit one zone at all. 11,016 characters of argued notes.
+  Three judgement calls, all defensible: it declined to spec the flat `#0D1030` cover-frame field
+  as the deep zone (unmeasurable by `measure_well.py`, a panel under LDH rules, and an inset
+  aperture cannot bleed off an edge); it consolidated the name left because the previews' split
+  TAYLOR…RITCHIE cannot be one measured rectangle; and it set `apply_welcoming_clause: false`,
+  which was the correct call against a real tool defect — see below.
+- **T9 (XII) — round 2 returned a BLOCKER, correctly, instead of inventing a well.** Confirmed
+  independently: `well` is a **required top-level field** and `compile_prompt.py` exits 1 with
+  "spec is missing required field 'well'" when it is absent. The verso schema has no way to
+  express a text-free spread. This is a tooling gap, not a worker failure, and T9 was explicitly
+  invited to report it rather than pick the closest wrong value. **XII cannot be specified until
+  the tool supports it.**
+
+---
+
+## 🛑🛑 CRITICAL TOOL DEFECT — the compiler still asks for golden hour
+
+Found by T1 while writing the cover spec, then **confirmed directly**. `compile_prompt.py` line 122:
+
+```
+WELCOMING_CLAUSE = (
+    "The place is lived-in and welcoming, in the last hour of low golden sunlight with ...
+```
+
+Any spec setting `apply_welcoming_clause: true` compiles a prompt containing **"the last hour of
+low golden sunlight"** — the retired ruling, hard-coded. Verified live: Chapter V's compiled prompt
+carries that exact string right now. Chapters I and II also set the flag `true`.
+
+**Why this is the worst kind of bug on this project.** The prompt asks the generator for golden
+hour, and the gates then measure the result against luminous dawn haze. The two disagree by
+construction, so the loop is **unwinnable** — a worker would burn its 3-attempt cap, exit
+`RETRY-EXHAUSTED`, and the numbers would never explain why. It is precisely the silent-drift
+mechanism the whole compile-don't-hand-write discipline exists to prevent, sitting inside the
+compiler itself.
+
+The comment block above the clause even records its own history: the 2026-07-29 ruling removed
+"dusk or blue hour" and leaned the welcoming read on "the low golden light itself". That reasoning
+retired with golden hour on 2026-07-31; the code did not follow.
+
+**T1's workaround is right for one spec and wrong as a policy.** Writing occupancy cues into scene
+prose by hand is exactly the hand-authoring that causes drift across separately generated chapters.
+Fix the clause, then flip the flag back on.
+
+### Two tool fixes now blocking Phase 3
+
+| # | Fix | Blocks |
+|---|---|---|
+| TF1 | `WELCOMING_CLAUSE` → LDH dawn language (raised ambient floor, lived-in, several lit windows) | **Every** welcoming exterior: Cover, I, II, V, and the night-exterior set |
+| TF2 | Schema + compiler support for a text-free spread with no well | XII only |
+
+Both live in `~/.claude/skills/verso/`. **Deliberately held until T5 and T8 return** — those workers
+execute `compile_prompt.py` to validate their own specs, and editing it underneath them could fail
+their validation for reasons that have nothing to do with their work.
+
+---
 
 ### ⚠️ Doc conflict found during review — `schema.md` vs the copy deck
 

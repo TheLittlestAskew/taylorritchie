@@ -4,45 +4,42 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-🟢 **The verso compiler is FIXED and verified. Phase 2 wave 2 is in flight — four workers (T6, T7, T10, T11). When they clear, all 15 spreads are specced and Phase 2 closes.**
+🟢 **Phase 2 is nearly closed. 15 of 15 spreads have specs; the last reviews are outstanding.** The verso compiler is fixed and verified. Next real phase is **3 — generation**, which is where the cost lives.
 
-**Resume point: review the four wave-2 outputs, then Phase 3 (generation).**
+**`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
 
-1. **Check JSON validity first**, before anything else. There is a known read-write race: T11 edits `06_VI`/`07_VII` while T6 and T7 read them as their pattern reference. If a worker reports an unexplained parse failure on VI or VII, that is the cause and a **re-run** fixes it — do not re-spec. (Sequencing T11 after T6/T7 would have avoided this; do that next time.)
-2. **Re-verify each spec yourself**: `compile_prompt.py` exits 0, valid JSON, `well.status` exactly `specified`, and the compiled prompt contains **no** `golden`/`last hour`/`dusk`/`blue hour`. Chapter I is the one legitimate `verified`.
-3. **Confirm T10's path fix actually resolves** — after it lands, the cross-palette guard should be able to fire for the first time on this project. Test it: a `warm_pocket` spec whose refs all point at other `warm_pocket` chapters must exit 1.
-4. **Then Phase 3.** This is where the real cost lives — 13 spreads to generate, ≤2 Sonnet retries each before Opus escalation, and Opus adjusts the spec, never the gate.
+**Resume point, in order:**
+1. **Re-verify every returned spec yourself.** A worker's claim is not evidence. `compile_prompt.py` must **exit 0**, JSON must be valid, `well.status` must be exactly `specified`, and the compiled prompt must contain **no** `golden` / `last hour` / `dusk` / `blue hour`. **Chapter I is the one legitimate `verified`** — an image exists and was measured, and `--audit` confirms it.
+2. **Fix Chapter X's well class.** The copy deck header reads *"(finance; dark text on whiteboard)"*, which specifies a **pale** well carrying `#1B1B3A`. X was built `deep` because the brief said so — an orchestrator error, over-applying the warm-budget rule. Pale costs no warm budget, so it was never in tension. The whiteboard is the ideal well surface anyway; the marker marks must sit outside the well region, since nothing may cross a well.
+3. **Then Phase 3 — generation.** 13 spreads. ≤2 Sonnet retries each, then Opus escalation, and **Opus adjusts the spec, never the gate.** Run BOTH gates on every master: `check_palette.py` (structural) and `check_dawn_balance.py` (LDH area budget). Passing the first is not sufficient — it is profile-agnostic by design, so golden-hour art sails through it.
 
-**Review contract — do not skip.** Re-verify every returned spec yourself; a worker's claim that it passed is not evidence. `compile_prompt.py` must **exit 0**, JSON must be valid, and `well.status` must be exactly `specified` on the 13 new spreads. **Chapter I is the one legitimate exception** — it holds `verified` because an image exists and was measured, and `measure_well.py --audit` confirms it.
+**Standing rules — decided, do not re-litigate:**
+- **Luminous dawn haze governs all 15 spreads.** Golden hour is retired; "dusk" is not a lighting word here.
+- **Interiors are dawn-lit interiors** (ruled 2026-07-31): cool window light carries the cool 55–72% share, the hearth/lamp is a *local* pocket inside 18–32%, and the violet-rose bridge (12–24%) is mandatory indoors as well as out. A warm well costs 19–27% of the warm ceiling by itself, so an interior gets **a warm well or a warm room, never both.**
+- **Voice:** `tayls-voice` Mode 1. Chapters II–XI are resume content **verbatim** — do not re-voice. Only Cover, I, XIII, XIV are narrative.
+- **Read BOTH goal docs.** `Goal_Amendment_TwoPath_Cover.md` is **authority level 0** and overrides `SlashGoal_AmongTrees_Ship.md` on conflict. Both in `…\Septentrion\Constellations\Resume Site\`.
+- The public contact number is `706-767-7196`. All work stays on `feat/among-trees-storybook`; `main` stays untouched mid-build.
+- 🛑 Root `index.html` is a **throwaway placeholder**. Phase 5 must overwrite it with the Cover. If it reaches production, the build shipped incomplete.
 
-⚠️ **When scanning compiled prompts, check the exit code, not just the output.** A shell-loop scan reported all ten prompts clean on 2026-07-31 and was a false negative: the compile was failing silently and `grep -c` counted zero on empty output. Five were actually failing. Any "all clean" result must prove the command ran.
-
-🛑 **Do not edit `compile_prompt.py` while spec-writing workers are running.** They execute it to validate their own work, and a transient broken state fails them for reasons unrelated to their task. Sequence tool fixes between waves.
-
-**`delegation-ledger.md` is the live state of the storybook run; this file is the pointer.** Read the ledger first: it carries the phase table, the full Phase 1 audit table, the earned gotchas, and the open-risk list. If the session dies mid-run, resume from the ledger, not from zero.
-
-**The blocking decision.** LDH's colour-balance-by-area budget (cool 55–72%, mandatory violet-rose bridge 12–24%, warm 18–32%) is written for dawn **exteriors** and has no interior variant, while verso switches `palette_mode` to `warm_pocket` from VI onward. A fireplace room, a closet, a hallway and a doorway are warm-dominant by construction and cannot hold those ratios. **All six interior chapters fail the cool floor and the bridge band on that mismatch alone** — a spec conflict, not a verdict on the art. Three options are written out at the end of the ledger. Until it is answered, VI / IX / X stay **BLOCKED** and no interior spec gets written. Exterior chapters are unblocked and Phase 2.1 can start on them now.
-
-**Phase 1 result — 2 of 15 spreads survive.** Keep II (`v2`, the only image inside all three area bands). Grade I (`v13`, warmth +4 pts and a bright core; colour-class fix, so grade not re-roll). Regenerate V, VII, VIII, XI. Blocked: VI, IX, X. **No art at all exists for the Cover spread, III, IV, XII, XIII, XIV.**
-
-⚠️ **Correction to the standing note below: Chapter I's `verified` was called stale on two counts and only one holds.** Its geometry and contrast are fine — re-measured 2026-07-31, 11.68:1 at 40% × 56%, identical to the stored numbers, and `measure_well.py --audit` is clean on both specs. What fails is its **atmosphere** (warm 14.0% under the 18% floor, cores 0.7% under the 1% floor). Copy length cannot change a contrast ratio; whether v2.1's ≈62 words *fit* is a 2.2/5 question. **Do not re-roll I's well hunting a number that is already correct.**
-
-⚠️ **New gate in the toolchain:** `~/.claude/skills/luminous-dawn-haze/scripts/check_dawn_balance.py`. Passing `check_palette.py` is no longer sufficient — its two gates are profile-agnostic by design, so golden-hour art passes them. Run both from Phase 3 onward.
-
-**Read BOTH goal documents.** `Goal_Amendment_TwoPath_Cover.md` is **authority level 0** and overrides `SlashGoal_AmongTrees_Ship.md` wherever they conflict. Both are in `…\Septentrion\Constellations\Resume Site\`. The amendment was previously orphaned — the ralph invocation named only the goal file, so an autonomous run would have silently skipped the two-path cover, the interstitial, and the Resume Spread Page. That is fixed; keep it that way.
-
-**Ruling on Phase 2.2 voice — decided, do not re-litigate:** chapter copy uses `tayls-voice` **Mode 1 (Personal Voice, professional end)**. Mode 3 (Fiction) is not used. Write the ruling into each `spec.json` copy block so all 14 chapters resolve it identically. Chapters II–XI are resume content **verbatim** — do not re-voice them.
-
-**Correction to the 2026-07-31 entry below: the handoff guard was never actually suspended.** `.git\claude-handoff-skip` is present and 0 bytes, but a blank file does **not** skip. `Get-Content -Raw` returns `$null` on a 0-byte file, `.Trim()` throws, and the `catch` returns `$false` — so `Test-SkipRequested` reports *not skipped*, the opposite of what line 143's comment intends. Verified empirically 2026-07-31. The guard has been live the whole time and correctly caught this session's work. The file is inert and misleading; **delete it in Phase 7 before the merge** as planned, but it is housekeeping now, not a live risk.
-
-- All storybook work belongs on `feat/among-trees-storybook`. `main` must stay untouched mid-build.
-- The public contact number is `706-767-7196` (July 20, 2026 master résumé source).
-- 🛑 Root `index.html` is a **throwaway placeholder**. Phase 5 must overwrite it with the storybook Cover. If it reaches production, the build shipped incomplete.
+**Traps that have already cost time here:**
+- ⚠️ **Paths in specs are guilty until proven innocent.** The OneDrive-vs-vault naming split bit three times in one session. Canonical root is the vault: `…\Resume Siteesume art\<NN>_<NUMERAL>\`. A stale path made the cross-palette guard silently inert on every spread until 2026-07-31.
+- ⚠️ **Fix a worked example before fanning out from it**, or state the contested values literally in the brief. III and IV inherited stale paths by faithfully copying `01_I` while it was still wrong.
+- ⚠️ **When scanning compiled prompts, check the exit code, not just the output.** A shell-loop scan reported all ten clean and was a false negative — the compile was failing silently and `grep -c` counted zero on empty output. Five were actually failing.
+- 🛑 **Never edit `compile_prompt.py` while spec workers are running**, and map **reads** as well as writes when planning waves. Non-overlapping writes is not the same as no conflict.
+- ⚠️ `.git\claude-handoff-skip` is present, 0 bytes, and **inert** — a blank file does not skip. Delete it in Phase 7 before the merge. Housekeeping, not a live risk.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-07-31 23:15 ET · Claude Code
+- **Changed:** Closed out most of Phase 2 wave 2. **XII is unblocked** — it compiles at exit 0 with no well at all, so the `text_free` path works end to end. **The cross-palette guard now fires for the first time in this project's history**: tested both directions after the path fix, a warm-on-warm chain exits 1 and a cool anchor exits 0. It had been silently inert on every spread. **Chapter I's derivation chain is repaired** — `chapter-i-gen-v12.png`, the base its master was edited from, did not exist in the vault, so the master was not reproducible from the canonical location; copied in and SHA256-verified. The welcoming clause is re-enabled on all five specs that had dodged it, and the Cover's single-window conflict is reconciled to three lit windows with the tall path-side one as the brightest core, preserving both the 1–5% bright-cores band and the aperture push-in target. Also trimmed the live log to the contract's 15 entries, archiving June to `handoff-archive/2026-06.md`, and rewrote the DO NEXT block, which had accumulated stale paragraphs still claiming VI/IX/X were blocked and a decision was pending — both resolved hours earlier.
+- **Commit:** `7036875`
+- **Friction:** misread — briefed Chapter X as a `deep` well on both X and XI, over-applying T5's warm-budget rule. The copy deck's X header reads *"(finance; dark text on whiteboard)"*, which specifies a **pale** well carrying `#1B1B3A`. The budget rule was about *warm* wells specifically; a pale well costs no warm budget, so there was never any tension to resolve. The worker followed the instruction and flagged the conflict, which is the correct behaviour — the error was mine, in the brief. Read the copy deck's own per-chapter annotations before specifying a well class; they carry layout intent, not just content.
+- **Friction:** gen-fail — let the DO NEXT block rot across five updates. New content was prepended each time without pruning superseded paragraphs, so it simultaneously said the interior ruling was pending, that VI/IX/X were blocked, and that those things were resolved. Anyone resuming cold would have followed the stale half. The block is a **pointer, not an append-only log**; rewrite it whole each time rather than adding to the top.
+- **Next:** Fix Chapter X's well class to pale, finish reviewing T6, then Phase 3 generation. See DO NEXT.
+- **Watch out:** ⚠️ **Paths inside specs are guilty until proven innocent.** The OneDrive-vs-vault naming split has now bitten three separate times in one session: it caused a false "no art at all" audit finding, it left `output_dir` pointing at directories that do not exist, and it is why the cross-palette guard never fired. It also **propagated** — III and IV inherited stale paths by faithfully copying `01_I` as a worked example while that example was still wrong. Fix a reference example before fanning out from it, or state the contested values literally in each brief. A path sweep found more defects than the original targeted fix did.
 
 ### 2026-07-31 22:05 ET · Claude Code
 - **Changed:** Fixed the three verso compiler defects that were blocking generation, then dispatched Phase 2 wave 2. **TF1** rewrote `WELCOMING_CLAUSE` in dawn language — all ten chapters now compile clean, with zero occurrences of `golden`/`last hour`/`dusk`/`blue hour` where five previously carried them. **TF2** added a first-class top-level `"text_free": true`, deliberately not a fourth `treatment` value, since `treatment` describes the shape of a well that exists while the claim here is about the spread. **TF3** inverted the cross-palette guard rather than deleting it: it now refuses warm-on-warm reference chaining while permitting a cool exterior anchor for an interior, which the dawn-lit ruling makes correct. All six acceptance criteria re-verified independently. Wave 2 dispatched: T6 (VIII+IX), T7 (X+XI), T10 (stale paths + XII's flag), T11 (re-enable the welcoming clause on the five specs that dodged the bug).
@@ -138,12 +135,4 @@
 - **Commit:** `b35e590`
 - **Next:** Review the concept, revise the art direction/content, then promote the approved design into `index.html` and reconnect the complete portfolio assets.
 
-### 2026-06-28 12:58 ET · Claude chat
-- **Changed:** Merged the SystemHorizon control panel into `systemhorizon/` (sub-route of tayloraritchie.com) via git subtree --squash; dropped stale meridian-keystone.html and the nested handoff.
-- **Commit:** `2bc88ba`
-- **Next:** Repoint the systemhorizon-build skill; archive the old SystemHorizon repo.
-
-### 2026-06-23 09:37 ET · Claude chat
-- **Changed:** Enabled repo handoff — added this `HANDOFF.md` at root.
-- **Commit:** `docs: enable repo handoff`
-- **Next:** Set by the next real change to the repo.
+> Older entries archived to `handoff-archive/2026-06.md`.

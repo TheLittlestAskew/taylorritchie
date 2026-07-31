@@ -724,11 +724,38 @@ re-voice them; only Cover, I, XIII, XIV are narrative.
 
 ---
 
-## Phases 3–7 — not started
+## Phase 3 — Master generation  ▶ **IN PROGRESS**
+
+**Deliberately piloted before fanning out.** Three tasks dispatched instead of thirteen, chosen to
+prove the three distinct paths independently and cheaply:
+
+| # | Chapter | Path being proven | Tier | Status |
+|---|---|---|---|---|
+| P3-VI | VI | **Dawn-lit interior** — the ruling has never been tested against a real image, and it governs 5 more chapters | Opus | RUNNING |
+| P3-III | III | **Base exterior loop** — first generation since the three compiler fixes | Sonnet | RUNNING |
+| P3-I | I | **Edit path** — the cheap repair route the whole Phase 3 triage depends on | Sonnet | RUNNING |
+
+Rationale for piloting rather than dispatching all 13: the interior ruling is one turn old and
+**unvalidated against pixels**. If cool window light cannot actually hold 55–72% of an interior
+frame, that is a fact worth learning on one chapter rather than six. Likewise the edit path — if
+grading cannot fix a colour-class failure, every "prefer an edit" instruction in the loop is wrong
+and the real cost of Phase 3 roughly doubles.
+
+**Hard cap 3 attempts per chapter, never a 4th.** Exit `RETRY-EXHAUSTED` with the measurement
+history instead; an unwinnable gate is information, not a reason to keep spending. Chapter X once
+had no passing rectangle anywhere in frame.
+
+**Both gates on every master.** `check_palette.py` is profile-agnostic by construction — the
+rejected Chapter VIII night corridor scores a perfect 0.0% muddy on it. Only `check_dawn_balance.py`
+can say whether an image is actually dawn.
+
+**Remaining after the pilot (10):** Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV — less
+whichever the pilot invalidates. II is kept as-is and needs nothing.
+
+### Phases 4–7 — not started
 
 | Phase | Status | Note |
 |---|---|---|
-| 3 — Master generation loop | **TODO** | ≤2 Sonnet retries per chapter → Opus escalation. Opus adjusts the spec, never the gate. |
 | 4 — Overlays | **TODO** | `rembg` absent → path (a) transparent generation only, unless installed. Firefly layer is **code, not image**. |
 | 5 — Site build | **TODO** | Incl. **5.4b** (data-driven icon placement) and **5.10 / 5.10b** (Resume Spread Page) from the amendment. Root `index.html` placeholder must be overwritten here. |
 | 6 — Verification gates | **TODO** | 11 gates: 8 original (7 amended for the `/resume/` carve-out) + 9–11 from amendment §C. |

@@ -10,7 +10,7 @@
 >
 > **Branch:** `feat/among-trees-storybook` · `main` and the live site stay untouched mid-build.
 
-**Status:** Phases 0 and 1 complete. **Interior ruling made (dawn-lit interiors) — nothing is
+**Status:** Phases 0, 1 and **2 COMPLETE** — all 15 spreads specced and verified. **Interior ruling made (dawn-lit interiors) — nothing is
 blocked.** Phase 2 in progress: specs for 13 spreads. Run mode: autonomous delegation.
 **Last updated:** 2026-07-31 · Claude Code
 
@@ -338,8 +338,15 @@ it is a real gate rather than an eyeball check.
 | T6 | VIII + IX specs | Opus | **DONE** | 0 |
 | T7 | X + XI specs | Sonnet | **DONE** — X returning for a pale well | 1 |
 | T1b | Cover single-window reconcile | Opus | **DONE** | 0 |
-| T7b | X → pale whiteboard well (**orchestrator error**) | Sonnet | DISPATCHED | — |
-| T12 | Fix 2 stale lines in `schema.md` | Haiku | DISPATCHED | 0 |
+| T7b | X → pale whiteboard well (**orchestrator error**) | Sonnet | **DONE** | — |
+| T12 | Fix 2 stale lines in `schema.md` | Haiku | **DONE** | 0 |
+
+**T12 — PASS.** Verified independently: no sentence anywhere still claims XII has a well, a width or
+a 25% target; `text_free` is documented in five places against the real implementation, including
+that a text-free spec is refused if its well carries `target`/`material`/`value_class`/`treatment`;
+and the dark-hallway claim for IX survives **only inside its dated supersession note**, which is
+what was asked — a future reader must be able to recognise a retired rule as retired rather than
+re-deriving the conflict a fourth time. File timestamps confirm only `references/schema.md` changed.
 
 ---
 
@@ -359,7 +366,7 @@ Run directly against every spec, not taken from worker reports. **Zero problem r
 | 07_VII | 0 | specified | deep | 40 | true | — |
 | 08_VIII | 0 | specified | deep | 40 | true | — |
 | 09_IX | 0 | specified | deep | 40 | true | — |
-| 10_X | 0 | specified | deep → **pale** | **45** | true | — |
+| 10_X | 0 | specified | **pale** | **45** | true | — |
 | 11_XI | 0 | specified | deep | 40 | true | — |
 | 12_XII | 0 | specified | — | — | false | **true** |
 | 13_XIII | 0 | specified | deep | 25 | true | — |

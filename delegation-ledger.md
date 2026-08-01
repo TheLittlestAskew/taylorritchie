@@ -896,6 +896,25 @@ would have inherited drift from a bad anchor.
 
 Repointed to the **only three verified on-profile masters**: I v16, II v2, and now III v4.
 
+**Repoint verified: 14 of 15 specs now anchor only on the three verified masters.** All paths
+resolve, `--audit` clean, 15/15 compile at exit 0, and `03_III` untouched as instructed.
+
+> 🛑 **`06_VI` is the exception, and it is a live concern rather than a loose end.** It was excluded
+> from the repoint because a worker is regenerating it *right now* — a concurrent edit would corrupt
+> that work. But it means **VI still anchors on `chapter-I-above-the-trees-v13.png`, a retired image
+> that fails warm at 14.0%.**
+>
+> **This may be a contributing cause of VI's two failed Opus rounds that nobody accounted for.**
+> Anchoring on an off-palette image is the project's own documented warm-drift mechanism —
+> *"each step looks fine beside the one before it and the set walks off-palette"* — and every VI
+> attempt so far has been generated against exactly that. The final-attempt brief instructs the
+> worker to repoint VI's anchors to the three verified masters before generating, so the last
+> attempt should be the first one run on a clean anchor.
+>
+> **Consequence for the halt decision:** if VI's final attempt fails, weigh the fact that its two
+> prior rounds ran with a poisoned anchor before concluding the 55% cool floor is unreachable for
+> this interior. That conclusion has not actually been tested under clean conditions yet.
+
 **Copy fit settled: `treatment: "split_page"`.** The arithmetic — well box 538×210px giving ~4 lines
 against ~17 needed for two roles, cross-checked against II's single-role box of near-identical area
 holding half the copy. This is what the earlier "split_page not needed" claim missed by reasoning

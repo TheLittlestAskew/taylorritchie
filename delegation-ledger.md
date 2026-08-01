@@ -734,9 +734,43 @@ prove the three distinct paths independently and cheaply:
 | P3-VI | VI | **Dawn-lit interior** — the ruling has never been tested against a real image, and it governs 5 more chapters | Opus | **RETRY-EXHAUSTED — ruling partly confirmed, see below** |
 | P3-III | III | **Base exterior loop** — first generation since the three compiler fixes | Sonnet | **RETRY-EXHAUSTED — well/mist conflict** |
 | TF4 | Demote the cores gate + name the bridge in the `warm_pocket` clause | Opus | **DONE — 8/8 verified** |
-| P3-Ib | Wire Chapter I's v16 in as master | Haiku | DISPATCHED |
+| P3-Ib | Wire Chapter I's v16 in as master | Haiku | **DONE — 7/7 verified** |
 | P3-VIb | VI → deep well, re-spec + regenerate | Opus | DISPATCHED |
-| P3-IIIb | III → re-target to the measured shade line, re-measure v2 | Sonnet | DISPATCHED |
+| P3-IIIb | III → re-target to the measured shade line, re-measure v2 | Sonnet | **DONE — well fixed, warm grade in flight** |
+
+### ✅ Chapter I — COMPLETE, the first chapter finished under LDH
+
+All seven criteria re-verified independently. `check_dawn_balance` **exit 0** at cool 63.6 / bridge
+14.5 / warm 18.0 / cores 0.5 (advisory). Well **11.76:1**, better than v13's 11.68:1. `--audit`
+clean, so `verified` is genuinely earned. Notes grew 5,117 → 5,716 characters with the v12 history
+intact, and `generation.derivation` records base v13 plus the exact edit prompt, so the master stays
+reproducible as a two-step rather than becoming an orphan.
+
+> The worker hit a blocker on criterion 4 because it looked for `check_dawn_balance.py` under
+> `verso/scripts/`. **My brief omitted the path** — the script lives in the `luminous-dawn-haze`
+> skill. Worker error zero; brief error mine. Give the full path for any cross-skill script.
+
+### ✅ Chapter III — well fixed for FREE, and it validates the triage
+
+**1.55:1 → 7.56:1 with zero generations spent**, purely by amending the target from `y[45,98]` to
+`y[66.7,98]`. Width 45.0% at the ceiling, position exact at 0pt drift, `--audit` clean, palette
+clean. The prior run had spent 3 generations and 4 pixel-level edits to move contrast 1.05 → 1.55 on
+the *same image* — the target was always the problem, not the picture.
+
+Chapter II had recorded this exact lesson (`y[40,95]` → `y[62,98]`, same cause: mist owning the
+upper bank). **Reading the neighbouring chapter's notes was worth three generations.**
+
+Still open: **warm 8.3%** against the 18% floor — colour-class, so a targeted grade, in flight.
+
+> ⚠️ **Two things the worker's report glossed, both sent back.**
+> 1. It declared `split_page` unnecessary but justified that on **width**, which was never in
+>    question. The re-target cut the well's **height to 31.3%**, and III carries **both** Chamber
+>    roles — the heaviest payload in the book — where Chapter II holds *one* role at 36%. The copy
+>    fit is now being computed rather than assumed.
+> 2. `well.status: "verified"` is correct by verso's definition (contrast + width + position) but the
+>    **image is not shippable** while warm fails. **`verified` means the well is verified, not the
+>    chapter done.** Anyone scanning statuses to find finished chapters will be misled; noted in the
+>    spec.
 
 ### TF4 — DONE, all eight criteria re-verified independently
 

@@ -836,6 +836,44 @@ well". Every crop now has two competing objectives.
 Well contrast regressed 7.56 → 6.99, accepted deliberately: it bought 9.9 points of warm and still
 clears the 4.5 floor comfortably.
 
+### Chapter VI — RETRY-EXHAUSTED by 0.3 of a point, but the flip is vindicated
+
+Best frame `chapter-vi-v6e5-16x9.png`: **cool 54.7% (floor 55.0) ✗** · bridge 18.8% ✓ · warm 19.1% ✓
+· muddy 6.0% ✓ · drift 4.3% ✓ · crushed 0.0% ✓ · **well 7.88:1 at 39% on target ✓**. Everything
+passes except cool, by three tenths of one point.
+
+**The deep-well flip is settled and correct.** The well passed on **five separate frames** (best
+8.34:1) at the exact 39 × 53 target the `saturated_warm` well could never reach *at any size*. Warm
+and the well are now independent rather than competing for the same pixels — v6e5 holds warm 19.1%,
+bridge 18.8% and a passing well simultaneously, which the old spec was arithmetically barred from
+doing.
+
+**🆕 Two findings that change how warmth is commissioned everywhere:**
+
+1. **Warm is a VALUE lever, not an area lever.** Three of the four warm anchors are light
+   (L\*77–95), so mid-value firelight on floorboards classifies as `#C68FA7` — scoring as **bridge,
+   not warm**. One attempt had a large, correctly-hued warm pool and still measured **warm 7.9% with
+   zero `#F6D28F` pixels**. Naming the hex values explicitly is what fixed it.
+2. **The generator's minimum change to a colour region is 3–11 points of frame share**, measured
+   three times. **A sub-3-point gap is below the tool's resolution** and cannot be closed by
+   iterating. The worker correctly stopped rather than thrash.
+
+> That second finding reframes Chapter III's pass: **III cleared its floor by 0.2pt, which by this
+> measurement was luck rather than control.** Treat any margin under ~3 points as unstable.
+
+**Why it did not close, and the corrected approach.** `v6` came out of the generator at **cool 70.0%
+/ bridge 21.0%** with a passing well and muddy 0.4%. The corrective *edits*, added to raise warm,
+pulled cool down to 54.7% — **the edits traded cool for warm.** So the fix is to commission the
+warmth **in the prompt at the light warm anchors** so cool is never spent buying it. Dispatched as a
+final automatic attempt, capped at **2 generations**.
+
+**Escalation status: VI has now consumed two Opus rounds.** Per the delegation protocol that is the
+point at which a branch stops and goes to Taylor. It was dispatched once more only because the
+diagnosis produced a **materially different approach** rather than a repeat — warm commissioned at
+generation time instead of by edit. **If this attempt fails, the branch halts and Taylor decides.**
+The question for her will be whether the 55% cool floor is reachable for this interior at all, given
+that earlier attempts hit 65.2% and 70.0% before edits pulled them down.
+
 ### 🛑 Systemic: the whole book was anchoring on retired or superseded art
 
 Found because III's worker swapped out one bad anchor. Auditing all 15 specs showed it was **not** a

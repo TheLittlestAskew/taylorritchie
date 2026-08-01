@@ -15,13 +15,19 @@
 - ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
 - ❌ **The bright-cores gate was invalid** — now fixed. Demoted to **advisory** on 2026-08-01: measured and printed, never a failure. It had been calibrated on a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly master here — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame passing all three area bands. **Do not spend an attempt chasing cores.**
 
-**Resume point.** **Three chapters are done and verified** — II (kept), I, III. **All 15 specs are verified.** One task was in flight at session end:
+🛑 **CHAPTER VI IS HALTED — Taylor's decision required before Phase 3 continues.** Three Opus rounds, 8 generations, 13 edits, 21 measured frames. Do not dispatch a fourth round. Full analysis and options are at the end of `delegation-ledger.md`.
 
-**Chapter VI — final automatic attempt.** It misses by **0.3 of one point**: cool 54.7% against a 55.0% floor, with everything else passing (bridge 18.8, warm 19.1, muddy 6.0, drift 4.3, well 7.88:1 at 39% on target).
+**The correction that matters:** I previously reported VI as "missing the cool floor by 0.3". **Cool was never the problem** — it cleared 55% on eleven of 21 frames, and both fresh generations came out *over* the ceiling at 74.2% and 72.8%. **The real constraint is `warm ≥18` with a `deep` well, which no generation has ever produced** (7.2–9.7 across every deep-well roll). The only frames above 18 got there by edits that spent ~15 points of cool.
 
-🛑 **VI has consumed two Opus rounds — the protocol's stop-and-ask threshold. If this attempt fails, HALT the branch and put it to Taylor.** Do not authorise a fourth round automatically.
+**It is a geometry problem, not a value one.** v7's floor pool sampled within two points of `#F6D28F` and still scored 7.2% — the pixels are the right colour and there are not enough of them. With the deep well at `x[3,42] y[2,55]`, only the floor can carry warm, and the couch (scores cool) plus rug (scores bridge) own **43.6% of the lower frame**.
 
-⚠️ **But read this before concluding the floor is unreachable.** VI's two prior rounds both ran anchored on `chapter-I-above-the-trees-v13.png` — a **retired** image that fails warm at 14.0%. Anchoring on an off-palette image is this project's own documented warm-drift mechanism, so **VI's difficulty may be partly inherited rather than intrinsic**, and the 55% floor has never actually been tested on VI under clean conditions. The final attempt repoints first. Weigh that before deciding.
+🛑 **The bigger question, which should be settled before generating VII–XI:** five more interiors use `deep` wells. **No interior has ever met warm 18%**, while all three verified masters that do are **exteriors with open sky.** If deep-well interiors structurally cannot reach that floor, this is a six-chapter problem, not a VI problem.
+
+**Options for Taylor** — (a) delete the couch and retry VI once (untried, cheap, tests the geometry theory directly; it is a deep-indigo silhouette scoring *cool* on a frame with cool to spare, sitting where warm floor would go, and nothing in the copy deck needs it); (b) accept `chapter-vi-v6e5-16x9.png` as a documented deviation — 0.3 off cool with everything else passing and the well at 7.88:1; (c) revisit the warm floor for deep-well interiors; (d) re-plan VI's composition so warm has somewhere to live.
+
+⚠️ **Do not try to "just nudge" either near-miss.** VI's best is 0.3 off and another frame is 0.1 off, but the generator's smallest change to a colour region is **3–11 points of frame share**. Neither can be aimed at; landing one would be luck.
+
+**Meanwhile — the rest of Phase 3 is NOT blocked.** Three chapters are done and verified (II kept, I, III) and all 15 specs are verified. The **exteriors** can fan out now: Cover, IV, V, XII, XIII, XIV. Hold VII–XI until the interior question above is settled.
 
 **Then fan out** to the remaining: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
 
@@ -78,6 +84,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 07:20 ET · Claude Code
+- **Changed:** **Chapter VI halted for Taylor** after three Opus rounds (8 generations, 13 edits, 21 measured frames), per the delegation protocol's stop-and-ask rule. Round three ran on a clean anchor for the first time and still failed. Full analysis, the three best frames and four options are written at the end of `delegation-ledger.md`.
+- **Commit:** `def124e`
+- **Friction:** misread — **I reported VI's problem to Taylor as "0.3 short on the cool floor", and that was wrong.** Measuring all 21 frames instead of the two the worker highlighted showed cool clears 55% on **eleven** of them, and both fresh generations came out *over* the ceiling at 74.2% and 72.8%. The actual constraint is `warm ≥18` with a `deep` well, which **no generation has ever produced**. I had generalised from the single frame in front of me rather than from the distribution. **When a chapter has many attempts on disk, measure them all before naming the binding constraint** — the answer was in files already sitting in the folder.
+- **Next:** Taylor decides on VI. Exteriors can fan out meanwhile; hold VII–XI. See DO NEXT.
+- **Watch out:** 🛑 **The question is bigger than VI and should be settled before VII–XI are generated.** Five more interiors use `deep` wells. **No interior has ever met warm 18%**, while all three verified masters that do are **exteriors with open sky** — a real asymmetry the area budget may simply not describe. Generating five more interiors before answering it risks five more halted branches. ⚠️ Also: VI's best frame is 0.3 off and another is **0.1** off, and **neither can be aimed at** — the generator's minimum colour-region change is 3–11 points of frame share. Do not spend attempts nudging a sub-3-point gap; that is the definition of thrash here.
 
 ### 2026-08-01 06:40 ET · Claude Code
 - **Changed:** Verified the style-anchor repoint — **14 of 15 specs now anchor only on the three verified masters** (I v16, II v2, III v4). All paths resolve, `--audit` clean, 15/15 compile at exit 0, `03_III` untouched as instructed. This closes the systemic drift exposure found earlier: `13_XIII` and `14_XIV` had been anchored on the two worst images in the project, and nine chapters on the superseded v13.

@@ -733,7 +733,54 @@ prove the three distinct paths independently and cheaply:
 |---|---|---|---|---|
 | P3-VI | VI | **Dawn-lit interior** — the ruling has never been tested against a real image, and it governs 5 more chapters | Opus | RUNNING |
 | P3-III | III | **Base exterior loop** — first generation since the three compiler fixes | Sonnet | RUNNING |
-| P3-I | I | **Edit path** — the cheap repair route the whole Phase 3 triage depends on | Sonnet | RUNNING |
+| P3-I | I | **Edit path** — the cheap repair route the whole Phase 3 triage depends on | Sonnet | **RETRY-EXHAUSTED — but see below, the gate was wrong** |
+
+### 🎯 P3-I result — the edit path WORKS; my cores gate is defective
+
+| Attempt | warm | cores | cool | bridge | muddy | well contrast |
+|---|---|---|---|---|---|---|
+| base v13 | 14.0% ✗ | 0.7% ✗ | 66.3% ✓ | 16.0% ✓ | 1.6% ✓ | 11.68:1 |
+| 1 · v14 | 15.0% ✗ | 0.5% ✗ | 65.3% ✓ | 14.1% ✓ | 1.6% ✓ | 11.78:1 |
+| 2 · v15 | 16.7% ✗ | 0.5% ✗ | 60.2% ✓ | **10.2% ✗** | 1.1% ✓ | 11.78:1 |
+| 3 · **v16** | **18.0% ✓** | 0.5% ✗ | **63.6% ✓** | **14.5% ✓** | **1.7% ✓** | **11.76:1 ✓** |
+
+**The pilot's primary question is answered: a targeted edit CAN fix a colour-class failure without
+touching the well.** v16 moved warm from 14.0% into the band at 18.0%, kept cool and bridge in
+band, held muddy at 1.7%, and the well came out at **11.76:1 against the base's 11.68:1** — it
+*gained* contrast. Phase 3's "prefer an edit over a re-roll" triage is validated. `check_edit.py`
+exited 0 on all three attempts.
+
+**The one failure is my gate, not the art.** Cores never moved past 0.5% across three attempts and
+increasingly forceful prompt language ("brilliant", "blazing", "pure-white sun disc"). Cause,
+confirmed directly from the spec: Chapter I's **only** light source is *"the low sun **off frame** to
+the right beyond the city"*. There is no sun disc in frame and no fireflies — it is a trailhead
+looking at a distant city, not a forest interior. **No in-frame source can produce a near-white
+specular core, so the band was unreachable by construction.**
+
+The profile itself says so and I did not encode it: *"Visible sun, **if present**: 2–6% of frame
+width."* The sun is **conditional**; I made the 1–5% cores band unconditional. My calibration
+exemplar `dawn-atmosphere.jpg` happens to contain a visible sun glow, which is why it read 2.43% and
+the defect stayed hidden.
+
+**And the gate was actively dangerous here**, not merely wrong: on Chapter I the only region that
+could host a bright core is the open sky — **which is the well**. Satisfying the gate would have
+required putting a near-white hotspot inside the text region and wrecking the 11.68:1 contrast the
+entire chapter was built around. A worker following the gate over the spec would have destroyed the
+one thing worth protecting.
+
+**Cost of the defect:** three edit attempts and a `RETRY-EXHAUSTED` on an image that had already
+passed everything that mattered by attempt 3.
+
+**Resolution — TF4, deliberately NOT dispatched yet.** The cores band must be **conditional on a
+declared in-frame light source**. It must be read from the spec, **not passed as a command-line
+flag** — verso already learned this with `--exempt-width`: "a hand-passed flag is silently wrong in
+both directions", which is why width exemption lives in `treatment`. Held because P3-VI and P3-III
+are still running and both execute `check_dawn_balance.py`; editing it underneath them is the same
+read-write race already recorded once tonight.
+
+**v16 is the accepted master pending the gate fix** — do not re-roll Chapter I. Candidates v14, v15,
+v16 are on disk; the spec still points at v13 and was correctly left unmodified, since the brief
+gated spec updates on success.
 
 Rationale for piloting rather than dispatching all 13: the interior ruling is one turn old and
 **unvalidated against pixels**. If cool window light cannot actually hold 55–72% of an interior

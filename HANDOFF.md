@@ -31,7 +31,7 @@
 - 🛑 Root `index.html` is a **throwaway placeholder**. Phase 5 must overwrite it with the Cover. If it reaches production, the build shipped incomplete.
 
 **Traps that have already cost time here:**
-- ⚠️ **Paths in specs are guilty until proven innocent.** The OneDrive-vs-vault naming split bit three times in one session. Canonical root is the vault: `…\Resume Siteesume art\<NN>_<NUMERAL>\`. A stale path made the cross-palette guard silently inert on every spread until 2026-07-31.
+- ⚠️ **Paths in specs are guilty until proven innocent.** The OneDrive-vs-vault naming split bit three times in one session. Canonical root is the vault: `…\Resume Site\resume art\<NN>_<NUMERAL>\`. A stale path made the cross-palette guard silently inert on every spread until 2026-07-31.
 - ⚠️ **Fix a worked example before fanning out from it**, or state the contested values literally in the brief. III and IV inherited stale paths by faithfully copying `01_I` while it was still wrong.
 - ⚠️ **When scanning compiled prompts, check the exit code, not just the output.** A shell-loop scan reported all ten clean and was a false negative — the compile was failing silently and `grep -c` counted zero on empty output. Five were actually failing.
 - 🛑 **Never edit `compile_prompt.py` while spec workers are running**, and map **reads** as well as writes when planning waves. Non-overlapping writes is not the same as no conflict.
@@ -41,6 +41,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 00:40 ET · Claude Code
+- **Changed:** **Started Phase 3 — generation** — as a deliberate three-task pilot rather than a fan-out to thirteen. Dispatched **P3-VI** (the first dawn-lit interior ever generated, and the hardest case: a *warm* well in a room that must stay cool), **P3-III** (the base exterior loop, first generation since the three compiler fixes), and **P3-I** (the edit path). Each proves a different path, each capped at 3 attempts. Also archived the three 2026-07-20 entries to `handoff-archive/2026-07.md` to keep the live log inside the 15-entry contract.
+- **Commit:** `f3a18b5`
+- **Friction:** gen-fail — corrupted this file while rewriting the DO NEXT block. Windows paths were written inside a **non-raw Python string**, so `\r` in `…\Resume Site\resume art\…` was interpreted as a carriage return and split the line into `Resume Site` + newline + `esume art`. Python emitted a `SyntaxWarning: invalid escape sequence` at the time and it was not read carefully enough. Caught on the next read and repaired. **Any Python heredoc that writes Windows paths must use raw strings or `chr(92)`** — and a `SyntaxWarning` about escape sequences is a real defect in file-writing code, not noise. Second shell-escaping error of the session after the inherited-`cwd` git failure; both are the same class.
+- **Next:** Read the three pilot results, then either fan out to the remaining ten spreads or revise the interior pattern first.
+- **Watch out:** 🛑 **The pilot exists to test two unvalidated assumptions, and a failure is a success for this step.** (1) The dawn-lit interior ruling has never met an actual image — if cool window light cannot hold 55–72% of an interior frame, that governs six chapters and must be learned on one. (2) Phase 3's whole triage assumes a targeted edit can fix a colour-class failure more cheaply than a re-roll; if it cannot, every "prefer an edit" instruction in the loop is wrong and the real cost of this phase roughly doubles. The interior worker was told explicitly that reporting the ruling broken, **with numbers**, is worth more than returning a passing image. Do not read a `RETRY-EXHAUSTED` from the pilot as wasted spend.
 
 ### 2026-08-01 00:05 ET · Claude Code
 - **Changed:** **Closed Phase 2.** All 15 spreads are specced and independently verified — a sweep run directly against every file (not taken from worker reports) shows 15/15 compiling at exit 0 with **zero** golden-hour language, only I and II holding `verified` and both legitimately, III/V/X at the 45% ceiling, XIII/XIV narrow at 25%, and XII carrying no well at all. Final two items landed: **T12** corrected both remaining stale lines in `schema.md`, and **T7b** rebuilt Chapter X as a pale whiteboard well at 45%, marks confined to the board's left and centre thirds with the well on the wiped clean right two-thirds, surface specified cool white-grey rather than cream. Also rewrote the DO NEXT block into a Phase 3 operating brief and cleaned a self-contradicting status header in the ledger.
@@ -131,24 +138,4 @@
 - **Next:** Unchanged. See the block above this log.
 - **Watch out:** Log entries must now carry a tool label (`Claude Code` / `Claude desktop` / `Codex` / `ChatGPT`). Do not restructure this file; the dashboard parses it.
 
-### 2026-07-20 · Codex
-- **Changed:** Taylor explicitly approved merging PR #1. Updated the return point from pre-merge review to post-merge GitHub Pages verification.
-- **Commit:** `docs: set post-merge deployment return point`
-- **Tests:** No source changes; the production implementation remains covered by the validation recorded below.
-- **Unresolved:** GitHub Pages deployment must finish before the live URL can be verified.
-- **Next:** Merge PR #1, then verify the homepage, résumé, and SystemHorizon production routes.
-
-### 2026-07-20 · Codex
-- **Changed:** Promoted the approved editorial prototype into `index.html`; removed the superseded root-level concept copy; added production navigation, SEO/Open Graph metadata, `ProfilePage` structured data, keyboard focus treatment, reduced-motion behavior, and mobile navigation; rewrote featured work as evidence-led cases; added a native-details secondary archive using representative existing assets; preserved the `systemhorizon/`, tracker, portfolio document, and image routes; and added the current Business Systems & CRM Operations résumé at the canonical public path `resume/TaylorRitchie_Resume.pdf`.
-- **Content:** Used `706-767-7196` from `TaylorRitchie_MasterResume_Source_20260720.docx`; retained the four approved homepage metrics; did not elevate the disputed Stripe metrics; used the current official title and privacy language; and linked the verified canonical LinkedIn profile URL.
-- **Commit:** `585aa89` (`feat: promote editorial redesign to production homepage`)
-- **Tests:** `npx --yes html-validate index.html` (pass); `node tests/site-audit.mjs http://127.0.0.1:4173/` (pass at 320, 375, 480, 768, 1024, 1280, 1440, and 1920 px; local links, duplicate IDs, one `h1`, alt text, disputed-metric absence, navigation, archive control, anchor behavior, horizontal scrolling, and browser console errors); `git diff --check` (pass); visual inspection of the current two-page résumé render and 320/1440 homepage screenshots (pass).
-- **Unresolved:** Human review is still required for final visual preference and authorization to merge. No production deployment or merge was performed.
-- **Next:** Review PR #1, confirm final visuals, and merge to `main` when approved.
-
-### 2026-07-20 · ChatGPT
-- **Changed:** Created `feat/romeo-juliet-resume-redesign` and added a complete responsive single-page concept in `romeo-juliet-concept.html`. The concept includes the cinematic name-card hero, broadcast-style About section, impact metric strip, chapter-card experience, editorial portfolio grid, theatrical playbill capabilities section, and `FIN.` contact close. Content is grounded in the current resume and professional portfolio while avoiding the disputed Stripe migration metric.
-- **Commit:** `b35e590`
-- **Next:** Review the concept, revise the art direction/content, then promote the approved design into `index.html` and reconnect the complete portfolio assets.
-
-> Older entries archived to `handoff-archive/2026-06.md`.
+> Older entries archived to `handoff-archive/2026-07.md` and `handoff-archive/2026-06.md`.

@@ -15,10 +15,10 @@
 - ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
 - ❌ **The bright-cores gate was invalid** — now fixed. Demoted to **advisory** on 2026-08-01: measured and printed, never a failure. It had been calibrated on a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly master here — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame passing all three area bands. **Do not spend an attempt chasing cores.**
 
-**Resume point.** Chapters **II** (kept), **I** (complete) and **III** (complete) are done — three verified masters. Two tasks were in flight at session end:
+**Resume point.** **Three chapters are done and verified** — II (kept), I, III. Two tasks were in flight at session end:
 
-1. **Chapter VI** — deep-well regeneration (Opus).
-2. **Style-anchor repoint** — every spec re-pointed to the three verified masters (see the systemic issue below).
+1. **Chapter VI — final automatic attempt.** It misses by **0.3 of one point**: cool 54.7% against a 55.0% floor, with *everything else passing* (bridge 18.8, warm 19.1, muddy 6.0, drift 4.3, well 7.88:1 at 39% on target). 🛑 **VI has consumed two Opus rounds. If this attempt fails, the branch HALTS and goes to Taylor** — do not dispatch a fourth. The question for her: is the 55% cool floor reachable for this interior at all, given earlier attempts hit 65.2% and 70.0% before corrective edits pulled them down?
+2. **Style-anchor repoint** across all specs (see below).
 
 **Then fan out** to the remaining: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
 
@@ -27,6 +27,12 @@
 **Never anchor on an image that failed the Phase 1 audit.** On 2026-08-01 the whole book was found anchoring on retired or superseded art — XIII and XIV pointed at the two *worst* images in the project, and nine chapters at the superseded v13. `style_refs` is the stated defence against warm drift, so a bad anchor poisons every generation made from it. **The TF3 cross-palette guard cannot catch this** — it checks that a ref resolves to a `cool_dominant` chapter, not that the image is any good.
 
 🆕 **The 16:9 crop offset is a COLOUR control, not just a contrast one.** On one 21:9 source, warm ran 14.0%→20.6% and drift 13.5%→21.5% purely as a function of offset. Every crop now has two competing objectives. Measure the offset; do not take hard-left by reflex.
+
+🆕 **Warm is a VALUE lever, not an area lever.** Three of the four warm anchors are light (L\*77–95), so mid-value firelight on floorboards classifies as `#C68FA7` and scores as **bridge, not warm**. One attempt had a large, correctly-hued warm pool and still measured **warm 7.9% with zero `#F6D28F` pixels**. **Name the hex values explicitly in the scene prose.**
+
+🆕 **Commission warmth at GENERATION time, never by corrective edit.** Chapter VI's v6 left the generator at cool 70.0% / bridge 21.0% with a passing well; the edits added afterwards to raise warm pulled cool down to 54.7% and cost it the chapter. **Edits trade cool for warm.**
+
+🛑 **The generator's minimum change to a colour region is 3–11 points of frame share** (measured three times). **A sub-3-point gap is below the tool's resolution and cannot be closed by iterating** — stop rather than thrash. This also reframes Chapter III's pass: it cleared by 0.2pt, which was luck rather than control. **Treat any margin under ~3 points as unstable.**
 
 🆕 **Two warmth lessons, learned on III and worth applying up front:** *"pale"* warm light renders as **neutral** — it trips warm-neutral drift while earning no warm area. And warming **foliage or mist** instead of sky and ground plane goes **olive** (off-palette 33%). Put warmth in the sky and on the ground.
 
@@ -69,6 +75,14 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 06:00 ET · Claude Code
+- **Changed:** Chapter VI returned `RETRY-EXHAUSTED` **by 0.3 of one point** — cool 54.7% against a 55.0% floor with every other band passing. **The deep-well flip is vindicated regardless:** the well passed on **five separate frames** (best 8.34:1) at the exact 39 × 53 target the `saturated_warm` well could never reach at any size, so warm and the well are now independent instead of competing for the same pixels. Dispatched one final attempt with a materially different approach — commission the warmth **in the prompt** rather than by corrective edit — capped at 2 generations.
+- **Commit:** `32c9bc1`
+- **Next:** Land VI's final attempt and the style-anchor repoint, then fan out to the remaining ten. See DO NEXT.
+- **Watch out:** 🛑 **VI has now consumed two Opus rounds, which is the delegation protocol's stop-and-ask threshold.** It was dispatched once more only because the diagnosis produced a genuinely different approach rather than a repeat. **If it fails, halt the branch and put it to Taylor** — the question being whether the 55% cool floor is reachable for this interior at all. Do not authorise a fourth round automatically.
+  ⚠️ **The single most useful measurement of the session: the generator's smallest change to a colour region is 3–11 points of frame share.** A sub-3-point gap therefore **cannot** be closed by iterating, and chasing one is guaranteed thrash. This reframes Chapter III's pass, which cleared its floor by 0.2pt — that was luck, not control. **Treat every margin under ~3 points as unstable**, and expect III in particular to move under Phase 5's per-breakpoint re-crops.
+  ⚠️ **Warm is a VALUE lever, not an area lever**, and **edits trade cool for warm**. VI's v6 left the generator at cool 70.0% and the corrective edits took it to 54.7%. Commission warmth at generation time, naming the light warm anchors by hex.
 
 ### 2026-08-01 05:15 ET · Claude Code
 - **Changed:** **Chapter III is COMPLETE** — the escalation worked. Warm went **8.29% → 18.2%** in 3 generations by widening the warm commission in the **scene prose** (a full-frame-width cream/gold sky band replacing the single "gap", plus a warm-coloured raked road) rather than by grading, which had provably plateaued. Both gate sets exit 0: cool 57.9 / bridge 19.4 / warm 18.2 / muddy 1.8 / drift 17.8 / crushed 0.0, well **6.99:1** at 45.0% width with 0pt drift. Then found and dispatched a fix for a **systemic style-anchor problem** across all 15 specs.

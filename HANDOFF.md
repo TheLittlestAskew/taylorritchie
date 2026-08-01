@@ -6,7 +6,13 @@
 ## ▶ DO NEXT
 🟢 **PHASE 2 IS COMPLETE. All 15 spreads are specced and independently verified — every spec compiles at exit 0 with zero golden-hour language. Nothing is blocked.**
 
-**▶ Start Phase 3 — generation.** 13 spreads to make (II is kept as-is, I needs only a colour grade). This is the bulk of the remaining cost and the phase most likely to overrun: Chapter I alone took 13 versions.
+**▶ Phase 3 is UNDERWAY.** A three-task pilot went out instead of a fan-out to thirteen. **P3-I has returned and the edit path is validated** — a targeted grade fixed a colour-class failure and the well *gained* contrast (11.76:1 vs 11.68:1). P3-VI and P3-III were still running at the end of the session.
+
+🛑 **DO THIS FIRST — TF4, the bright-cores gate is defective and blocks Chapter I.** `check_dawn_balance.py` enforces the 1–5% bright-cores band **unconditionally**, but the LDH profile says *"Visible sun, **if present**"* — it is conditional. Chapter I's only light source is the low sun **off frame**, with no sun disc and no fireflies, so no in-frame source can produce a near-white specular core and the band is unreachable by construction. It cost three edit attempts and a false `RETRY-EXHAUSTED`. Worse, the only region on Chapter I that could host a core **is the well**, so obeying the gate would mean putting a hotspot in the text region and destroying the contrast that chapter took 13 versions to earn.
+Fix: make the cores band conditional on a **declared in-frame light source read from the spec** — an explicit field, **never a command-line flag**. verso already learned this with `--exempt-width` ("a hand-passed flag is silently wrong in both directions"), which is why width exemption lives in `treatment`. Do not parse prose from `light_sources` to infer it; declare it. Then re-check `chapter-I-above-the-trees-v16.png`, which should pass, and wire it in as Chapter I's master.
+⚠️ **Do not edit that script while any generation worker is running** — they all execute it.
+
+**Chapter I: v16 is the accepted master pending TF4. Do not re-roll it.** Candidates v14/v15/v16 are on disk in `01_I\`; the spec still points at v13 and was correctly left unmodified, since spec updates were gated on success.
 
 **`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
 
@@ -41,6 +47,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 01:20 ET · Claude Code
+- **Changed:** First Phase 3 pilot result returned. **P3-I validated the edit path**, which is the assumption Phase 3's entire cost model rests on: a targeted grade moved Chapter I's warm area from 14.0% into the band at 18.0%, kept cool / bridge / muddy in band, and the well came out at **11.76:1 against the base's 11.68:1** — it *gained* contrast rather than paying for the fix. `check_edit.py` exited 0 on all three attempts. "Prefer a targeted edit over a re-roll" stands as Phase 3 policy.
+- **Commit:** `1aa62f3`
+- **Friction:** misread — **the bright-cores gate I wrote is defective and it cost three edit attempts plus a false `RETRY-EXHAUSTED`.** `check_dawn_balance.py` enforces the 1–5% band unconditionally, but the LDH profile reads *"Visible sun, **if present**: 2–6% of frame width"* — conditional. Chapter I's sole light source is the low sun **off frame**, no disc and no fireflies, so the band was unreachable by construction and the worker escalated prompt language ("brilliant", "blazing", "pure-white sun disc") against a target physics did not permit. The defect hid during calibration because my exemplar `dawn-atmosphere.jpg` happens to contain a visible sun and scored 2.43%. **Calibrating against a single artefact validates the gate only for artefacts like it** — the conditional case needed a second, deliberately different sample. Fix is TF4; held until the running generation workers finish, since they all execute that script.
+- **Next:** Land P3-VI and P3-III, then TF4, then fan out or revise. See DO NEXT.
+- **Watch out:** 🛑 **That gate did not merely fail, it pointed at the one destructive action available.** The only region on Chapter I that could host a bright core is the open sky — **which is the well**. A worker trusting the gate over the spec would have put a near-white hotspot inside the text region and destroyed the 11.68:1 contrast the chapter took 13 versions to earn. When a gate and a spec disagree, the spec's composition wins until the conflict is adjudicated; a gate is a measurement of intent, not a substitute for it. Also worth carrying: **a `RETRY-EXHAUSTED` is not automatically a bad image.** v16 had passed everything that mattered by attempt 3 and was failing only the broken check.
 
 ### 2026-08-01 00:40 ET · Claude Code
 - **Changed:** **Started Phase 3 — generation** — as a deliberate three-task pilot rather than a fan-out to thirteen. Dispatched **P3-VI** (the first dawn-lit interior ever generated, and the hardest case: a *warm* well in a room that must stay cool), **P3-III** (the base exterior loop, first generation since the three compiler fixes), and **P3-I** (the edit path). Each proves a different path, each capped at 3 attempts. Also archived the three 2026-07-20 entries to `handoff-archive/2026-07.md` to keep the live log inside the 15-entry contract.

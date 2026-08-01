@@ -802,6 +802,62 @@ decimal places rather than assumed.
 **scene prose**, never the gate — widen the warm region, keep it out of the well at `x[3,48]
 y[66.7,98]`, and do not trade the bridge for it.
 
+### ✅ Chapter III — PASSES both gate sets, but on a knife edge
+
+Escalation succeeded in 3 generations. Master `chapter-iii-master-v4.png`:
+**warm 18.2% · cool 57.9% · bridge 19.4% · muddy 1.8% · drift 17.8% · crushed 0.0% · well 6.99:1
+at 45.0% width, 0pt drift.** Both gate sets exit 0, `--audit` clean.
+
+**The fix was area, exactly as diagnosed.** Prose changes: dropped the middle and far tree lines so a
+continuous sky band exists, replaced the single "gap" with a cream/butter-gold band running the
+**full frame width** behind the far conifers, and coloured the raked road warm sandy gold. Everything
+below the skyline held explicitly cool. Well sentences carried verbatim.
+
+**What the two failed attempts proved, both reusable:**
+- **"Pale" warm light renders as *neutral*** — it trips warm-neutral drift (19.6%) while earning no
+  warm area (9.2%). Warmth must be commissioned as saturated colour, not as pale light.
+- **Warming foliage and mist instead of sky and road goes olive** — off-palette 33.0%, cool 45.5%,
+  warm still 11.5%. Put warmth in the sky and on the ground plane, never in the greenery.
+
+**🆕 New finding: the 16:9 crop offset is a COLOUR control, not just a contrast one.** Across the
+same 21:9 source, warm runs 14.0% → 20.6% and drift runs 13.5% → 21.5% purely as a function of crop
+offset. This is new to the project — crop bias was previously understood only as "bias toward the
+well". Every crop now has two competing objectives.
+
+> 🛑 **III passes on a 0.4-point total margin and it is fragile.** Warm clears its floor by 0.2pt
+> (18.2 vs 18.0) and drift clears its ceiling by 0.2pt (17.8 vs 18.0), and **they move in opposite
+> directions along the crop axis**. The passing interval is roughly offset **84–96px**, a 12px
+> window. **Any re-crop, regrade or resize must re-run both scripts.**
+>
+> ⚠️ **This collides directly with open risk 3 (mobile).** Phase 5 art-directs a crop per breakpoint
+> and re-measures each. III's 12px passing window means it will very likely fail its mobile crops.
+> Flag it now so Phase 5 budgets for a III-specific solution rather than discovering it late.
+
+Well contrast regressed 7.56 → 6.99, accepted deliberately: it bought 9.9 points of warm and still
+clears the 4.5 floor comfortably.
+
+### 🛑 Systemic: the whole book was anchoring on retired or superseded art
+
+Found because III's worker swapped out one bad anchor. Auditing all 15 specs showed it was **not** a
+one-off:
+
+- **Six references to Phase-1-RETIRED images.** `02_II` and `12_XII` → `chapter-I-trailhead-v4.png`
+  (41.1% crushed, 50.6% off-palette — a dark sketch, never a master). `13_XIII` and `14_XIV` → **both**
+  `doorway-v2` (fails both structural gates, 12.0% muddy / 63.2% drift) **and** `next-chapter-v3`
+  (23.8% muddy). The two worst images in the project were the style anchors for the closing spreads.
+- **Nine chapters anchored on `chapter-I-above-the-trees-v13.png`**, superseded by v16 the same night
+  and failing warm at 14.0%.
+- **`12_XII` still carried a stale `resume art/I/` path** — the naming bug's **fifth** appearance. It
+  was missed because I left XII off the sweep list I gave T10b. My omission.
+
+**Why this mattered more than it looks:** `style_refs` is the project's stated defence against warm
+drift — *"reference a known on-palette chapter every time"* — and almost every chapter was
+referencing an off-palette one. The TF3 cross-palette guard cannot catch this; it checks that a ref
+resolves to a `cool_dominant` chapter, not that the image is any good. Every remaining generation
+would have inherited drift from a bad anchor.
+
+Repointed to the **only three verified on-profile masters**: I v16, II v2, and now III v4.
+
 **Copy fit settled: `treatment: "split_page"`.** The arithmetic — well box 538×210px giving ~4 lines
 against ~17 needed for two roles, cross-checked against II's single-role box of near-identical area
 holding half the copy. This is what the earlier "split_page not needed" claim missed by reasoning

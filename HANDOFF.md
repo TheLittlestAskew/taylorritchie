@@ -15,12 +15,20 @@
 - ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
 - ❌ **The bright-cores gate was invalid** — now fixed. Demoted to **advisory** on 2026-08-01: measured and printed, never a failure. It had been calibrated on a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly master here — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame passing all three area bands. **Do not spend an attempt chasing cores.**
 
-**Resume point.** Chapters **II** (kept) and **I** (complete) are done. Two Opus tasks were in flight at session end:
+**Resume point.** Chapters **II** (kept), **I** (complete) and **III** (complete) are done — three verified masters. Two tasks were in flight at session end:
 
-1. **Chapter III — escalation.** Its well is fixed and verified (7.56:1, 45% width, 0pt drift at `x[3,48] y[66.7,98]`) and `treatment` is correctly `split_page`. The one open failure is **warm 8.29%** against the 18% floor. Grading **plateaus at ~12.7%** — three edits proved it, and pushing further blew drift to 40.9% and shrank the bridge to 14.3%. Warmth cannot be graded into a frame that lacks the area, so Opus is amending the **scene prose** to widen the warm region and regenerating. **Nothing warm may enter the well.**
-2. **Chapter VI — deep-well regeneration.**
+1. **Chapter VI** — deep-well regeneration (Opus).
+2. **Style-anchor repoint** — every spec re-pointed to the three verified masters (see the systemic issue below).
 
 **Then fan out** to the remaining: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
+
+🛑 **The only three verified on-profile masters — anchor every generation on these and nothing else:**
+`01_I/chapter-I-above-the-trees-v16.png` (63.6/14.5/18.0) · `02_II/chapter-II-misty-morning-v2.png` (61.3/14.8/18.0) · `03_III/chapter-iii-master-v4.png` (57.9/19.4/18.2).
+**Never anchor on an image that failed the Phase 1 audit.** On 2026-08-01 the whole book was found anchoring on retired or superseded art — XIII and XIV pointed at the two *worst* images in the project, and nine chapters at the superseded v13. `style_refs` is the stated defence against warm drift, so a bad anchor poisons every generation made from it. **The TF3 cross-palette guard cannot catch this** — it checks that a ref resolves to a `cool_dominant` chapter, not that the image is any good.
+
+🆕 **The 16:9 crop offset is a COLOUR control, not just a contrast one.** On one 21:9 source, warm ran 14.0%→20.6% and drift 13.5%→21.5% purely as a function of offset. Every crop now has two competing objectives. Measure the offset; do not take hard-left by reflex.
+
+🆕 **Two warmth lessons, learned on III and worth applying up front:** *"pale"* warm light renders as **neutral** — it trips warm-neutral drift while earning no warm area. And warming **foliage or mist** instead of sky and ground plane goes **olive** (off-palette 33%). Put warmth in the sky and on the ground.
 
 🛑 **Warm 18% is this book's binding constraint — brief every remaining chapter accordingly.** Both approved masters clear the floor by *hundredths*: I v16 at 18.009%, II v2 at 18.040%. Chapter III sits at 8.29% and cannot be graded up. **Commission a generous warm region in the scene prose from the start**; a tight warm composition is unrecoverable later, because grading cannot enlarge an area that was never drawn.
 
@@ -61,6 +69,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 05:15 ET · Claude Code
+- **Changed:** **Chapter III is COMPLETE** — the escalation worked. Warm went **8.29% → 18.2%** in 3 generations by widening the warm commission in the **scene prose** (a full-frame-width cream/gold sky band replacing the single "gap", plus a warm-coloured raked road) rather than by grading, which had provably plateaued. Both gate sets exit 0: cool 57.9 / bridge 19.4 / warm 18.2 / muddy 1.8 / drift 17.8 / crushed 0.0, well **6.99:1** at 45.0% width with 0pt drift. Then found and dispatched a fix for a **systemic style-anchor problem** across all 15 specs.
+- **Commit:** `0a60876`
+- **Watch out:** 🛑 **The whole book was anchoring on retired or superseded art, and it was only found by chasing one line in a worker's report.** Six references to Phase-1-RETIRED images — `13_XIII` and `14_XIV` both anchored on `doorway-v2` (fails **both** structural gates, 12.0% muddy / 63.2% drift) **and** `next-chapter-v3` (23.8% muddy), i.e. the two worst images in the project were the style references for the closing spreads. Nine more chapters anchored on `above-the-trees-v13`, superseded hours earlier and failing warm at 14.0%. Plus a **fifth** appearance of the stale-path bug in `12_XII`, which survived because **I left XII off the sweep list** I gave an earlier worker. `style_refs` is this project's stated defence against warm drift, so nearly every remaining generation would have inherited drift from a bad anchor — and the TF3 guard cannot catch it, because it verifies that a ref *resolves*, not that the image is good.
+  ⚠️ **Chapter III passes on a 0.4-point total margin and is fragile.** Warm clears its floor by 0.2pt and drift clears its ceiling by 0.2pt, and **they move in opposite directions along the crop axis** — the passing window is roughly offset 84–96px, about 12px wide. Any re-crop, regrade or resize must re-run both gate scripts. **This collides directly with the mobile risk:** Phase 5 art-directs a crop per breakpoint and re-measures each, so III will very likely fail its mobile crops. Budget for a III-specific solution rather than discovering it late.
+- **Next:** Verify the anchor repoint and VI's regeneration, then fan out to the remaining ten. See DO NEXT.
 
 ### 2026-08-01 04:30 ET · Claude Code
 - **Changed:** Chapter III's warm grade returned `RETRY-EXHAUSTED` at a **measured plateau** — three edits reached only 12.7% against the 18% floor, and pushing past it made other gates pay (drift 40.9% on one attempt; bridge down to 14.3% and off-palette up to 8.1% on another). Diagnosed as an **area** problem rather than a colour one: III commissions its warmth as *"pooling… into the gap where the wood opens"*, one small slot, and no colour pass can enlarge an area that was never drawn. Escalated to Opus to amend the **scene prose** and regenerate. Separately, the copy-fit question I sent back came home decisive — **`treatment: "split_page"`**, on arithmetic: the well box is 538×210px giving ~4 lines against ~17 needed for two roles, cross-checked against Chapter II's near-identical box holding half the copy.

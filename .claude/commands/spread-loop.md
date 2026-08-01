@@ -96,9 +96,19 @@ goes to black" — deep chromatic silhouettes are correct and will not trip it.
 | Well width | 38–45% · III/V/X target the **45% ceiling** · XIII–XIV ~25% · **XII exempt, no well** |
 | Well position | within ±10 pts of target |
 | Muddy middle | low — references run 0.1–0.7%; drifted spreads run 12–29% |
-| LDH areas | cool 55–72% · violet-rose bridge 12–24% **present** · warm 18–32% · bright cores 1–5% |
+| LDH areas | cool 55–72% · violet-rose bridge 12–24% **present** · warm 18–32% — three enforced bands |
+| Bright cores | **advisory only since 2026-08-01** — reported, never a fail. See below |
 | Value floor | `crushed` ≤ 2% — dark **and** colourless. Deep chromatic silhouettes are fine |
 | Fireflies | sparse, dim, irregular. Neon or grid-spaced = regenerate |
+
+🛑 **Bright cores stopped being a gate on 2026-08-01.** The 1–5% band was calibrated on
+a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly
+master in this project — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame
+that passes all three area bands. It also demanded a specular core from scenes whose only
+light source is off frame, and on Chapter I the only place one could go was the open sky
+that carries the text well. That cost Chapter I three edits and a false
+`RETRY-EXHAUSTED`. `check_dawn_balance.py` still prints the number; read it, do not
+retry on it. **A frame in band on cool, bridge and warm exits 0 with cores at 0.0%.**
 
 🛑 **Interiors are DAWN-LIT interiors** (ruled 2026-07-31). VI–XI take the same single
 budget as the exteriors: cool dawn light through windows does the atmospheric work and

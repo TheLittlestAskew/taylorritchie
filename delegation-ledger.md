@@ -733,7 +733,38 @@ prove the three distinct paths independently and cheaply:
 |---|---|---|---|---|
 | P3-VI | VI | **Dawn-lit interior** — the ruling has never been tested against a real image, and it governs 5 more chapters | Opus | **RETRY-EXHAUSTED — ruling partly confirmed, see below** |
 | P3-III | III | **Base exterior loop** — first generation since the three compiler fixes | Sonnet | **RETRY-EXHAUSTED — well/mist conflict** |
-| TF4 | Demote the cores gate + name the bridge in the `warm_pocket` clause | Opus | DISPATCHED |
+| TF4 | Demote the cores gate + name the bridge in the `warm_pocket` clause | Opus | **DONE — 8/8 verified** |
+| P3-Ib | Wire Chapter I's v16 in as master | Haiku | DISPATCHED |
+| P3-VIb | VI → deep well, re-spec + regenerate | Opus | DISPATCHED |
+| P3-IIIb | III → re-target to the measured shade line, re-measure v2 | Sonnet | DISPATCHED |
+
+### TF4 — DONE, all eight criteria re-verified independently
+
+`cores` is now **advisory**: measured, printed with a `cores*` column and a footnote, and unable to
+fail an image on its own. Proof it was surgical rather than a blanket loosening — `01_I` **v13 still
+exits 1** on `warm 14.0% is BELOW the 18-32% band`, while `02_II` and `01_I` v16 both exit 0. The
+rationale sits in-code above `BRIGHT_CORE_L` with all four measurements, and four new self-test pins
+stop a future edit silently re-arming it.
+
+The `warm_pocket` clause now names the violet–lavender–dusty-rose bridge as **mandatory** with its
+share, so the band is no longer purely prose-driven. `cool_dominant` got equivalent treatment — it
+had named those hues only as sky-ramp stops, never as a required band.
+
+**A fourth stale-doc defect, found by the worker on its own initiative.** `verso/SKILL.md` still
+carried "the area budget has no interior variant… do not read those failures as bad art until the
+interior ruling exists". The ruling exists; that paragraph was telling workers to **ignore exactly
+the cool-floor and bridge failures** the new clause is meant to fix. Replaced.
+
+**Flagged for review, not acted on:** a TF2-era self-test asserts `"the whole frame" not in prompt`,
+which is over-broad — it fired on innocent wording in the new clause, and the worker reworded its own
+text rather than loosen another worker's guard. That was the right call in the moment, but the
+assertion will bite again and should be narrowed to the defect it was written for.
+
+> ⚠️ **My verification harness produced a false negative again.** A bash loop interpolating Windows
+> paths reported `exit 1` on the two images that must pass; re-run through Python they both exit 0.
+> **Third shell path/escaping false negative of the session** — the earlier ones were the "all
+> prompts clean" scan and the inherited-`cwd` git failure. **Stop using bash string interpolation
+> for Windows paths entirely; drive every verification from Python with explicit exit-code checks.**
 
 ### 🎯 P3-VI — the dawn-lit interior ruling, tested against pixels at last
 

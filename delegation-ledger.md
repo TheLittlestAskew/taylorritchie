@@ -772,6 +772,41 @@ Still open: **warm 8.3%** against the 18% floor — colour-class, so a targeted 
 >    chapter done.** Anyone scanning statuses to find finished chapters will be misled; noted in the
 >    spec.
 
+### ⚠️ III's warm floor — escalated to Opus, and the gate was checked before blaming the image
+
+The warm grade **plateaued**: three edits reached only 12.7% against the 18% floor, and pushing past
+that made other gates pay — v1 blew warm-neutral drift to 40.9%, v3 shrank the bridge to 14.3% and
+pushed off-palette to 8.1%. A real measured ceiling, not a lack of effort. **Warmth cannot be graded
+into a frame that does not contain the area**, and III commissions its warmth as *"pooling… into the
+gap where the wood opens"* — one small slot.
+
+**I checked whether my gate was wrong again before concluding the image was.** Having demoted the
+cores band earlier tonight, the bar for a second demotion is high. Measured at full precision:
+
+| image | warm |
+|---|---:|
+| exemplar `dawn-atmosphere.jpg` | 20.63% |
+| Chapter I v16 (approved) | **18.01%** |
+| Chapter II v2 (approved) | **18.04%** |
+| Chapter III v2 | **8.29%** |
+
+The floor **is** achievable, so the gate stands and the image is at fault. Note both display as
+"18.0%" — a genuine coincidence of two distinct values, not a clipping bug; that was checked at five
+decimal places rather than assumed.
+
+> **Planning fact for every remaining chapter: warm 18% is the binding constraint of this book.**
+> Both approved masters clear it by hundredths of a point. Commission generous warm regions up front;
+> a tight warm composition cannot be rescued by grading later.
+
+**Escalated to Opus** (Sonnet exhausted 3 generations + 3 edits) with the instruction to adjust the
+**scene prose**, never the gate — widen the warm region, keep it out of the well at `x[3,48]
+y[66.7,98]`, and do not trade the bridge for it.
+
+**Copy fit settled: `treatment: "split_page"`.** The arithmetic — well box 538×210px giving ~4 lines
+against ~17 needed for two roles, cross-checked against II's single-role box of near-identical area
+holding half the copy. This is what the earlier "split_page not needed" claim missed by reasoning
+about width when the re-target had changed **height**.
+
 ### TF4 — DONE, all eight criteria re-verified independently
 
 `cores` is now **advisory**: measured, printed with a `cores*` column and a footnote, and unable to

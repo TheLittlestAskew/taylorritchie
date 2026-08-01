@@ -13,20 +13,21 @@
 - ✅ **Cool dawn light carries an interior** — VI reached **65.2%** off one curtains-open window. The dawn-lit ruling's central claim holds.
 - ✅ **The violet-rose bridge works indoors**, but is *entirely* prose-driven, because the compiler's `warm_pocket` clause never names violet/lavender/rose.
 - ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
-- ❌ **The bright-cores gate is invalid** (see below).
+- ❌ **The bright-cores gate was invalid** — now fixed. Demoted to **advisory** on 2026-08-01: measured and printed, never a failure. It had been calibrated on a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly master here — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame passing all three area bands. **Do not spend an attempt chasing cores.**
 
-**Resume point, in order:**
-1. **Verify TF4** (dispatched, may be mid-flight): demotes `cores` to advisory and makes the `warm_pocket` clause name the bridge. Key criterion — `02_II` and `01_I/…v16.png` must exit 0, while `01_I/…v13.png` must still **fail** on warm 14.0%, proving only cores was demoted.
-2. **Wire in Chapter I's v16** as master once cores is advisory — it passes everything else. **Do not re-roll it.** Candidates v14/v15/v16 are in `01_I\`; the spec still points at v13 and was correctly left unmodified, since spec updates were gated on success.
-3. **Flip VI's `value_class` to `deep`** and resize its well off the warm budget, then regenerate.
-4. **Re-target Chapter III before regenerating it.** Its well was commissioned at `y[45,98]`, which is exactly where the scene's own atmosphere puts trunk-mist; the measured passing zone starts at **y 66.7**. This is Chapter II's amendment repeating — II moved to `y[62,98]` for the identical reason. A target fix is free; a regeneration is not. If the shorter well cannot hold III's payload (it carries **both** Chamber roles), the documented move is `treatment: "split_page"`, **never** widening past 45%.
-5. **Then fan out** to the remaining spreads.
+**Resume point:** TF4 is **done and verified 8/8** — cores demoted, and the `warm_pocket` clause now names the violet–rose bridge itself so it is no longer purely prose-driven. Three follow-ups were dispatched and were in flight at session end:
+
+1. **Chapter I** — wire `v16` in as master. It passes everything now. **Do not re-roll it.**
+2. **Chapter VI** — flipped to a `deep` well, re-spec + regenerate.
+3. **Chapter III** — re-target to the measured shade line (**passing zone starts y ≈ 66.7**) and re-measure the *existing* `chapter-iii-master-v2.png` before spending any generation. This is Chapter II's amendment repeating; II moved `y[40,95]` → `y[62,98]` for the identical reason. A target fix is free. If the shorter well cannot hold III's payload — it carries **both** Chamber roles — the documented move is `treatment: "split_page"`, **never** widening past 45%.
+
+**Then fan out** to the remaining nine: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
 
 **`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
 
 **How Phase 3 runs:** `/spread-loop <NUMERAL>` per chapter. **Hard cap 3 generation attempts, never a 4th** — exit `RETRY-EXHAUSTED` with the measurement history instead, because an unwinnable gate is information, not a reason to keep spending. ≤2 Sonnet retries then Opus escalation, and **Opus adjusts the spec, never the gate.**
 
-**Run BOTH gates on every master.** `check_palette.py` is structural and **profile-agnostic by design**, so golden-hour art sails straight through it — Chapter VIII scored a perfect 0.0% muddy and is a night corridor. `check_dawn_balance.py` measures the LDH area budget (cool 55–72%, violet-rose bridge 12–24%, warm 18–32%, bright cores 1–5%, plus crushed-black). Passing the first is not sufficient.
+**Run BOTH gates on every master.** `check_palette.py` is structural and **profile-agnostic by design**, so golden-hour art sails straight through it — Chapter VIII scored a perfect 0.0% muddy and is a night corridor. `check_dawn_balance.py` measures the LDH area budget — **three enforced bands**: cool 55–72%, violet-rose bridge 12–24%, warm 18–32%, plus crushed-black. Bright cores is reported but **advisory only**. Passing the first script is not sufficient.
 
 **Triage before spending:** colour, value and warmth problems are **gradeable** — prefer a targeted edit, which is cheaper and lower-risk than regenerating. Composition, depth ladder and firefly placement need **regeneration**; no grade adds a depth plane. Every edit prompt ends *"The art style should be fully preserved."* — that clause measurably works. Re-measure with `check_edit.py`; an edited image is not trusted until re-measured.
 
@@ -38,7 +39,7 @@
 
 **Standing rules — decided, do not re-litigate:**
 - **Luminous dawn haze governs all 15 spreads.** Golden hour is retired; "dusk" is not a lighting word here.
-- **Interiors are dawn-lit interiors** (ruled 2026-07-31): cool window light carries the cool 55–72% share, the hearth/lamp is a *local* pocket inside 18–32%, and the violet-rose bridge (12–24%) is mandatory indoors as well as out. A warm well costs 19–27% of the warm ceiling by itself, so an interior gets **a warm well or a warm room, never both.**
+- **Interiors are dawn-lit interiors** (ruled 2026-07-31): cool window light carries the cool 55–72% share, the hearth/lamp is a *local* pocket inside 18–32%, and the violet-rose bridge (12–24%) is mandatory indoors as well as out. **A `saturated_warm` well is unaffordable in an interior at usable size** — measured 2026-08-01, `warm% = 1.45 × gold_area% + 7.5` (r = 0.994), so VI's 39×53 well predicted 37.4% warm against a 32% ceiling. **All interiors take `deep` wells.** This *simplifies* the earlier "warm well or warm room" rule: the warm-well option was never actually affordable.
 - **Voice:** `tayls-voice` Mode 1. Chapters II–XI are resume content **verbatim** — do not re-voice. Only Cover, I, XIII, XIV are narrative.
 - **Read BOTH goal docs.** `Goal_Amendment_TwoPath_Cover.md` is **authority level 0** and overrides `SlashGoal_AmongTrees_Ship.md` on conflict. Both in `…\Septentrion\Constellations\Resume Site\`.
 - The public contact number is `706-767-7196`. All work stays on `feat/among-trees-storybook`; `main` stays untouched mid-build.
@@ -55,6 +56,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 03:00 ET · Claude Code
+- **Changed:** **TF4 landed and was verified 8/8 independently.** `cores` is now **advisory** — measured and printed under a `cores*` column with a footnote, but unable to fail an image. The demotion was proved surgical rather than a blanket loosening: `01_I` v13 **still exits 1** on `warm 14.0% is BELOW the 18-32% band`, while `02_II` and `01_I` v16 both exit 0. Four new self-test pins stop a future edit silently re-arming it. The compiler's `warm_pocket` clause now names the violet–lavender–dusty-rose bridge as mandatory with its share, so interiors no longer depend on each worker hand-writing the band; `cool_dominant` got equivalent treatment. Dispatched the three pilot follow-ups: wire Chapter I's v16 in as master, flip VI to a `deep` well and regenerate, and re-target III to its measured shade line before spending a generation.
+- **Commit:** `3d5ca7c`
+- **Friction:** gen-fail — **my verification harness threw a third false negative.** A bash loop interpolating Windows paths reported `exit 1` on the two images that were required to pass, and I was one step from reporting TF4 as failed on that basis; re-run through Python, both exit 0. Same root cause as the earlier "all ten prompts clean" false all-clear and the inherited-`cwd` git failure — bash mangling Windows paths and the failure looking like a real result. **Standing rule now recorded in the ledger: drive every verification from Python with explicit exit-code checks; never bash string interpolation over Windows paths.** Three occurrences is a pattern, not three accidents.
+- **Next:** Verify the three follow-ups, then fan out to the remaining nine spreads. See DO NEXT.
+- **Watch out:** ⚠️ **A fourth stale-doc defect was found — by a worker, unprompted.** `verso/SKILL.md` still said "the area budget has no interior variant… do not read those failures as bad art until the interior ruling exists". The ruling exists, and that paragraph instructed workers to **ignore exactly the cool-floor and bridge failures** the new clause was written to catch. Four stale-doc defects in one session, all the same shape: a governing rule changed and the documents *quoting* it did not. **When a ruling changes, grep the whole skill tree for the retired vocabulary.** Also flagged and deliberately not acted on: a TF2-era self-test asserts `"the whole frame" not in prompt`, which is over-broad and fired on innocent wording. A worker reworded its own text rather than loosen another worker's guard — right call, but that assertion will bite again and should be narrowed to the defect it was written for.
 
 ### 2026-08-01 02:10 ET · Claude Code
 - **Changed:** **Phase 3's three-task pilot completed.** All three returned `RETRY-EXHAUSTED`, and two of the three were blocked by **defective gates rather than bad art** — which is precisely what piloting three chapters instead of thirteen was meant to surface. Confirmed: the edit path works (Chapter I's well *gained* contrast while its warm area moved into band), cool dawn light genuinely carries an interior at **65.2% off a single window**, and the violet-rose bridge works indoors. Disproved: an interior cannot afford a `saturated_warm` well — fitted across four images, `warm% = 1.45 × gold_area% + 7.5` at **r = 0.994**, so VI's specified well predicts 37.4% warm against a 32% ceiling. VI flips to `deep`, which *simplifies* the interior rule since the warm-well option was never affordable at spec scale. Dispatched **TF4** to demote the cores gate and to make the compiler's `warm_pocket` clause name the bridge colours instead of leaving them to hand-written prose.
@@ -153,17 +161,5 @@
 - **Friction:** gen-fail — the first axe smoke test threw `Error: Please use browser.newContext()`. `@axe-core/playwright` rejects a page created by `browser.newPage()`; it requires an explicit `browser.newContext()` first. Worked immediately once the context was created.
 - **Next:** See the DO NEXT block above — two human blockers (ralph-loop plugin, tayls-voice) before Phase 0.
 - **Watch out:** `npm audit` reports 3 high-sev findings in this repo (`sharp@0.34.2` libvips CVEs, `glob@11.0.3` CLI command injection). Do NOT run `npm audit fix` — `sharp-cli@5.2.0` is the latest published and npm's proposed "fix" is a semver-major *downgrade* to 4.2.0. Closing the libvips CVEs would need an npm `overrides` pin to `sharp@^0.35.0`, untested against sharp-cli 5. Separately, `tests/site-audit.mjs` still imports Playwright through a hardcoded absolute path into a Codex runtime cache (`C:/Users/theli/.cache/codex-runtimes/...`); now that Playwright is a real repo dependency that line should become `import { chromium } from 'playwright'`.
-
-### 2026-07-26 22:52 ET · Claude Code
-- **Changed:** Added `systemhorizon/PROJECTS_CONTENT_SPEC.md` — reconciled all claude.ai Projects + the documented portfolio into per-project page/dashboard content for the SystemHorizon `projects` view, plus a schema extension and display-pattern library. Also built a `septentrion-sync` → Supabase heartbeat (script + wrapper hook live in `~/.claude/skills/septentrion-sync/`, outside this repo) that auto-stamps project status.
-- **Commit:** `747c322`
-- **Next:** Unchanged. See the block above this log.
-- **Watch out:** The heartbeat needs 5 columns added to the `projects` table (SQL in spec §7) before it can write; until then it self-reports "NOT PUSHED — missing columns" and is harmless.
-
-### 2026-07-26 11:44 ET · Claude Code
-- **Changed:** Added the Handoff Contract to `AGENTS.md` so Codex follows it. Codex reads `AGENTS.md`, never `~/.claude/skills/`, so it had no handoff instructions at all before this.
-- **Commit:** `4d70829`
-- **Next:** Unchanged. See the block above this log.
-- **Watch out:** Log entries must now carry a tool label (`Claude Code` / `Claude desktop` / `Codex` / `ChatGPT`). Do not restructure this file; the dashboard parses it.
 
 > Older entries archived to `handoff-archive/2026-07.md` and `handoff-archive/2026-06.md`.

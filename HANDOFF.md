@@ -6,13 +6,21 @@
 ## ▶ DO NEXT
 🟢 **PHASE 2 IS COMPLETE. All 15 spreads are specced and independently verified — every spec compiles at exit 0 with zero golden-hour language. Nothing is blocked.**
 
-**▶ Phase 3 is UNDERWAY.** A three-task pilot went out instead of a fan-out to thirteen. **P3-I has returned and the edit path is validated** — a targeted grade fixed a colour-class failure and the well *gained* contrast (11.76:1 vs 11.68:1). P3-VI and P3-III were still running at the end of the session.
+**▶ Phase 3's three-task pilot is COMPLETE.** It cost three chapters and bought findings that would otherwise have cost thirteen. All three returned `RETRY-EXHAUSTED`, and **that is the pilot working, not failing** — two of the three were blocked by defective gates rather than bad art.
 
-🛑 **DO THIS FIRST — TF4, the bright-cores gate is defective and blocks Chapter I.** `check_dawn_balance.py` enforces the 1–5% bright-cores band **unconditionally**, but the LDH profile says *"Visible sun, **if present**"* — it is conditional. Chapter I's only light source is the low sun **off frame**, with no sun disc and no fireflies, so no in-frame source can produce a near-white specular core and the band is unreachable by construction. It cost three edit attempts and a false `RETRY-EXHAUSTED`. Worse, the only region on Chapter I that could host a core **is the well**, so obeying the gate would mean putting a hotspot in the text region and destroying the contrast that chapter took 13 versions to earn.
-Fix: make the cores band conditional on a **declared in-frame light source read from the spec** — an explicit field, **never a command-line flag**. verso already learned this with `--exempt-width` ("a hand-passed flag is silently wrong in both directions"), which is why width exemption lives in `treatment`. Do not parse prose from `light_sources` to infer it; declare it. Then re-check `chapter-I-above-the-trees-v16.png`, which should pass, and wire it in as Chapter I's master.
-⚠️ **Do not edit that script while any generation worker is running** — they all execute it.
+**What the pilot proved:**
+- ✅ **The edit path works** — the assumption Phase 3's cost model rests on. Chapter I's grade moved warm 14.0% → 18.0% and the well *gained* contrast, 11.76:1 vs 11.68:1.
+- ✅ **Cool dawn light carries an interior** — VI reached **65.2%** off one curtains-open window. The dawn-lit ruling's central claim holds.
+- ✅ **The violet-rose bridge works indoors**, but is *entirely* prose-driven, because the compiler's `warm_pocket` clause never names violet/lavender/rose.
+- ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
+- ❌ **The bright-cores gate is invalid** (see below).
 
-**Chapter I: v16 is the accepted master pending TF4. Do not re-roll it.** Candidates v14/v15/v16 are on disk in `01_I\`; the spec still points at v13 and was correctly left unmodified, since spec updates were gated on success.
+**Resume point, in order:**
+1. **Verify TF4** (dispatched, may be mid-flight): demotes `cores` to advisory and makes the `warm_pocket` clause name the bridge. Key criterion — `02_II` and `01_I/…v16.png` must exit 0, while `01_I/…v13.png` must still **fail** on warm 14.0%, proving only cores was demoted.
+2. **Wire in Chapter I's v16** as master once cores is advisory — it passes everything else. **Do not re-roll it.** Candidates v14/v15/v16 are in `01_I\`; the spec still points at v13 and was correctly left unmodified, since spec updates were gated on success.
+3. **Flip VI's `value_class` to `deep`** and resize its well off the warm budget, then regenerate.
+4. **Re-target Chapter III before regenerating it.** Its well was commissioned at `y[45,98]`, which is exactly where the scene's own atmosphere puts trunk-mist; the measured passing zone starts at **y 66.7**. This is Chapter II's amendment repeating — II moved to `y[62,98]` for the identical reason. A target fix is free; a regeneration is not. If the shorter well cannot hold III's payload (it carries **both** Chamber roles), the documented move is `treatment: "split_page"`, **never** widening past 45%.
+5. **Then fan out** to the remaining spreads.
 
 **`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
 
@@ -47,6 +55,13 @@ Fix: make the cores band conditional on a **declared in-frame light source read 
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 02:10 ET · Claude Code
+- **Changed:** **Phase 3's three-task pilot completed.** All three returned `RETRY-EXHAUSTED`, and two of the three were blocked by **defective gates rather than bad art** — which is precisely what piloting three chapters instead of thirteen was meant to surface. Confirmed: the edit path works (Chapter I's well *gained* contrast while its warm area moved into band), cool dawn light genuinely carries an interior at **65.2% off a single window**, and the violet-rose bridge works indoors. Disproved: an interior cannot afford a `saturated_warm` well — fitted across four images, `warm% = 1.45 × gold_area% + 7.5` at **r = 0.994**, so VI's specified well predicts 37.4% warm against a 32% ceiling. VI flips to `deep`, which *simplifies* the interior rule since the warm-well option was never affordable at spec scale. Dispatched **TF4** to demote the cores gate and to make the compiler's `warm_pocket` clause name the bridge colours instead of leaving them to hand-written prose.
+- **Commit:** `b2e5e09`
+- **Friction:** misread — **I under-diagnosed the cores defect and reported the incomplete version to Taylor.** I said it was "conditional on an in-frame light source", which is true but secondary. The primary cause is that I calibrated `BRIGHT_CORE_L = 98` against `dawn-atmosphere.jpg`, a **rendered game screenshot with a large blown-out sky bloom**, while the chapter art is **painterly** and never reaches that share of extreme luminance. Chapter II v2 — the only image in the project passing all three area bands — scores **0.38%** against a 1% floor. **Calibrating a gate against a single artefact validates it only for artefacts like that one**; the conditional case and the medium difference both needed a deliberately different second sample before I called the gate validated. Cost: two false `RETRY-EXHAUSTED` results across Chapters I and III.
+- **Next:** Verify TF4, wire in Chapter I's v16, flip VI to a deep well, re-target III, then fan out. See DO NEXT.
+- **Watch out:** ⚠️ **A `RETRY-EXHAUSTED` is not evidence of a bad image — check the gate before re-rolling.** Chapter I's v16 had passed everything real by attempt 3 and was failing only a broken check; re-rolling it would have thrown away a good grade and spent a fresh generation. Two of three pilot chapters were in this state. Separately, **Chapter III's failure is genuinely compositional and repeats Chapter II exactly**: a well commissioned on ground that the scene's own mist occupies cannot be rescued by prompt wording — three regenerations and four targeted pixel-level edits moved contrast only 1.05 → 1.55. II solved it by moving the target to the measured shade line, and III's measured passing zone starts at y 66.7. **Re-target before regenerating; a target fix is free.**
 
 ### 2026-08-01 01:20 ET · Claude Code
 - **Changed:** First Phase 3 pilot result returned. **P3-I validated the edit path**, which is the assumption Phase 3's entire cost model rests on: a targeted grade moved Chapter I's warm area from 14.0% into the band at 18.0%, kept cool / bridge / muddy in band, and the well came out at **11.76:1 against the base's 11.68:1** — it *gained* contrast rather than paying for the fix. `check_edit.py` exited 0 on all three attempts. "Prefer a targeted edit over a re-roll" stands as Phase 3 policy.

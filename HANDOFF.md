@@ -15,13 +15,14 @@
 - ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
 - ❌ **The bright-cores gate was invalid** — now fixed. Demoted to **advisory** on 2026-08-01: measured and printed, never a failure. It had been calibrated on a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly master here — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame passing all three area bands. **Do not spend an attempt chasing cores.**
 
-**Resume point:** TF4 is **done and verified 8/8** — cores demoted, and the `warm_pocket` clause now names the violet–rose bridge itself so it is no longer purely prose-driven. Three follow-ups were dispatched and were in flight at session end:
+**Resume point:** TF4 verified 8/8. **Chapter I is COMPLETE** — the first chapter fully verified under LDH (dawn gate exit 0 at 63.6/14.5/18.0, well 11.76:1, audit clean). **Chapter III's well is fixed** at 7.56:1 for **zero generations**, by re-targeting alone. Two tasks were in flight at session end:
 
-1. **Chapter I** — wire `v16` in as master. It passes everything now. **Do not re-roll it.**
-2. **Chapter VI** — flipped to a `deep` well, re-spec + regenerate.
-3. **Chapter III** — re-target to the measured shade line (**passing zone starts y ≈ 66.7**) and re-measure the *existing* `chapter-iii-master-v2.png` before spending any generation. This is Chapter II's amendment repeating; II moved `y[40,95]` → `y[62,98]` for the identical reason. A target fix is free. If the shorter well cannot hold III's payload — it carries **both** Chamber roles — the documented move is `treatment: "split_page"`, **never** widening past 45%.
+1. **Chapter III — warm grade.** Its well now passes, but `warm 8.3%` fails the 18% floor. Colour-class, so a **targeted grade**, never a re-roll. Protect the well at `x[3,48] y[66.7,98]` — no warm may spill into it — and do not flatten the bridge (20.6%) while pushing warmth. Also outstanding: **compute whether the copy fits.** The re-target cut the well's height to **31.3%** and III carries **both** Chamber roles, the heaviest payload in the book, where Chapter II holds one role at 36%. If it does not fit, the move is `treatment: "split_page"`, **never** pushing the top edge back into the mist.
+2. **Chapter VI — deep-well regeneration.**
 
-**Then fan out** to the remaining nine: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
+**Then fan out** to the remaining: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
+
+⚠️ **`well.status: "verified"` means the WELL is verified — contrast, width, position — NOT that the chapter is shippable.** Chapter III currently reads `verified` while its master still fails the dawn gate on warm. Do not use that field alone to decide which chapters are done.
 
 **`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
 
@@ -56,6 +57,13 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-01 03:45 ET · Claude Code
+- **Changed:** **Chapter I is COMPLETE** — the first chapter fully verified under luminous dawn haze. Dawn gate exit 0 (cool 63.6 / bridge 14.5 / warm 18.0 / cores 0.5 advisory), well **11.76:1** against v13's 11.68:1, `--audit` clean so `verified` is earned, notes grown 5,117 → 5,716 characters with the v12 history intact, and `generation.derivation` recording base v13 plus the exact edit prompt so the master stays reproducible as a two-step. **Chapter III's well was fixed for free** — `1.55:1 → 7.56:1` with **zero generations**, purely by amending the target from `y[45,98]` to `y[66.7,98]`; width 45.0% at ceiling, 0pt drift. Dispatched III's warm grade and a copy-fit calculation.
+- **Commit:** `1b1f97e`
+- **Friction:** misread — the Chapter I brief told the worker to run `check_dawn_balance.py` **without giving its path**, so it searched `verso/scripts/` and reported a blocker; the script lives in the `luminous-dawn-haze` skill. Six of seven criteria passed and the deliverable was fine. **Always give the full path for a cross-skill script** — this project keeps its gates in two different skills and workers cannot be expected to infer which.
+- **Next:** Land III's warm grade and VI's deep-well regeneration, then fan out. See DO NEXT.
+- **Watch out:** ⚠️ **`well.status: "verified"` does NOT mean the chapter is shippable.** It is verso's term for the *well* passing contrast, width and position. Chapter III reads `verified` right now while its master still fails the dawn gate on warm 8.3%. Anyone scanning statuses to count finished chapters will over-count. Also: III's re-target vindicated a habit worth keeping — **the prior run burned 3 generations and 4 pixel-level edits pushing contrast 1.05 → 1.55 on an image whose target was simply in the wrong place**, and Chapter II's notes had already recorded the identical amendment for the identical cause. Reading the neighbouring chapter's notes was worth three generations. Finally, III's worker declared `split_page` unnecessary while justifying it on **width**, which was never in question — the re-target cut **height** to 31.3% for the book's heaviest copy payload. **Check the dimension that actually changed.**
 
 ### 2026-08-01 03:00 ET · Claude Code
 - **Changed:** **TF4 landed and was verified 8/8 independently.** `cores` is now **advisory** — measured and printed under a `cores*` column with a footnote, but unable to fail an image. The demotion was proved surgical rather than a blanket loosening: `01_I` v13 **still exits 1** on `warm 14.0% is BELOW the 18-32% band`, while `02_II` and `01_I` v16 both exit 0. Four new self-test pins stop a future edit silently re-arming it. The compiler's `warm_pocket` clause now names the violet–lavender–dusty-rose bridge as mandatory with its share, so interiors no longer depend on each worker hand-writing the band; `cool_dominant` got equivalent treatment. Dispatched the three pilot follow-ups: wire Chapter I's v16 in as master, flip VI to a `deep` well and regenerate, and re-target III to its measured shade line before spending a generation.

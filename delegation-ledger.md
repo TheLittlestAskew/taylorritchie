@@ -731,8 +731,85 @@ prove the three distinct paths independently and cheaply:
 
 | # | Chapter | Path being proven | Tier | Status |
 |---|---|---|---|---|
-| P3-VI | VI | **Dawn-lit interior** — the ruling has never been tested against a real image, and it governs 5 more chapters | Opus | RUNNING |
-| P3-III | III | **Base exterior loop** — first generation since the three compiler fixes | Sonnet | RUNNING |
+| P3-VI | VI | **Dawn-lit interior** — the ruling has never been tested against a real image, and it governs 5 more chapters | Opus | **RETRY-EXHAUSTED — ruling partly confirmed, see below** |
+| P3-III | III | **Base exterior loop** — first generation since the three compiler fixes | Sonnet | **RETRY-EXHAUSTED — well/mist conflict** |
+| TF4 | Demote the cores gate + name the bridge in the `warm_pocket` clause | Opus | DISPATCHED |
+
+### 🎯 P3-VI — the dawn-lit interior ruling, tested against pixels at last
+
+| # | Well @ target | Best passing rect | muddy / drift | cool / bridge / warm / cores |
+|---|---|---|---|---|
+| v1 | 1.00:1 | 15.0% @ 4.70:1 | 2.5 / 10.8 | 47.2 / **32.3** / 16.4 / 0.0 |
+| v2 | 1.00:1 | 25.0% @ 3.97:1 | 4.1 / 9.4 | **65.2 / 11.9 / 21.4** / 0.0 |
+| v2e1 edit | 1.05:1 | 40.0% @ 3.77:1 | 4.1 / 6.8 | 55.8 / 8.6 / 33.8 / 0.0 |
+| v3 | 1.44:1 | 30.0% @ **7.33:1** | 1.5 / 9.2 | 26.3 / 24.8 / **46.5** / 0.0 |
+
+**Two thirds of the ruling is CONFIRMED, and that is the headline.**
+
+- **Cool 55–72% indoors: YES.** v2 reached **65.2% off a single curtains-open window**. Cool dawn
+  light genuinely carries an interior frame. The central claim of the ruling survives contact.
+- **Violet-rose bridge indoors: YES — and it is *entirely* prose-driven.** It tracked the hand-written
+  scene text almost linearly: 32.3% (overshoot) → 11.9% → 24.8%. Cause: the compiler's `warm_pocket`
+  clause **never names violet, lavender or rose**, so the mandatory band exists only where a worker
+  hand-writes it. That is the drift mechanism the compiler exists to eliminate. → **TF4b.**
+
+**The third part fails, on arithmetic rather than craft.** Across four images the worker fitted
+`warm% = 1.45 × gold_plaster_area% + 7.5`, **r = 0.994**. VI's specified 39 × 53 well is 20.7% of
+frame → predicted warm **37.4%** against a 32% ceiling. The largest gold plane compatible with warm
+≤32% is 16.9% of frame — 39% wide but only **43% tall**, short of the 53% VI's three copy blocks
+need. The spec under-counted the **irreducible non-well warm** (firebox, mantel, hearthstone, embers
+— the 7.5 intercept) by roughly ten points.
+
+**Consequence: an interior cannot carry a `saturated_warm` well at usable size. VI must flip to a
+`deep` well like VII–XI.** That simplifies T5's rule rather than complicating it — the "warm well OR
+warm room" choice collapses, because at spec scale the warm well was never actually affordable. No
+chapter now uses `saturated_warm`.
+
+### P3-III — a real well/composition conflict, not a prompt bug
+
+Best candidate `chapter-iii-master-v2.png`: well contrast **1.55:1** against the 4.5:1 floor,
+position drifted ~22pt on y. Gates: muddy 0.4% ✓, cool 70.7% ✓, **bridge 20.6% ✓ unforced**, warm
+8.3% ✗, cores 0.0% ✗.
+
+The well was commissioned on *"the shaded rise of moss and needle-litter forest floor at the road's
+left edge"* at `y[45,98]` — **but that zone is exactly where the scene's own atmosphere puts
+trunk-mist.** Three regenerations and four targeted "darken this specific pixel" edits moved contrast
+only 1.05 → 1.55. The worker's read is that this is a genuine composition tension, and the evidence
+supports it.
+
+**This is Chapter II's lesson repeating.** II's notes record the identical amendment: its target
+originally read `y[40,95]`, two independent generations both put the shade line at y 62, and the
+target was moved to `y[62,98]` because *"the low sun rakes across the upper bank, so the bank is only
+genuinely dark in the lower foreground."* III has the same geometry and needs the same correction —
+the measured passing zone starts at **y 66.7**. Re-target and re-measure the existing v2 **before**
+spending another generation; verso's own rule is that only regeneration fixes composition, but this
+is a *target* fix, which is free.
+
+⚠️ If the re-targeted well is too short for III's payload — it carries **both** Chamber roles, the
+heaviest text in the book — the documented move is `treatment: "split_page"`, **not** widening past
+45% and wrecking the composition.
+
+### 🛑 The cores gate is worse than I first diagnosed
+
+I reported it as "conditional on an in-frame light source". That was **incomplete**. Measured share
+at L\*≥98:
+
+| image | L≥98 |
+|---|---:|
+| exemplar `dawn-atmosphere.jpg` | **2.43%** |
+| I v13 (approved) | 0.74% |
+| **II v2 — the only image passing all three area bands** | **0.38%** |
+| III v2 | 0.01% |
+
+**The project's own best master fails the gate by a factor of three.** Two compounding causes: the
+exemplar is a rendered game screenshot with a large blown-out sky bloom while the chapter art is
+painterly and never reaches that share of extreme luminance; *and* the profile makes the sun
+conditional (*"visible sun, if present"*) while the gate did not.
+
+**Calibrating a gate against a single artefact validates it only for artefacts like that one.** The
+exemplar was the wrong medium and I did not take a second, deliberately different sample before
+declaring the gate calibrated. TF4a demotes cores to advisory — measured and printed, never
+pass/fail — which is the same principle already applied to the value floor earlier tonight.
 | P3-I | I | **Edit path** — the cheap repair route the whole Phase 3 triage depends on | Sonnet | **RETRY-EXHAUSTED — but see below, the gate was wrong** |
 
 ### 🎯 P3-I result — the edit path WORKS; my cores gate is defective

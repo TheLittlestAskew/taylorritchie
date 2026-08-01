@@ -14,7 +14,8 @@
 verified — every spec compiles at exit 0 with zero golden-hour language. Nothing is blocked.
 **Next is Phase 3 — generation**, which is the bulk of the remaining cost: 13 spreads to make.
 Run mode: autonomous delegation.
-**Last updated:** 2026-07-31 · Claude Code
+**Last updated:** 2026-08-01 · Claude Code
+**🛑 VI IS HALTED PENDING TAYLOR.** Three Opus rounds exhausted. See the VI section.
 
 **Canonical art root:** `…\Septentrion\Constellations\Resume Site\resume art\<NN>_<NUMERAL>\`
 (the vault). The OneDrive `PORTFOLIO\resume art\<NUMERAL>\` tree is a working copy — shared
@@ -1172,3 +1173,67 @@ cover `spec.json` well data that does not exist yet (now 5.4b, blocks rather tha
 Then ran Phase 0.1–0.4: live deploy verified, environment verified, nanobanana generation
 failure diagnosed to a prompt-phrasing trigger rather than config, scaffold + `/classic/`
 move completed with the asset-path rewrite, this ledger created.
+
+
+---
+
+## 🛑 CHAPTER VI — HALTED, DECISION REQUIRED FROM TAYLOR
+
+Three Opus rounds, 8 generations and 13 edits across 21 measured frames. **Branch stopped per the
+delegation protocol's two-round rule** (extended once because round three used a materially different
+approach on a clean anchor). No fourth round without Taylor.
+
+### My earlier framing was wrong, and the correction matters
+
+I reported this as "VI misses the cool floor by 0.3." **Cool was never the problem.** Across 21
+frames cool measured at or above 55% on eleven and below it on exactly one. Both fresh generations
+came out at 74.2% and 72.8% — *over* the ceiling.
+
+**The real binding constraint is `warm ≥18` with a `deep` well, which no generation has ever
+produced.** Every deep-well roll: v4 9.7, v5 7.9, v6 7.5, v7 7.2, v8 7.9. The only frames above 18
+got there via edits, and those edits spent ~15 points of cool to do it.
+
+### Not a value problem any more — a geometry one
+
+The value lever was applied and it worked: v7's floor pool sampled at RGB 247,211,159, which is
+`#F6D28F` to within two points, and still scored warm 7.2%. So the pixels are the right colour and
+there are simply **not enough of them**.
+
+Cause: with the `deep` well occupying the upper-left at `x[3,42] y[2,55]`, the **only** surface left
+that can carry warm is the floor — and the couch (`#152552`, scores **cool**) plus the rug
+(`#C68FA7`, scores **bridge**) already own **43.6% of the lower frame**. v8e4 closed the last
+alternative by proving a warm wash on plaster fails the drift gate at 20.7%.
+
+### The two best frames, and how near they are
+
+| frame | cool | bridge | warm | well | miss |
+|---|---|---|---|---|---|
+| `chapter-vi-v6e5-16x9.png` | **54.7** ✗ | 18.8 ✓ | 19.1 ✓ | **7.88:1** ✓ | cool by **0.3** |
+| `chapter-vi-v2-16x9.png` | 65.2 ✓ | **11.9** ✗ | 21.4 ✓ | 1.00:1 ✗ | bridge by **0.1** |
+| `chapter-vi-v8e3-16x9.png` | 69.5 ✓ | 14.1 ✓ | **10.5** ✗ | 5.82:1 ✓ | warm by 7.5 |
+
+⚠️ Both near-misses are **far below the generator's resolution** — its smallest change to a colour
+region is 3–11 points of frame share. **Neither 0.3 nor 0.1 can be aimed at.** Landing one would be
+luck, which is exactly how Chapter III passed.
+
+### The one untried lever
+
+**Delete the couch.** It is a deep-indigo silhouette scoring *cool* on a frame that already has ~14
+points of cool to spare, and it sits exactly where warm floor would go. Nothing in the copy deck or
+the VII foreshadow requires it. Cheap, specific, and never attempted.
+
+**This is a compositional change to Taylor's spread, which is why it is her call and not mine.**
+
+### 🛑 The strategic question underneath, which is bigger than VI
+
+**Five more interiors — VII, VIII, IX, X, XI — all use `deep` wells.** If a deep-well interior
+structurally cannot reach warm 18%, this is not a VI problem, it is a **six-chapter** problem, and it
+should be settled before those five are generated rather than after. Options as they stand:
+
+- **(a)** Delete the couch and run VI once more — tests the geometry theory directly and cheaply.
+- **(b)** Accept `v6e5` (0.3 off cool, everything else passing, well 7.88:1) as a documented deviation.
+- **(c)** Revisit whether **warm 18% is the right floor for a deep-well interior**. Note the honest
+  counter-evidence: the floor is met by all three verified masters — but all three are **exteriors
+  with open sky**. No interior has ever met it. That is a real asymmetry the budget may simply not
+  describe.
+- **(d)** Re-plan VI's composition more broadly, e.g. move the well so the warm has somewhere to live.

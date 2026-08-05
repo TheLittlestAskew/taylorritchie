@@ -4,86 +4,75 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-🟢 **PHASE 2 IS COMPLETE. All 15 spreads are specced and independently verified — every spec compiles at exit 0 with zero golden-hour language. Nothing is blocked.**
+🛑 **EVERYTHING IN THE 2026-08-01 LOG ENTRIES DESCRIBES A RETIRED PROJECT.** On 2026-08-04 Taylor scrapped the Among Trees art style outright. The `verso` skill, `compile_prompt.py`, `check_palette.py`, `check_dawn_balance.py`, the luminous-dawn-haze profile, the cool/bridge/warm area budget, the `saturated_warm` vs `deep` well taxonomy and all 15 spread specs were archived to `~/_retired/2026-08-04_among-trees-style/`. **Do not rebuild any of it and do not act on a 2026-08-01 entry as if it were live.** Those entries are kept because their *lessons* transferred; their *machinery* did not.
 
-**▶ Phase 3's three-task pilot is COMPLETE.** It cost three chapters and bought findings that would otherwise have cost thirteen. All three returned `RETRY-EXHAUSTED`, and **that is the pilot working, not failing** — two of the three were blocked by defective gates rather than bad art.
+**▶ The next action: Chapter III.** Write its prompt by hand against `Style/EARLY-MORNING.md` and `ThePlan.md`, generate, grade, measure the well, record the run. **Chapter II is the worked example — copy its structure, not its scene.**
 
-**What the pilot proved:**
-- ✅ **The edit path works** — the assumption Phase 3's cost model rests on. Chapter I's grade moved warm 14.0% → 18.0% and the well *gained* contrast, 11.76:1 vs 11.68:1.
-- ✅ **Cool dawn light carries an interior** — VI reached **65.2%** off one curtains-open window. The dawn-lit ruling's central claim holds.
-- ✅ **The violet-rose bridge works indoors**, but is *entirely* prose-driven, because the compiler's `warm_pocket` clause never names violet/lavender/rose.
-- ❌ **A `saturated_warm` well is unaffordable in an interior.** Fitted across 4 images: `warm% = 1.45 × gold_area% + 7.5`, r = 0.994. **VI must flip to a `deep` well like VII–XI.**
-- ❌ **The bright-cores gate was invalid** — now fixed. Demoted to **advisory** on 2026-08-01: measured and printed, never a failure. It had been calibrated on a rendered game screenshot with a blown-out sky bloom (2.43%) and failed every painterly master here — 0.74%, 0.38%, 0.01% — including Chapter II v2, the only frame passing all three area bands. **Do not spend an attempt chasing cores.**
+🟢 **The style is rebuilt and it works.** `Style/EARLY-MORNING.md` (r3) is the governing art document, `Style/check_grade.py` enforces it, and `--self-test` is green on 60 checks including all eight of Taylor's curated references. Two chapters are through it:
 
-🛑 **CHAPTER VI IS HALTED — Taylor's decision required before Phase 3 continues.** Three Opus rounds, 8 generations, 13 edits, 21 measured frames. Do not dispatch a fourth round. Full analysis and options are at the end of `delegation-ledger.md`.
+| | frame | gates | well | ink |
+|---|---|---|---|---|
+| **I** | `chapter-I-above-the-trees-em-v1.png` | 5/5 with `--sky-well` | x 62–94, y 20–46 · 32%×26% · **5.19:1** | `#1B1B3A` |
+| **II** | `test-em-II-t2.png` (candidate) | **5/5 strict** | x 3–38, y 70–96 · 35%×26% · **5.97:1** | `#1B1B3A` |
 
-**The correction that matters:** I previously reported VI as "missing the cool floor by 0.3". **Cool was never the problem** — it cleared 55% on eleven of 21 frames, and both fresh generations came out *over* the ceiling at 74.2% and 72.8%. **The real constraint is `warm ≥18` with a `deep` well, which no generation has ever produced** (7.2–9.7 across every deep-well roll). The only frames above 18 got there by edits that spent ~15 points of cool.
+⚠️ **Chapter II is a CANDIDATE, not a master — it needs Taylor's eye on tree-mass flatness before it locks.** No gate measures flatness, and t2 carries more internal incident than t1 (dappled patches on the near-right trunk, tufts at the canopy edges). That is the exact axis she flagged on Chapter I's first frame. Everything measurable about it passes.
 
-**It is a geometry problem, not a value one.** v7's floor pool sampled within two points of `#F6D28F` and still scored 7.2% — the pixels are the right colour and there are not enough of them. With the deep well at `x[3,42] y[2,55]`, only the floor can carry warm, and the couch (scores cool) plus rug (scores bridge) own **43.6% of the lower frame**.
+**Everything lives in the vault, not in this repo:** `~\Obsidian Vaults\Septentrion\Constellations\Resume Site\`. `Style/` holds the profile, the gate script and one run record per chapter; `resume art\<NN>_<NUMERAL>\` holds the frames and `spec.json`. The `resume art` tree is **untracked by design** — full-size frames never enter git history.
 
-🛑 **The bigger question, which should be settled before generating VII–XI:** five more interiors use `deep` wells. **No interior has ever met warm 18%**, while all three verified masters that do are **exteriors with open sky.** If deep-well interiors structurally cannot reach that floor, this is a six-chapter problem, not a VI problem.
+**How a chapter runs now — no compiler, by Taylor's call 2026-08-05:**
+1. Read `ThePlan.md` for the scene and where the well goes, plus the chapter's `layout.jpg` if it has one (those are **text-placement** references, not style references).
+2. Hand-write the prompt from `EARLY-MORNING.md`, reusing the ranked findings in `Style/test-prompt-chapter-I.md` and `Style/prompt-chapter-II.md`.
+3. Generate — `gemini-3-pro-image-preview`, 16:9, `use_image_history: false`, **no reference image**.
+4. `python check_grade.py FRAME --verbose`. Declare `--sky-well` only if the chapter's text well genuinely *is* open sky; it is never inferred.
+5. `measure_well.py FRAME --text "#1B1B3A" --target ...` from `~/_retired/2026-08-04_among-trees-style/skills-live/verso/scripts/`.
+6. Write the run record in `Style/` and the `spec.json` in the chapter folder.
 
-**Options for Taylor** — (a) delete the couch and retry VI once (untried, cheap, tests the geometry theory directly; it is a deep-indigo silhouette scoring *cool* on a frame with cool to spare, sitting where warm floor would go, and nothing in the copy deck needs it); (b) accept `chapter-vi-v6e5-16x9.png` as a documented deviation — 0.3 off cool with everything else passing and the well at 7.88:1; (c) revisit the warm floor for deep-well interiors; (d) re-plan VI's composition so warm has somewhere to live.
+🆕 **Green is the cool-arc release valve, and it is the most reusable thing Chapter II found.** Green is the only large area in this palette that is neither cool arc nor warm, so it is the only way to pull a too-blue frame down without spending warm budget on a profile that fences warm into the top quarter. Chapter II's t1 passed at cool arc 90.8% against a 92% ceiling — 1.2 points, which is luck rather than control. Commissioning a broad lit meadow moved green 1.7% → 10.6% and cool arc to 78.6% while warm barely moved. **Reach for green first when cool arc runs high.**
 
-⚠️ **Do not try to "just nudge" either near-miss.** VI's best is 0.3 off and another frame is 0.1 off, but the generator's smallest change to a colour region is **3–11 points of frame share**. Neither can be aimed at; landing one would be luck.
+🆕 **Commission a text well as enumerated negative space and it lands first try.** The clause is quoted verbatim in `Style/prompt-chapter-II.md` — it names every object that must not be in the rectangle (no trunks, no branches, no rocks, no grass blades, no hotspots, no fireflies) rather than asking for a clear area. Same mechanism as the tree-flatness clause, which also works by enumeration. Both generations honoured it completely.
 
-**Meanwhile — the rest of Phase 3 is NOT blocked.** Three chapters are done and verified (II kept, I, III) and all 15 specs are verified. The **exteriors** can fan out now: Cover, IV, V, XII, XIII, XIV. Hold VII–XI until the interior question above is settled.
+⚠️ **A smaller box inside a passing box does not necessarily pass.** Insetting Chapter II's well upward from y 66.7 to y 60 collapsed worst pixel from 6.16:1 to **2.29:1**, because the mist bank's top edge meets the dark forest right there. Inset for type padding and **re-measure every time.**
 
-**Then fan out** to the remaining: Cover, IV, V, VII, VIII, IX, X, XI, XII, XIII, XIV.
+⚠️ **`measure_well.py` still enforces the retired 38–45% width band.** The Almanac replaced it with **32–40%, ideal 36%** on 2026-07-30 (`septentrion` `8163faf`) and the script was never updated, so it reports a **false failure** on both chapters — I at 32% and II at 35%, the latter one point off ideal. Fix the constant before trusting that line. This is the oldest open item in the project.
 
-🛑 **The only three verified on-profile masters — anchor every generation on these and nothing else:**
-`01_I/chapter-I-above-the-trees-v16.png` (63.6/14.5/18.0) · `02_II/chapter-II-misty-morning-v2.png` (61.3/14.8/18.0) · `03_III/chapter-iii-master-v4.png` (57.9/19.4/18.2).
-**Never anchor on an image that failed the Phase 1 audit.** On 2026-08-01 the whole book was found anchoring on retired or superseded art — XIII and XIV pointed at the two *worst* images in the project, and nine chapters at the superseded v13. `style_refs` is the stated defence against warm drift, so a bad anchor poisons every generation made from it. **The TF3 cross-palette guard cannot catch this** — it checks that a ref resolves to a `cool_dominant` chapter, not that the image is any good.
+⚠️ **Neither frame is 4K.** Both are 1376×768. A full-bleed hero needs a higher-resolution regeneration, and **both colour and well must be re-measured after it** — neither survives a re-roll automatically. Nano Banana exposes no size parameter, so the path that produced Chapter I's old 2389×1344 output is worth finding before this compounds across 15 spreads.
 
-🆕 **The 16:9 crop offset is a COLOUR control, not just a contrast one.** On one 21:9 source, warm ran 14.0%→20.6% and drift 13.5%→21.5% purely as a function of offset. Every crop now has two competing objectives. Measure the offset; do not take hard-left by reflex.
+⚠️ **Tree-mass flatness is unmeasurable and is Taylor's call every time.** Local L\* standard deviation inside the dark masses runs 0.79–4.27 across the references, confounded by how much of a frame is haze, so the metric cannot tell the failure from the fix. It is recorded as `reported_not_gated.silhouette_flatness` and labelled honestly. **Judge by eye, every chapter.**
 
-🆕 **Warm is a VALUE lever, not an area lever.** Three of the four warm anchors are light (L\*77–95), so mid-value firelight on floorboards classifies as `#C68FA7` and scores as **bridge, not warm**. One attempt had a large, correctly-hued warm pool and still measured **warm 7.9% with zero `#F6D28F` pixels**. **Name the hex values explicitly in the scene prose.**
+⚠️ **Position instructions are weak against this model's composition instincts.** Chapter II's canopy gap was asked for in the upper left twice and landed centre-left both times. It moved when pushed, but not all the way. Do not let a chapter depend on an exact placement without budgeting generations for it.
 
-🆕 **Commission warmth at GENERATION time, never by corrective edit.** Chapter VI's v6 left the generator at cool 70.0% / bridge 21.0% with a passing well; the edits added afterwards to raise warm pulled cool down to 54.7% and cost it the chapter. **Edits trade cool for warm.**
+🛑 **A style anchor image is a coin flip on composition.** Chapter I's r3 run proved it both ways with the same two anchors: t9 kept the whole composition and produced the flattest tree masses in the project, t10 threw the composition out entirely and invented a lit tent nobody asked for. Worth the flip, but check by eye every time and never assume the text overrides the image.
 
-🛑 **The generator's minimum change to a colour region is 3–11 points of frame share** (measured three times). **A sub-3-point gap is below the tool's resolution and cannot be closed by iterating** — stop rather than thrash. This also reframes Chapter III's pass: it cleared by 0.2pt, which was luck rather than control. **Treat any margin under ~3 points as unstable.**
-
-🆕 **Two warmth lessons, learned on III and worth applying up front:** *"pale"* warm light renders as **neutral** — it trips warm-neutral drift while earning no warm area. And warming **foliage or mist** instead of sky and ground plane goes **olive** (off-palette 33%). Put warmth in the sky and on the ground.
-
-🛑 **Warm 18% is this book's binding constraint — brief every remaining chapter accordingly.** Both approved masters clear the floor by *hundredths*: I v16 at 18.009%, II v2 at 18.040%. Chapter III sits at 8.29% and cannot be graded up. **Commission a generous warm region in the scene prose from the start**; a tight warm composition is unrecoverable later, because grading cannot enlarge an area that was never drawn.
-
-⚠️ **Before demoting any gate, check whether the project's approved masters pass it.** Cores was demoted because Chapter II — the best frame in the project — failed it. Warm was *kept* because both approved masters clear it. That test is the difference between fixing a bad gate and quietly lowering the bar.
-
-⚠️ **`well.status: "verified"` means the WELL is verified — contrast, width, position — NOT that the chapter is shippable.** Chapter III currently reads `verified` while its master still fails the dawn gate on warm. Do not use that field alone to decide which chapters are done.
-
-**`delegation-ledger.md` is the live state of this run; this file is the pointer.** Read the ledger first — it carries the Phase 1 audit table, the Phase 2 task table with tiers and retries, the dawn-lit interior pattern, and the open-risk list. Mid-run, recover from the ledger, not from zero.
-
-**How Phase 3 runs:** `/spread-loop <NUMERAL>` per chapter. **Hard cap 3 generation attempts, never a 4th** — exit `RETRY-EXHAUSTED` with the measurement history instead, because an unwinnable gate is information, not a reason to keep spending. ≤2 Sonnet retries then Opus escalation, and **Opus adjusts the spec, never the gate.**
-
-**Run BOTH gates on every master.** `check_palette.py` is structural and **profile-agnostic by design**, so golden-hour art sails straight through it — Chapter VIII scored a perfect 0.0% muddy and is a night corridor. `check_dawn_balance.py` measures the LDH area budget — **three enforced bands**: cool 55–72%, violet-rose bridge 12–24%, warm 18–32%, plus crushed-black. Bright cores is reported but **advisory only**. Passing the first script is not sufficient.
-
-**Triage before spending:** colour, value and warmth problems are **gradeable** — prefer a targeted edit, which is cheaper and lower-risk than regenerating. Composition, depth ladder and firefly placement need **regeneration**; no grade adds a depth plane. Every edit prompt ends *"The art style should be fully preserved."* — that clause measurably works. Re-measure with `check_edit.py`; an edited image is not trusted until re-measured.
-
-**Known Phase 3 hazards, all already paid for:**
-- ⚠️ **Never put meta-instructions in a prompt.** Appending `"Test image only."` makes the model return **no image at all**, with no error. If a generation returns "No image returned from model", suspect prompt phrasing before the API, the key, or the quota.
-- ⚠️ **Crop bias is not taste.** On Chapter I the same source measured **11.68:1 on the right window and 1.0:1 on the centre window**.
-- ⚠️ **Cover has two on-sight rejection conditions** recorded in its notes: a secondary window rivalling the primary kills the push-in target, and any warm light left of x 48 puts a value ramp in the text band.
-- ⚠️ 4K masters stay in the **vault**. Only WebP/AVIF enter git — irreversible in history otherwise.
+🛑 **The governing rule for the profile: a gate that fails the reference is a gate that gets ignored.** `check_grade.py --self-test` re-measures all eight references and asserts each passes, **and** re-measures the retired Chapter I versions and asserts each still fails. Before demoting or widening any band, check whether the project's own approved frames pass it. **Never widen a band to make a frame pass** — widening beyond a declared scope is what killed the previous profile.
 
 **Standing rules — decided, do not re-litigate:**
-- **Luminous dawn haze governs all 15 spreads.** Golden hour is retired; "dusk" is not a lighting word here.
-- **Interiors are dawn-lit interiors** (ruled 2026-07-31): cool window light carries the cool 55–72% share, the hearth/lamp is a *local* pocket inside 18–32%, and the violet-rose bridge (12–24%) is mandatory indoors as well as out. **A `saturated_warm` well is unaffordable in an interior at usable size** — measured 2026-08-01, `warm% = 1.45 × gold_area% + 7.5` (r = 0.994), so VI's 39×53 well predicted 37.4% warm against a 32% ceiling. **All interiors take `deep` wells.** This *simplifies* the earlier "warm well or warm room" rule: the warm-well option was never actually affordable.
-- **Voice:** `tayls-voice` Mode 1. Chapters II–XI are resume content **verbatim** — do not re-voice. Only Cover, I, XIII, XIV are narrative.
-- **Read BOTH goal docs.** `Goal_Amendment_TwoPath_Cover.md` is **authority level 0** and overrides `SlashGoal_AmongTrees_Ship.md` on conflict. Both in `…\Septentrion\Constellations\Resume Site\`.
+- **Early Morning governs all 15 spreads.** One time of day, on purpose. Hue is a function of light, not of object identity.
+- **The teal is the mist, not the sky.** The sky is a warm ramp: violet zenith → mauve → coral → peach → cream horizon glow.
+- **Chapter I's composition stands** (Taylor, 2026-08-04): not trees across the sky, not the well moved off the sky. The `--sky-well` scope exists because of that call and is declared per spread, never inferred.
+- **Typography:** Josefin Sans 300 display, Nunito Sans 300 body at 16px. Cinzel Decorative and Work Sans are Rectrix Caedere fonts and were carried over here in error.
+- **Voice:** `tayls-voice` Mode 1. Chapters II–XI are resume content **verbatim** — do not re-voice. Only Cover, I, XIII and XIV are narrative.
 - The public contact number is `706-767-7196`. All work stays on `feat/among-trees-storybook`; `main` stays untouched mid-build.
-- 🛑 Root `index.html` is a **throwaway placeholder**. Phase 5 must overwrite it with the Cover. If it reaches production, the build shipped incomplete.
+- 🛑 Root `index.html` is a **throwaway placeholder** and must be overwritten with the Cover before ship. If it reaches production, the build shipped incomplete.
+- Overlay/motion layers and `SceneMotion` are specced but **not built, and correctly deferred** until all 15 masters are approved.
 
-**Traps that have already cost time here:**
-- ⚠️ **Paths in specs are guilty until proven innocent.** The OneDrive-vs-vault naming split bit three times in one session. Canonical root is the vault: `…\Resume Site\resume art\<NN>_<NUMERAL>\`. A stale path made the cross-palette guard silently inert on every spread until 2026-07-31.
-- ⚠️ **Fix a worked example before fanning out from it**, or state the contested values literally in the brief. III and IV inherited stale paths by faithfully copying `01_I` while it was still wrong.
-- ⚠️ **When scanning compiled prompts, check the exit code, not just the output.** A shell-loop scan reported all ten clean and was a false negative — the compile was failing silently and `grep -c` counted zero on empty output. Five were actually failing.
-- 🛑 **Never edit `compile_prompt.py` while spec workers are running**, and map **reads** as well as writes when planning waves. Non-overlapping writes is not the same as no conflict.
-- ⚠️ `.git\claude-handoff-skip` is present, 0 bytes, and **inert** — a blank file does not skip. Delete it in Phase 7 before the merge. Housekeeping, not a live risk.
+**Still to make: Cover, III, IV, V, VI, VII, VIII, IX, X, XI, XII, XIII, XIV** — thirteen spreads, none started under the new style.
+
+⚠️ `.git\claude-handoff-skip` is present, 0 bytes, and **inert** — a blank file does not skip. Delete it before the merge. Housekeeping, not a live risk.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-05 12:55 ET · Claude Code
+- **Changed:** **Chapter I is locked and Chapter II passed all five gates in two generations** — the first chapter in this project to clear without a retry. Promoted Chapter I's `t5` to `chapter-I-above-the-trees-em-v1.png` and wrote its `spec.json` (5/5 gates under `--sky-well`, well x 62–94 / y 20–46 at **5.19:1**). Then wrote Chapter II by hand from `EARLY-MORNING.md` with **no prompt compiler** — `test-em-II-t2.png`, 5/5 gates on the **strict** ceiling, well x 3–38 / y 70–96 at **5.97:1** and 35% wide, one point off the Almanac's 36% ideal and the best-proportioned well in the project. Run record in `Style/prompt-chapter-II.md`, spec in `resume art/02_II/spec.json`. Also **rewrote the DO NEXT block wholesale**, which was still describing the retired Among Trees run as live.
+- **Commit:** `<SHA>`
+- **Next:** Chapter III, same motion. See DO NEXT.
+- **Watch out:** 🛑 **This file's DO NEXT had been actively misleading since 2026-08-04** — it described the halted Chapter VI, the dawn-lit interior ruling, the `saturated_warm`/`deep` well taxonomy and the `/spread-loop` command as the live state of the project, all of which were archived a week ago. A session recovering cold from it would have spent its first hour rebuilding a retired pipeline. The 08-01 entries are left intact because their *lessons* transferred, but the block above now says plainly that the machinery did not. **The failure mode to watch for: the log is append-only and self-consistent, so nothing in it flags that the world moved. Only the DO NEXT block can say "this is over", and only if someone rewrites it.**
+  🆕 **Green is the cool-arc release valve.** Chapter II's t1 cleared the cool-arc ceiling by 1.2 points — inside the project's own "under ~3 points is luck, not control" rule. The fix was not less blue or more warm, it was **more green**: a broad lit meadow moved green 1.7% → 10.6% and cool arc 90.8% → 78.6% while warm moved only 6.8 → 8.6. Green is the only large area in this palette that is neither cool arc nor warm, which on a profile that fences warm into the top quarter makes it the only lever available. Reach for it first.
+  🆕 **A text well commissioned as enumerated negative space landed on the first generation** — listing every object that must not be in the rectangle rather than asking for a clear area. Same mechanism as the tree-flatness clause. Quoted verbatim in the run record; reuse it.
+  ⚠️ **A smaller box inside a passing box does not necessarily pass.** Insetting Chapter II's well upward from y 66.7 to y 60 dropped worst pixel 6.16:1 → **2.29:1**, because the mist bank's top edge meets the dark forest exactly there. Re-measure after every inset.
+  ⚠️ **Both frames are 1376×768, not 4K**, and `measure_well.py` still reports a false width failure from the retired 38–45% band. Neither is new; both now compound across every chapter, so fix the band before III and find the high-resolution generation path before this repeats fifteen times.
 
 ### 2026-08-01 07:20 ET · Claude Code
 - **Changed:** **Chapter VI halted for Taylor** after three Opus rounds (8 generations, 13 edits, 21 measured frames), per the delegation protocol's stop-and-ask rule. Round three ran on a clean anchor for the first time and still failed. Full analysis, the three best frames and four options are written at the end of `delegation-ledger.md`.
@@ -183,13 +172,5 @@
 - **Friction:** gen-fail — T9 (XII) first returned a spec asserting a full-frame text well, `target: {"x":[0,100],"y":[0,100]}` with `material: "the whole frame, measurement exempt"`, on a spread the copy deck says has no text at all. Sent back with the specific criterion; round 2 correctly returned a **blocker** instead of inventing a value. Root cause was not the worker: `schema.md` line 62 says "XII–XIV are exempt and run near 25%" while the copy deck says XII has no well, and the schema has no way to express a text-free spread. Briefing a worker to "report a blocker rather than pick the closest wrong value" is what turned a silent fabrication into a useful finding; keep that sentence in future briefs.
 - **Next:** Verify TF1–TF3, re-verify the five affected specs, then dispatch T6, T7 and re-dispatch T9. See the DO NEXT block.
 - **Watch out:** 🛑 **The golden-hour defect is the most expensive thing found this session.** `compile_prompt.py`'s `WELCOMING_CLAUSE` hard-codes "the last hour of low golden sunlight", so five chapters were compiling prompts asking for golden hour while the gates measure luminous dawn haze — **unwinnable by construction**, burning the 3-attempt retry cap with no number in the output explaining why. The other four chapters are clean only because four separate workers each independently set `apply_welcoming_clause: false` and hand-wrote replacement occupancy prose, which is itself the drift mechanism the compiler exists to prevent. Fix the clause, then put the flag back. Separately: `13_XIII\chapter 13 layout.png` is **not a chapter layout** — it is an unrelated Aftermath Meridian website mockup showing a two-page book spread with a visible spine, the exact physical-book depiction this project forbids, sitting in XIII's own folder. T8 caught it and refused to use it. Move it out before a less careful worker copies from it.
-
-### 2026-07-31 19:55 ET · Claude Code
-- **Changed:** Took Taylor's two rulings and started **Phase 2**. **Ruling 1 — dawn-lit interiors:** one LDH colour budget governs all fifteen spreads; interiors VI–XI are re-conceived so cool dawn window light carries the cool 55–72% share while the hearth or lamp stays a *local* warm pocket inside 18–32%, and the violet-rose bridge is mandatory indoors exactly as outdoors. VI/IX/X therefore move BLOCKED → REGENERATE, since dawn-lit is a re-staging and not a colour pass. Written into `.claude/commands/spread-loop.md` §6 so every worker resolves it identically. **Ruling 2 — run mode:** resume the autonomous delegation run. Decomposed Phase 2 into 9 tasks across 3 waves, got the plan approved, and dispatched wave 1 (7 concurrent workers: Cover, I, III+IV, V, VI+VII, XIII+XIV, XII). T6 and T7 are held on a real dependency — they copy the dawn-lit interior pattern that T5 establishes. Also fixed a gap in `spread-loop.md`: its verdict table demanded LDH area figures while step 5 ran only `check_palette.py`, which cannot produce them; it now runs `check_dawn_balance.py` alongside.
-- **Commit:** `37f36c8`, `f739939`
-- **Friction:** misread — reported in the Phase 1 audit that six chapters had "no art at all". Wrong. I had audited the OneDrive working copy; the canonical vault tree holds **Taylor's own layout sketches and composition references** for III, IV, V, VI, XII, XIII and XIV. Caught only because I went to verify the autonomous run's paths before launching it, and found `spread-loop.md` pointing somewhere I had not looked. The generation phase now starts from her staging instead of from prose, which materially changes the odds. Verify a tool's configured paths before auditing "what exists" — the inventory is only as good as the directory you looked in.
-- **Friction:** misread — the first draft of `check_dawn_balance.py` used two thresholds I invented rather than derived, and both failed Taylor's own exemplar (`dawn-atmosphere.jpg`): bright cores at L\*88 read 16.8% against a 5% ceiling, and a value floor of "share below L\*16.4" flagged 11.3% of an image whose darks average chroma 23.7 and are not crushed at all. Running the reference image through the gate *before* trusting it is what caught it. Calibrate every threshold against the artefact the spec was written from; a gate that fails its own exemplar is a gate that gets ignored.
-- **Next:** Review the wave-1 specs against their acceptance criteria (re-running `compile_prompt.py` personally, not accepting worker claims), then dispatch T6 and T7.
-- **Watch out:** 🛑 **The near-HIPAA clause is now stripped from the copy deck's Chapter V by Taylor's ruling** — it ships on a public page rather than into an ATS, and her standing rule forbids the phrasing. The Privacy Officer credential itself stays. T4 is the **only** task authorised to write to `Chapter_Copy_Deck (1).md`; if any other worker edits it, that is a contract violation and the diff should be reverted. Separately, the copy deck is still marked LOCKED INPUT, so this one sanctioned edit needs to remain visibly annotated or a later session will read it as drift.
 
 > Older entries archived to `handoff-archive/2026-07.md` and `handoff-archive/2026-06.md`.

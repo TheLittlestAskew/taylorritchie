@@ -3,22 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Taylor Ritchie's portfolio is being rebuilt. Contact Taylor, view LinkedIn, or download a resume.">
-  <meta name="theme-color" content="#172022">
+  <meta name="description" content="Taylor Ritchie's portfolio is under maintenance. Contact Taylor, view LinkedIn, or download a resume.">
+  <meta name="theme-color" content="#17142a">
   <link rel="canonical" href="https://tayloraritchie.com/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Taylor Ritchie · Site under construction">
+  <meta property="og:title" content="Taylor Ritchie · Site under maintenance">
   <meta property="og:description" content="Taylor's portfolio is being rebuilt. Get in touch, view LinkedIn, or download a resume.">
   <meta property="og:url" content="https://tayloraritchie.com/">
-  <title>Taylor Ritchie · Site under construction</title>
+  <meta property="og:image" content="https://tayloraritchie.com/img/maintenance-page.png">
+  <meta property="og:image:alt" content="A peaceful illustrated forest maintenance scene, with Page Under Maintenance written at its center.">
+  <title>Taylor Ritchie · Site under maintenance</title>
   <style>
     :root {
       color-scheme: dark;
-      --ink: #172022;
-      --paper: #f7f4ec;
-      --mist: #c9d3cf;
-      --accent: #d9a441;
-      --line: rgba(247, 244, 236, 0.22);
+      --ink: #17142a;
+      --paper: #fff1dd;
+      --accent: #f0bd8b;
+      --panel: rgba(23, 20, 42, 0.84);
     }
 
     * { box-sizing: border-box; }
@@ -28,82 +29,82 @@
       margin: 0;
       display: grid;
       place-items: center;
-      padding: clamp(1.5rem, 6vw, 5rem);
-      background:
-        radial-gradient(circle at 18% 12%, rgba(217, 164, 65, 0.18), transparent 29rem),
-        radial-gradient(circle at 86% 88%, rgba(110, 145, 135, 0.22), transparent 31rem),
-        var(--ink);
+      overflow: hidden;
+      background: var(--ink);
       color: var(--paper);
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: system-ui, sans-serif;
     }
 
-    main { width: min(100%, 44rem); }
+    main { width: 100%; height: 100vh; position: relative; }
 
-    .label {
-      margin: 0 0 1.5rem;
-      color: var(--accent);
-      font: 700 0.78rem/1.2 system-ui, sans-serif;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+    .maintenance-art {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center;
     }
 
-    h1 {
-      max-width: 12ch;
-      margin: 0;
-      font-size: clamp(3.2rem, 11vw, 7.5rem);
-      font-weight: 400;
-      letter-spacing: -0.055em;
-      line-height: 0.9;
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
     }
 
-    .message {
-      max-width: 39rem;
-      margin: 2rem 0 2.5rem;
-      color: var(--mist);
-      font: 400 clamp(1.1rem, 2.4vw, 1.35rem)/1.6 system-ui, sans-serif;
-    }
-
-    .actions {
+    .links {
+      position: absolute;
+      right: clamp(0.75rem, 2vw, 2rem);
+      bottom: clamp(0.75rem, 2vw, 2rem);
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid var(--line);
+      justify-content: flex-end;
+      gap: 0.55rem;
+      max-width: min(33rem, calc(100% - 1.5rem));
+      padding: 0.55rem;
+      border: 1px solid rgba(255, 241, 221, 0.25);
+      border-radius: 0.5rem;
+      background: var(--panel);
+      box-shadow: 0 0.75rem 2.5rem rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(8px);
     }
 
     a {
-      min-height: 2.8rem;
+      min-height: 2.65rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.7rem 1rem;
-      border: 1px solid var(--line);
+      padding: 0.65rem 0.9rem;
+      border: 1px solid rgba(255, 241, 221, 0.38);
+      border-radius: 0.25rem;
       color: var(--paper);
-      font: 700 0.9rem/1.2 system-ui, sans-serif;
+      font: 700 0.825rem/1.2 system-ui, sans-serif;
       text-decoration: none;
     }
 
     a:hover { border-color: var(--accent); color: var(--accent); }
-    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
-    .note {
-      margin: 2.5rem 0 0;
-      color: var(--mist);
-      font: 400 0.875rem/1.5 system-ui, sans-serif;
+    @media (max-width: 36rem) {
+      .links { left: 0.75rem; justify-content: center; }
+      a { flex: 1 1 auto; }
     }
   </style>
 </head>
 <body>
   <main>
-    <p class="label">Taylor Ritchie</p>
-    <h1>Under construction.</h1>
-    <p class="message">I’m rebuilding this portfolio. In the meantime, you can reach me, connect on LinkedIn, or download my résumé below.</p>
-    <nav class="actions" aria-label="Contact and resume links">
+    <h1 class="sr-only">Taylor Ritchie's portfolio is under maintenance</h1>
+    <img class="maintenance-art" src="img/maintenance-page.png" alt="A peaceful illustrated forest maintenance scene with the words Page Under Maintenance, We're out making improvements, and Please check back soon.">
+    <nav class="links" aria-label="Contact and resume links">
       <a href="mailto:taylor.ritchie14@gmail.com">Email Taylor</a>
       <a href="https://www.linkedin.com/in/taylor-askew-ritchie-126618133">LinkedIn</a>
       <a href="resume/TaylorRitchie_Resume.pdf">Download résumé</a>
     </nav>
-    <p class="note">Thanks for stopping by.</p>
   </main>
 </body>
 </html>

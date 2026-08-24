@@ -4,12 +4,18 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-Verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/`, including the homepage, résumé download, and `systemhorizon/` subroute. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+When Taylor is ready to relaunch the portfolio, replace the temporary maintenance page in `index.html` with the approved redesign, then validate and deploy it. The temporary page intentionally retains email, LinkedIn, and résumé access for recruiters.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-24 · Codex
+- **Changed:** Replaced the public homepage with Taylor's supplied illustrated maintenance page. The image remains fully visible at every viewport size, and a compact accessible dock retains verified email, LinkedIn, and résumé links.
+- **Commit:** `d3ae463` (`feat: add illustrated maintenance page`)
+- **Tests:** `npx --yes html-validate index.html` (pass); verified `img/maintenance-page.png` and `resume/TaylorRitchie_Resume.pdf` exist; `git diff --check` (pass).
+- **Next:** Relaunch the full portfolio only after Taylor approves its redesign.
 
 ### 2026-07-26 22:52 ET · Claude Code
 - **Changed:** Added `systemhorizon/PROJECTS_CONTENT_SPEC.md` — reconciled all claude.ai Projects + the documented portfolio into per-project page/dashboard content for the SystemHorizon `projects` view, plus a schema extension and display-pattern library. Also built a `septentrion-sync` → Supabase heartbeat (script + wrapper hook live in `~/.claude/skills/septentrion-sync/`, outside this repo) that auto-stamps project status.

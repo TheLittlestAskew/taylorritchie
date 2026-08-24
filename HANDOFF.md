@@ -4,12 +4,18 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-Verify the GitHub Pages deployment from merged PR #1 at `https://tayloraritchie.com/`, including the homepage, résumé download, and `systemhorizon/` subroute. The current public contact number is `706-767-7196`, resolved from the July 20, 2026 master résumé source.
+When Taylor is ready to relaunch the portfolio, replace the temporary construction page in `index.html` with the approved redesign, then validate and deploy it. The temporary page intentionally retains email, LinkedIn, and résumé access for recruiters.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-24 · Codex
+- **Changed:** Replaced the public homepage with a focused, accessible under-construction page while the portfolio is rebuilt. Kept verified email, LinkedIn, and current résumé download links available.
+- **Commit:** `ad4be6e` (`feat: add temporary construction page`)
+- **Tests:** `npx --yes html-validate index.html` (pass); verified `resume/TaylorRitchie_Resume.pdf` exists; `git diff --check` (pass).
+- **Next:** Relaunch the full portfolio only after Taylor approves its redesign.
 
 ### 2026-07-20 · Codex
 - **Changed:** Taylor explicitly approved merging PR #1. Updated the return point from pre-merge review to post-merge GitHub Pages verification.

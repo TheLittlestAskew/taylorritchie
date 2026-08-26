@@ -11,6 +11,13 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-08-26 12:50 ET · Claude Code
+- **Changed:** Banked the ten 2026-08-11 Codex entries below, which had been sitting **uncommitted in the working tree for 15 days**. Nothing was rewritten — the entries are Codex's, preserved verbatim; this entry only supplies the commit SHA they never got. Staged and committed the Chapter I parallax scene (5 referenced plates), the cabin-cutout cover (`cover-frame-v1.svg` + `chapter-one-cover-v1.png`), `hero-house-v2.webp`, `fonts/Monthoers.ttf`, and the `storybook-concept.html` changes (+83/−43).
+- **Excluded on purpose:** the four `*-keyed-v2.png` chroma-key intermediates. Verified by grep that **no HTML/CSS/JS references them**, and Codex's own entry calls them temporary review copies. They remain on disk; added a `.gitignore` rule so they stop showing as untracked. Restore with `git add -f` if they turn out to matter.
+- **Commit:** `1464c28`
+- **Next:** Unchanged. See the block above this log.
+- **Watch out:** ⚠️ **`fonts/Monthoers.ttf` is now committed to a public repo.** It is genuinely referenced by the cover `@font-face`, so the page needs it, but Monthoers is a commercial typeface and redistributing the `.ttf` in a public repo may breach its licence. Check the licence before this branch merges — removing it later means a history rewrite, not a delete. ⚠️ Also note **two clones of this repo exist**: this one (`OneDrive/.../taylorritchie-site`, branch `codex/storybook-architecture`) and `~/taylorritchie` (branch `feat/among-trees-storybook`). They will keep diverging until one is merged.
+
 ### 2026-08-11 · Codex
 - **Fixed:** Reset the Chapter I overlay layers from an incorrect 112% desktop scale and expanded mobile crop to their authored full-canvas framing. All five supplied assets share a 1672×941 registration canvas, so scaling the overlays independently distorted their intended city, forest, and path proportions. The base now safely remains visible at any small parallax edges.
 

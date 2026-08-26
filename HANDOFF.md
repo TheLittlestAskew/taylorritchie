@@ -11,6 +11,49 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-08-11 · Codex
+- **Fixed:** Reset the Chapter I overlay layers from an incorrect 112% desktop scale and expanded mobile crop to their authored full-canvas framing. All five supplied assets share a 1672×941 registration canvas, so scaling the overlays independently distorted their intended city, forest, and path proportions. The base now safely remains visible at any small parallax edges.
+
+### 2026-08-11 · Codex
+- **Changed:** Moved the Chapter I foreground-tree plate back one visual layer, behind the path/ground plate. This follows Taylor’s original-composition reference: dark trees frame the left and perimeter while the inviting trail remains the foremost readable route toward the valley and city.
+
+### 2026-08-11 · Codex
+- **Changed:** Added the approved `02-distant-atmosphere-keyed-v2.png` source to the Chapter I implementation, converted to `02-distant-atmosphere-v2.png` with alpha. Chapter I now uses every authored layer in `resume art/01_I/parallax-layout-v2` in the intended base → atmosphere → city → path → foreground order.
+
+### 2026-08-11 · Codex
+- **Changed:** Corrected the page sequence so Chapter I follows the cover immediately. The displaced Contents section now sits after the existing temporary Chapter I–III work block; it remains available while the planned field-guide/navigation treatment is built.
+- **Plan alignment:** The canonical Chapter I role is `The Story Starts: Above The Trees` / Trailhead / Thesis. Its current systems-and-operations copy and Power Platform card are placeholders from the earlier prototype and must move to their planned later chapter, not remain in Chapter I.
+- **Next:** Taylor supplies or approves the approximately 62-word Chapter I thesis and tagline, then Codex replaces the placeholder heading/card without inventing biographical copy.
+
+### 2026-08-11 · Codex
+- **Changed:** Replaced only Chapter I’s generic orb treatment with Taylor’s approved layered dawn-valley scene. The implemented layers are the authored sky/valley base, city, illuminated path, and transparent foreground forest, each able to parallax independently. Resume content remains stable in the verified upper-right sky well and a high-contrast evidence card.
+- **Assets:** Copied the Chapter I source layers into `img/storybook/chapter-one/`; converted the magenta city/path and green forest sources to clean alpha PNGs using the built-in chroma-key helper. The keyed working-source copies are retained temporarily for review and will not be referenced by the page.
+- **Next:** Taylor reviews the first implemented Chapter I scene, especially text placement, city scale, and whether the pathway gives the desired arrival from the cover. Do not change Chapter II or later chapters until Chapter I is approved.
+
+### 2026-08-11 · Codex
+- **Changed:** Added a small 0.65rem gutter between the two centered cover actions, preserving their paired placement without making them appear as one segmented control.
+
+### 2026-08-11 · Codex
+- **Changed:** Removed the threshold subtext. Centered the two threshold actions as one split control beneath the cabin cutout and retargeted `Enter the work` to Chapter I.
+- **Transition intent:** The next visual unit is a scroll bridge in which the visitor appears to pass through the cabin cutout and arrives at Chapter I. The present button target establishes that navigation direction without prematurely faking the animated bridge.
+- **Next:** Build the cutout-to-Chapter I scroll bridge once the Chapter I implementation replaces its current generic chapter treatment.
+
+### 2026-08-11 · Codex
+- **Changed:** Added Taylor’s supplied Monthoers typeface as a local `@font-face` and assigned it only to the cover-title treatment. Navigation and body typography retain their existing legible fonts.
+- **Asset:** Copied `Monthoers.ttf` into `fonts/Monthoers.ttf`, eliminating any runtime dependency on a third-party font host for the decorative cover type.
+- **Next:** Refresh the local cover and confirm the Monthoers title weight and spacing. Keep this font isolated to cover and chapter-display moments unless Taylor explicitly expands its role.
+
+### 2026-08-11 · Codex
+- **Changed:** Rebuilt the threshold as a layered cover. Chapter I’s supplied illustration now sits behind Taylor’s supplied navy cabin-frame SVG, making the landscape visible only through the temporary cabin silhouette. The hero title is split around the cutout; supporting portfolio copy and actions remain accessible beneath it.
+- **Assets:** Copied the supplied `cover-frame.svg` and `chapter-I-above-the-trees-em-v1.png` into `img/storybook/cover/` as project-owned `cover-frame-v1.svg` and `chapter-one-cover-v1.png`. The existing hero-house assets are retained but no longer consumed by the threshold.
+- **Next:** Inspect the cover at desktop and mobile widths. When Chapter V determines the final cabin shape, replace only `cover-frame-v1.svg`; the Chapter I layer and cover layout should remain intact.
+
+### 2026-08-10 · Codex
+- **Changed:** Corrected only the threshold hero sky. The prior bright lavender atmosphere is now a subdued rainy blue-green, pine-black, and slate-indigo sky, retaining the house, amber windows, wet path, trees, rain, negative title space, and all later story layers.
+- **Asset:** Generated with the built-in image-generation tool from `hero-house-v1.webp`, then optimized to a 63 KB WebP at `img/storybook/hero-house-v2.webp`. The original asset remains in place as a recoverable prior version.
+- **Tests:** Visual inspection of the generated asset (pass). Markup and full responsive audit still need to be rerun after Taylor reviews the visual change.
+- **Next:** Taylor reviews the corrected sky in the first layer. If approved, run the HTML and responsive browser audits before committing.
+
 ### 2026-07-21 · Codex
 - **Changed:** Rebuilt only Section 2, Contents, as the next first-person beat in the house journey. The viewer stands at the open rain-damp doorway looking into an amber foyer; a staircase and two lit interior doorways provide the visual metaphor for choosing where to go next. Live chapter navigation occupies the quiet aubergine wall on the right. No other section changed.
 - **Asset:** Generated with the built-in image-generation tool using the approved house hero as the architecture, palette, lighting, and style-continuity reference. Optimized to a 58.8 KB WebP at `img/storybook/contents-entry-v1.webp`. The superseded `contents-book-v1.webp` project copy was removed; its original generation remains archived.

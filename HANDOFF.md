@@ -4,12 +4,21 @@
 > Handoff is **enabled** for this repo. Every change updates the DO NEXT block below and prepends a log entry.
 
 ## ▶ DO NEXT
-When Taylor is ready to relaunch the portfolio, replace the temporary maintenance page in `index.html` with the approved redesign, then validate and deploy it. The temporary page intentionally retains email, LinkedIn, and résumé access for recruiters.
+When Taylor is ready to relaunch the portfolio, replace the temporary maintenance page in `index.html` with the approved redesign (already built and merged once in PR #1 — check git history for `585aa89` before rebuilding from scratch), then validate and deploy it. The temporary page intentionally retains email, LinkedIn, and résumé access for recruiters. **No action needed here until Taylor says go** — confirmed 2026-08-28, she's still actively working the design and wants the maintenance page to stay up.
+
+`systemhorizon/` is now a dead redirect stub only (see log below) — SystemHorizon itself lives at `sh.tayloraritchie.com`, a separate GitHub Pages deploy out of `TheLittlestAskew/SystemHorizon`, gated by Cloudflare Access. Nothing in this repo talks to Supabase anymore.
 
 ---
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-08-28 · Claude chat
+- **Changed:** Found and closed a live data leak: `systemhorizon/index.html` was a June 2026 snapshot of the old single-file SH build, still fully unauthenticated, hitting a Supabase project directly with an embedded anon key and RLS disabled — anyone with the URL could read and write tasks, pain log, and Career/job-search data. It was never linked from the maintenance-page homepage, so exposure was via guessable URL only, but it was genuinely live. No delete permission on this repo (integration returned 403 on tree creation), so replaced the file in place with a meta-refresh redirect stub pointing to `sh.tayloraritchie.com` — same URL now sends any old bookmark to the real, auth-gated app instead of leaking data.
+  - This was found while doing the real fix: SystemHorizon is being moved off the default GitHub Pages URL onto `sh.tayloraritchie.com`, gated by Cloudflare Access, decoupled from this repo entirely (see `TheLittlestAskew/SystemHorizon` HANDOFF for the other half of this work). The `systemhorizon/` subtree merge from 2026-06-28 is now fully superseded.
+- **Commit:** `0dcfa64`
+- **Tests:** None — this is a static redirect page, verified by reading the committed content back.
+- **Next:** See DO NEXT above. Once `sh.tayloraritchie.com` is confirmed live (Tayls-only Cloudflare dashboard steps, tracked in the SystemHorizon repo's HANDOFF), `systemhorizon/` in this repo could be deleted entirely rather than kept as a redirect stub — low priority, not blocking anything.
 
 ### 2026-08-24 · Codex
 - **Changed:** Replaced the public homepage with Taylor's supplied illustrated maintenance page. The image remains fully visible at every viewport size, and a compact accessible dock retains verified email, LinkedIn, and résumé links.

@@ -11,6 +11,14 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-08-29 00:13 ET · Codex
+- **Changed:** Added a tracker-ready intake for the confirmed ProgressNow application. This repository is public-facing, so it intentionally excludes Taylor's home address, personal contact information, and reference contact information. Do not create a duplicate: update existing `public.job_applications` row `190fe9fe-40a3-4e64-8b71-09a14367d3a1` only after an exact `ProgressNow` + `Operations Coordinator` match.
+- **Tracker update:** Set `status` to `Applied`; retain existing verified posting data; set `submission_date` only to the confirmed local date `2026-08-29` (the exact TriNet submission time was not captured, so do not invent one); set `last_update` to the actual update time; preserve the established `post_url`, `org_url`, source evidence, requirements, skills match/gap, and DOL contact limitation. Add a compact note: `Applied via TriNet on 2026-08-29; TriNet confirmation: Your application has been successfully submitted.`
+- **Verified posting:** Operations Coordinator | ProgressNow | full-time | remote anywhere in the United States | associated location Washington, DC | 15% travel | $55,000/year | Idealist listing published 2026-08-22 (seen 2026-08-23). Source listing: `https://www.idealist.org/en/job/c47645555a3e40afbad09703dd8a12de-operations-coordinator-progressnow-washington`; employer site: `https://progressnow.org/`; submitted through `https://app.trinethire.com/companies/242386-progressnow/jobs/122945-operations-coordinator`.
+- **Materials and form facts:** Uploaded `TaylorRitchie_Resume_OperationsProgramAdministration_20260720.docx`; pasted a tailored cover letter (no cover-letter file); completed the nonprofit-compliance, accounting/software, salary, remote-work, East Coast-hours, location, source, and rowing-coach questions; listed Idealist as source. The application explicitly says the submitted materials will be retained and Taylor will be notified if she is a good fit.
+- **DOL/employer contacts:** ProgressNow's official contact page is `https://progressnow.org/contact/` and exposes a contact form only. No public employer phone, street address, named contact, or contact email was verified. Do not fabricate or backfill these fields; do not create a DOL activity from this record unless later evidence supplies the required contact information.
+- **Next:** Unchanged. See the block above this log.
+
 ### 2026-08-26 12:50 ET · Claude Code
 - **Changed:** Banked the ten 2026-08-11 Codex entries below, which had been sitting **uncommitted in the working tree for 15 days**. Nothing was rewritten — the entries are Codex's, preserved verbatim; this entry only supplies the commit SHA they never got. Staged and committed the Chapter I parallax scene (5 referenced plates), the cabin-cutout cover (`cover-frame-v1.svg` + `chapter-one-cover-v1.png`), `hero-house-v2.webp`, `fonts/Monthoers.ttf`, and the `storybook-concept.html` changes (+83/−43).
 - **Excluded on purpose:** the four `*-keyed-v2.png` chroma-key intermediates. Verified by grep that **no HTML/CSS/JS references them**, and Codex's own entry calls them temporary review copies. They remain on disk; added a `.gitignore` rule so they stop showing as untracked. Restore with `git add -f` if they turn out to matter.
@@ -78,10 +86,5 @@ Review `storybook-concept.html` in the storybook-architecture draft PR. Decide w
 - **Asset:** Generated with the built-in image-generation tool using Taylor's book-spread reference plus the approved simplified hero as the style-density reference. Optimized to a 50.4 KB WebP at `img/storybook/contents-book-v1.webp`.
 - **Tests:** `html-validate` (pass); responsive/reduced-motion/browser audit at 320–1920 px (pass); `git diff --check` (pass); desktop visual inspection at 1440 px (pass).
 - **Next:** Taylor reviews the contents composition in draft PR #2. If approved, choose the next single section. Do not redesign later sections as a batch.
-
-### 2026-07-21 · Codex
-- **Changed:** Simplified only the storybook hero illustration after Taylor found the prior landscape too busy. The replacement uses broad pine silhouettes, a few atmospheric depth planes, one cyan clearing, and sparse peach-gold grasses. Removed the owl, path, dense foliage, and micro-texture. All later sections remain unchanged.
-- **Asset:** Generated with the built-in image-generation tool from Taylor's three simplified forest references and optimized to a 55.9 KB WebP at `img/storybook/hero-forest-v3.webp`. Replaced the superseded project copy of `hero-forest-v2.webp`; its original generation remains in Codex's generated-images archive.
-- **Next:** Taylor reviews the simplified hero in draft PR #2. Continue section-by-section only after hero approval.
 
 > Older entries archived to handoff-archive/2026-07.md and handoff-archive/2026-06.md

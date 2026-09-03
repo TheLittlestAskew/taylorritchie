@@ -64,6 +64,12 @@
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-02 22:20 ET · Claude Code (TOOLS.md tool inventory added)
+- **Changed:** Added `TOOLS.md` (13 active rows) — Playwright + axe-core, sharp-cli, GitHub Pages, the two Job Ops scheduled tasks, and the rest, with what each is used for and when last used. `AGENTS.md` gained a `### TOOLS.md` subsection so Codex maintains it too. One of 13 project tables that `septentrion-sync` v4 rolls into the vault's new `The Toolbox.md`.
+- **Commit:** `4c0388a`
+- **Next:** Unchanged. See the block above this log.
+- **Watch out:** Dates carry an honesty marker — bare = observed, `~` = inferred, `—` = unknown. Don't bump a row for a tool you only discussed, and never delete a row; retiring is a move to `## Retired`.
+
 ### 2026-08-05 12:55 ET · Claude Code
 - **Changed:** **Chapter I is locked and Chapter II passed all five gates in two generations** — the first chapter in this project to clear without a retry. Promoted Chapter I's `t5` to `chapter-I-above-the-trees-em-v1.png` and wrote its `spec.json` (5/5 gates under `--sky-well`, well x 62–94 / y 20–46 at **5.19:1**). Then wrote Chapter II by hand from `EARLY-MORNING.md` with **no prompt compiler** — `test-em-II-t2.png`, 5/5 gates on the **strict** ceiling, well x 3–38 / y 70–96 at **5.97:1** and 35% wide, one point off the Almanac's 36% ideal and the best-proportioned well in the project. Run record in `Style/prompt-chapter-II.md`, spec in `resume art/02_II/spec.json`. Also **rewrote the DO NEXT block wholesale**, which was still describing the retired Among Trees run as live.
 - **Commit:** `6d27071`

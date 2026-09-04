@@ -64,6 +64,12 @@
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-03 20:34 ET · Claude Code (banked an unbanked TOOLS.md edit; no site change)
+- **Changed:** `TOOLS.md` only. Two Supabase rows had been written into the working tree by an earlier 2026-09-03 session and left uncommitted, so they were sitting outside git while every other repo in the wave was pushed. Banked them: the job-pipeline project (`vtrtyagltwdrbastpppl`, behind `tracker.html`) and the projects-heartbeat project (`qzliydcrlhioradwacmd`, read by `systemhorizon/index.html`) — both were missing even though this repo hosts the pages that read them. Added a `/handoff` row and bumped `git` + `Claude Code` to today. **No site, resume, or storybook file was touched.**
+- **Commit:** `7914333`
+- **Next:** Unchanged. See the block above this log — Chapter III is still the action, and Chapter II is still a candidate awaiting Taylor's eye on tree-mass flatness.
+- **Watch out:** ⚠️ The heartbeat row carries a real trap worth restating: a stale Ephemeris note surfaces on the **SystemHorizon page hosted here**, not only in the SystemHorizon repo, so "the dashboard looks wrong" can point at either repo. ⚠️ Both Supabase entries are on the **free tier** and are separate projects; `vtrtyagltwdrbastpppl` is shared with `Rectrix_Caedere`.
+
 ### 2026-09-02 22:20 ET · Claude Code (TOOLS.md tool inventory added)
 - **Changed:** Added `TOOLS.md` (13 active rows) — Playwright + axe-core, sharp-cli, GitHub Pages, the two Job Ops scheduled tasks, and the rest, with what each is used for and when last used. `AGENTS.md` gained a `### TOOLS.md` subsection so Codex maintains it too. One of 13 project tables that `septentrion-sync` v4 rolls into the vault's new `The Toolbox.md`.
 - **Commit:** `4c0388a`

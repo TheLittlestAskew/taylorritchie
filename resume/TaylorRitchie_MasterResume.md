@@ -28,7 +28,7 @@
 
 **Communications & Marketing:** Brand standards development · graphic & brand design (Canva) · social media strategy (Instagram, Facebook, LinkedIn) · social media scheduling (Buffer) · email marketing (Mailchimp, Constant Contact, HTML email) · donor communications · content planning · WordPress / Divi · public speaking & presentations · mission storytelling
 
-**Compliance & Governance:** Privacy Officer duties · grant reporting & compliance · HIPAA-adjacent operating standards · board meeting minutes & governance support
+**Compliance & Governance:** Privacy Officer duties · grant reporting & compliance · confidentiality, segmentation & access controls · board meeting minutes & governance support
 
 **AI & Automation:** Prompt engineering · AI-assisted workflow design · generative AI content development · document & data extraction (OCR) · AI output quality assurance · human-in-the-loop process design · custom AI skill authoring · AssemblyAI (speech-to-text pipelines)
 
@@ -55,7 +55,7 @@
 - Write and submit grant applications and reports across local, state, foundation, and corporate funders, managing $600K+ in grant funding across the full lifecycle from prospect research through closeout, including all reimbursement workflows.
 - Manage the complete donor lifecycle for 540+ unique donors and $1.4M+ in donor revenue: database administration (Little Green Light, Dataverse), donation processing (Stripe, ProPay, Givebutter), tax letter generation, donor stewardship communications, and Neighbors Society (monthly) and Builders Society (multi-year pledge) tier tracking.
 - Oversee shelter budgeting and financial reconciliation; serve as primary liaison with outside accounting team.
-- Implemented privacy-segmented data architecture that keeps counseling records separate from operational data, enabling the organization to operate close to HIPAA standards without enterprise-level licensing.
+- Implemented privacy-segmented data architecture that keeps counseling records separate from operational data, enforcing confidentiality and role-based access controls without enterprise-level licensing.
 - Direct all digital marketing and communications: social media strategy across Instagram, Facebook, and LinkedIn; website maintenance; donor email campaigns; and brand standards.
 - Developed a custom Model Context Protocol (MCP) server in Python with full CRUD operations against Dataverse, enabling AI-assisted operations workflows.
 - Recruit, onboard, and coordinate shelter volunteers, including Bonner Scholars and corporate/group volunteer teams.

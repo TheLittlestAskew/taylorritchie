@@ -64,6 +64,12 @@
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-05 · Claude Code (added `.gitattributes` — a PDF was one click from being corrupted)
+- **Changed:** Added `.gitattributes`, the repo's first. Marks `*.pdf`, `*.docx`, images, fonts, archives and video as `binary`, and declares the real text types so legitimate EOL warnings stop resurfacing.
+- **Commit:** `552f65d`
+- **Next:** Unchanged — Chapter III. 🛑 But see below: this file only protects the branch it is on.
+- **Watch out:** 🛑 **Why this appeared:** Taylor opened `resume/TaylorRitchie_Resume_OpsAndSystems.pdf` in GitHub's web editor and it warned *"mixed line endings … we will normalize them to Windows-style (CRLF)."* The repo had **no** `.gitattributes`, so `git check-attr` reported `text: unspecified` on the PDF — nothing told git it was binary. Committing there would have rewritten every `0x0A` to `0x0D 0x0A` **inside a binary file**, corrupting it and desynchronising the byte offsets in its cross-reference table. She stopped before saving; the file verifies clean (`%PDF-1.7`, 2 pages, `pypdf` reads it). ⚠️ **A PDF cannot be find-and-replaced anyway** — the text is baked into the rendered document. The HIPAA fix there needs a regeneration through the `.docx` pipeline, not an edit. 🛑 **This `.gitattributes` is only on this branch.** The live PDFs are on `main`, so until it lands there the same web-editor trap is still open on the default branch — and putting it there is another `main` commit, which this file's standing rules forbid mid-build. Taylor's call.
+
 ### 2026-09-05 · Claude Code (✅ street address and HIPAA claim cleared from ALL SIX branches)
 - **Changed:** Taylor approved the address removal, so both issues were swept across every branch rather than just the two I had touched.
   - **Street address removed** from the contact line of `resume/TaylorRitchie_MasterResume.md` and all three `resume/variants/*.md`, on all six branches. The line now opens with city + ZIP, matching the `_MASTER_NEW` designed resumes. Commits: `a00038f` (main) · `6ea2661` · `a83c14c` · `8b9ae53` · `7f7c806` · `2255dc8`.

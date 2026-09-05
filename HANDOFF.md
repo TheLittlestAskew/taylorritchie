@@ -64,6 +64,15 @@
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-05 · Claude Code (✅ street address and HIPAA claim cleared from ALL SIX branches)
+- **Changed:** Taylor approved the address removal, so both issues were swept across every branch rather than just the two I had touched.
+  - **Street address removed** from the contact line of `resume/TaylorRitchie_MasterResume.md` and all three `resume/variants/*.md`, on all six branches. The line now opens with city + ZIP, matching the `_MASTER_NEW` designed resumes. Commits: `a00038f` (main) · `6ea2661` · `a83c14c` · `8b9ae53` · `7f7c806` · `2255dc8`.
+  - **HIPAA claim removed from the four branches that still had it.** The earlier fix only reached `main` and this branch; `codex/storybook-architecture`, `codex/under-construction`, `codex/under-construction-current` and `feat/romeo-juliet-resume-redesign` each still carried it in their own copy of the master, so any merge from them would have put it back. Commits: `27b1e10` · `3ad1f88` · `d5780b7` · `d7ad592`.
+  - **Verified:** all six branches now report `hipaa:0  address:0`.
+- **Commit:** `a00038f` and the eight sibling commits listed above
+- **Next:** Unchanged. See the block above this log — Chapter III is still the action here.
+- **Watch out:** 🛑 **Neither removal touches git history.** Both were public for months; the working trees are clean but the old blobs remain reachable. Scrubbing them means `filter-repo` on a public repo with six branches — a deliberate decision, not a follow-on chore. 🛑 **`resume/TaylorRitchie_Resume_OpsAndSystems.pdf` on `main` still carries the HIPAA claim twice** and is the *downloadable* artifact, so it is the highest-exposure copy left. A PDF cannot be text-edited; it needs regenerating through the `.docx` build pipeline in `Septentrion\JobSearch\Resume & Job Hunting\`. ⚠️ **Lesson worth keeping:** the first pass fixed only the branches that happened to be in front of me. In a repo with six long-lived branches, a content removal is not done until every branch is verified — check them all, then re-verify after.
+
 ### 2026-09-05 · Claude Code (HIPAA claim removed on this branch too; 🛑 home street address found public)
 - **Changed:** `resume/TaylorRitchie_MasterResume.md` on this branch — the same two lines fixed on `main` in `ab26de9`. This branch carries its own, fuller copy of the master, so without this the merge would have reintroduced the claim.
 - **Commit:** `430b809`

@@ -64,6 +64,13 @@
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-05 · Claude Code (HIPAA claim removed on this branch too; 🛑 home street address found public)
+- **Changed:** `resume/TaylorRitchie_MasterResume.md` on this branch — the same two lines fixed on `main` in `ab26de9`. This branch carries its own, fuller copy of the master, so without this the merge would have reintroduced the claim.
+- **Commit:** `430b809`
+- **Next:** 🛑 Taylor's decision on the street address below.
+- **Watch out:** 🛑 **Taylor's full home street address is public in this repo — 4 files, every branch, including `main`.** `resume/TaylorRitchie_MasterResume.md` and all three `resume/variants/*.md` open with `9 Rosewood Rd SW, Rome, GA 30165 | <phone> | <email>`. The repo is public and GitHub Pages serves it. This is a larger exposure than the HIPAA wording that prompted the sweep, and **her own pipeline already says to fix it** — `operations-resume-build/artifact.md:36` reads *"Remove full street address, lapsed credential, `near-HIPAA` language."* The current designed `_MASTER_NEW` resumes use `Rome, GA 30165` (city + ZIP, no street), so that is the established standard to match. ⚠️ Not changed here: it is 4 files across 7 branches and it is her address, so it wants a deliberate pass rather than a side effect of a wording fix. ⚠️ As with any published content, removing it going forward does **not** remove it from git history.
+
+
 ### 2026-09-03 20:34 ET · Claude Code (banked an unbanked TOOLS.md edit; no site change)
 - **Changed:** `TOOLS.md` only. Two Supabase rows had been written into the working tree by an earlier 2026-09-03 session and left uncommitted, so they were sitting outside git while every other repo in the wave was pushed. Banked them: the job-pipeline project (`vtrtyagltwdrbastpppl`, behind `tracker.html`) and the projects-heartbeat project (`qzliydcrlhioradwacmd`, read by `systemhorizon/index.html`) — both were missing even though this repo hosts the pages that read them. Added a `/handoff` row and bumped `git` + `Claude Code` to today. **No site, resume, or storybook file was touched.**
 - **Commit:** `7914333`

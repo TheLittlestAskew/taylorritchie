@@ -13,6 +13,16 @@ When Taylor is ready to relaunch the portfolio, replace the temporary maintenanc
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-05 · Claude Code (🛑 HIPAA claim was live on the public site repo — removed from `main`)
+- **Changed:** `resume/TaylorRitchie_MasterResume.md`, two lines. This file sits on `main` in a **public** repo served by GitHub Pages, so the claim was publicly readable at `github.com/TheLittlestAskew/taylorritchie` and reachable as a raw path under `tayloraritchie.com`. It is not referenced by any site HTML/JS, so it never rendered on the homepage — but "unlinked" is not "unpublished."
+  - Skills line: `HIPAA-adjacent operating standards` → `confidentiality, segmentation & access controls`.
+  - Experience bullet: `enabling the organization to operate close to HIPAA standards` → `enforcing confidentiality and role-based access controls`. The achievement (privacy-segmented architecture, no enterprise licensing) is unchanged; only the regulatory claim is gone.
+  - Wording follows the master resume's own guardrail: *"Use 'served as Privacy Officer' and describe confidentiality, segmentation, and access controls. Do not claim HIPAA compliance or use 'near-HIPAA.'"*
+- **Commit:** `ab26de9`
+- **Next:** Unchanged. See the block above this log — the maintenance page stays up until Taylor says go.
+- **Watch out:** 🛑 **`resume/TaylorRitchie_Resume_OpsAndSystems.pdf` on `main` still contains the claim, twice**, and a PDF cannot be text-edited — it has to be regenerated through the `.docx` build pipeline in `Septentrion\JobSearch\Resume & Job Hunting\`. That PDF is a **downloadable deliverable**, so it is the higher-exposure copy of the two. `TaylorRitchie_Resume.pdf` and `TaylorRitchie_Resume_GrantsAdmin.pdf` are clean; so are all three `resume/variants/*.md`. ⚠️ `feat/among-trees-storybook` carries the same two lines in its copy of this file and will reintroduce them on merge unless fixed there too. ⚠️ **Do not "fix" the HIPAA strings in `build_*.py`** — there they are forbidden-claim guardrails doing their job, and deleting them removes the check.
+
+
 ### 2026-08-28 · Claude chat
 - **Changed:** Found and closed a live data leak: `systemhorizon/index.html` was a June 2026 snapshot of the old single-file SH build, still fully unauthenticated, hitting a Supabase project directly with an embedded anon key and RLS disabled — anyone with the URL could read and write tasks, pain log, and Career/job-search data. It was never linked from the maintenance-page homepage, so exposure was via guessable URL only, but it was genuinely live. No delete permission on this repo (integration returned 403 on tree creation), so replaced the file in place with a meta-refresh redirect stub pointing to `sh.tayloraritchie.com` — same URL now sends any old bookmark to the real, auth-gated app instead of leaking data.
   - This was found while doing the real fix: SystemHorizon is being moved off the default GitHub Pages URL onto `sh.tayloraritchie.com`, gated by Cloudflare Access, decoupled from this repo entirely (see `TheLittlestAskew/SystemHorizon` HANDOFF for the other half of this work). The `systemhorizon/` subtree merge from 2026-06-28 is now fully superseded.

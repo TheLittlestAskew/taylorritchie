@@ -1,6 +1,6 @@
 # TAYLOR ASKEW RITCHIE
 
-9 Rosewood Rd SW, Rome, GA 30165 | 706-767-7196 | taylor.ritchie14@gmail.com
+Rome, GA 30165 | 706-767-7196 | taylor.ritchie14@gmail.com
 [linkedin.com/in/taylor-askew-ritchie](https://www.linkedin.com/in/taylor-askew-ritchie-126618133/)
 
 ---

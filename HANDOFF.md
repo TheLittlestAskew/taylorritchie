@@ -13,6 +13,14 @@ When Taylor is ready to relaunch the portfolio, replace the temporary maintenanc
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
 
+### 2026-09-05 · Claude Code (resume cleanup closed out; `.gitattributes` added)
+- **Changed:** Two things, both closing out the sweep that started from a wording fix.
+  - **Added `.gitattributes`** — the repo's first. Marks `*.pdf`, `*.docx`, images, fonts, archives and video as `binary`, and declares the real text types. Verified: the two remaining PDFs here now resolve `binary: set`.
+  - **Recorded that Taylor deleted `resume/TaylorRitchie_Resume_OpsAndSystems.pdf`** (`cf7224d`). That file carried the regulatory-posture claim twice and was the last copy of it in this repo. Nothing on the site referenced it — checked `*.html`, `*.js`, `*.json`, `*.css` — so its removal breaks no link.
+- **Commit:** `<pending>`
+- **Next:** Unchanged — the maintenance page stays up until Taylor says go.
+- **Watch out:** 🛑 **The entry below this one is now stale in one respect:** it warns that the OpsAndSystems PDF "still contains the claim." It does not — the file is gone. 🛑 **Why `.gitattributes` matters here specifically:** with no such file, git read PDFs as text with unspecified EOL handling, and GitHub's web editor offered to normalise one to CRLF. Committing that would have rewritten every `0x0A` inside a binary file and corrupted it. Taylor stopped before saving; the file verified clean at the time. ⚠️ **`node_modules/` is untracked and NOT ignored on this branch** (it is ignored on `feat/among-trees-storybook`). A stray `git add -A` here would commit thousands of dependency files. Worth adding to `.gitignore` on its own.
+
 ### 2026-09-05 · Claude Code (🛑 HIPAA claim was live on the public site repo — removed from `main`)
 - **Changed:** `resume/TaylorRitchie_MasterResume.md`, two lines. This file sits on `main` in a **public** repo served by GitHub Pages, so the claim was publicly readable at `github.com/TheLittlestAskew/taylorritchie` and reachable as a raw path under `tayloraritchie.com`. It is not referenced by any site HTML/JS, so it never rendered on the homepage — but "unlinked" is not "unpublished."
   - Skills line: `HIPAA-adjacent operating standards` → `confidentiality, segmentation & access controls`.

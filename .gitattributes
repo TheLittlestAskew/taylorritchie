@@ -1,0 +1,32 @@
+# Protect binary assets from end-of-line conversion.
+#
+# Without this, git treats these as text with unspecified EOL handling, which is
+# what let GitHub's web editor offer to "normalize" a PDF to CRLF on 2026-09-05.
+# Rewriting 0x0A -> 0x0D 0x0A inside a PDF does not fix anything; it corrupts the
+# file and desynchronises the byte offsets in its cross-reference table.
+
+*.pdf   binary
+*.docx  binary
+*.xlsx  binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.otf   binary
+*.mp4   binary
+*.zip   binary
+
+# Text files: normalise in the repo, check out native. Keeps the "mixed line
+# endings" warnings from reappearing on the files that legitimately are text.
+*.md    text
+*.html  text
+*.css   text
+*.js    text
+*.json  text
+*.yml   text
+*.yaml  text

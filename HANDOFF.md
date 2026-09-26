@@ -6,26 +6,34 @@
 ## ▶ DO NEXT
 🛑 **EVERYTHING IN THE 2026-08-01 LOG ENTRIES DESCRIBES A RETIRED PROJECT.** On 2026-08-04 Taylor scrapped the Among Trees art style outright. The `verso` skill, `compile_prompt.py`, `check_palette.py`, `check_dawn_balance.py`, the luminous-dawn-haze profile, the cool/bridge/warm area budget, the `saturated_warm` vs `deep` well taxonomy and all 15 spread specs were archived to `~/_retired/2026-08-04_among-trees-style/`. **Do not rebuild any of it and do not act on a 2026-08-01 entry as if it were live.** Those entries are kept because their *lessons* transferred; their *machinery* did not.
 
-**▶ The next action: Chapter III.** Write its prompt by hand against `Style/EARLY-MORNING.md` and `ThePlan.md`, generate, grade, measure the well, record the run. **Chapter II is the worked example — copy its structure, not its scene.**
+**▶ The next action: Chapter IV, "Where our eyes can take us" — the fork.** Write its prompt by hand against `Style/EARLY-MORNING.md` and `ThePlan.md`, generate, grade, probe the well, record the run. **Chapter III is the worked example — copy its structure, not its scene.** III's run record lists the three clauses IV needs to invert or reuse; read `Style/prompt-chapter-III.md → New clauses this chapter contributes` first.
 
-🟢 **The style is rebuilt and it works.** `Style/EARLY-MORNING.md` (r3) is the governing art document, `Style/check_grade.py` enforces it, and `--self-test` is green on 60 checks including all eight of Taylor's curated references. Two chapters are through it:
+🟡 **Two chapters are waiting on Taylor's eye and nothing else.** Both pass everything measurable. Neither can lock without her, because the open axis is tree-mass flatness, which no gate measures and the profile says outright to judge by eye.
+- **Chapter II** — `test-em-II-t2.png`, dappled patches on the near-right trunk, tufts at the canopy edges.
+- **Chapter III** — `test-em-III-t1.png`, the big near trunks down the right edge carry a vertical gradient inside the mass instead of reading as one flat colour. **Also a second question for her:** t1 vs t2 was decided on composition, not on numbers — see the log entry below.
+
+🟢 **The style is rebuilt and it works.** `Style/EARLY-MORNING.md` (r3) is the governing art document, `Style/check_grade.py` enforces it, and `--self-test` is green on 60 checks including all eight of Taylor's curated references. Three chapters are through it:
 
 | | frame | gates | well | ink |
 |---|---|---|---|---|
 | **I** | `chapter-I-above-the-trees-em-v1.png` | 5/5 with `--sky-well` | x 62–94, y 20–46 · 32%×26% · **5.19:1** | `#1B1B3A` |
 | **II** | `test-em-II-t2.png` (candidate) | **5/5 strict** | x 3–38, y 70–96 · 35%×26% · **5.97:1** | `#1B1B3A` |
+| **III** | `test-em-III-t1.png` (candidate) | **5/5 strict** | x 0–32.5, y 16–84 · 32.5%×**68%** · **5.1:1** | `#1B1B3A` |
 
-⚠️ **Chapter II is a CANDIDATE, not a master — it needs Taylor's eye on tree-mass flatness before it locks.** No gate measures flatness, and t2 carries more internal incident than t1 (dappled patches on the near-right trunk, tufts at the canopy edges). That is the exact axis she flagged on Chapter I's first frame. Everything measurable about it passes.
-
-**Everything lives in the vault, not in this repo:** `~\Obsidian Vaults\Septentrion\Constellations\Resume Site\`. `Style/` holds the profile, the gate script and one run record per chapter; `resume art\<NN>_<NUMERAL>\` holds the frames and `spec.json`. The `resume art` tree is **untracked by design** — full-size frames never enter git history.
+**Everything lives in the vault, not in this repo:** `~\Obsidian Vaults\Septentrion\Constellations\CVsite\`. `Style/` holds the profile, the gate scripts and one run record per chapter; `resume art\<NN>_<NUMERAL>\` holds the frames and `spec.json`. The `resume art` tree is **untracked by design** — full-size frames never enter git history. ⚠️ **That gitignore covers the `spec.json` files too**, so every chapter's measured numbers live on this disk and nowhere else. Not changed here; whether the specs should be split out from the frames is Taylor's call.
 
 **How a chapter runs now — no compiler, by Taylor's call 2026-08-05:**
 1. Read `ThePlan.md` for the scene and where the well goes, plus the chapter's `layout.jpg` if it has one (those are **text-placement** references, not style references).
 2. Hand-write the prompt from `EARLY-MORNING.md`, reusing the ranked findings in `Style/test-prompt-chapter-I.md` and `Style/prompt-chapter-II.md`.
 3. Generate — `gemini-3-pro-image-preview`, 16:9, `use_image_history: false`, **no reference image**.
-4. `python check_grade.py FRAME --verbose`. Declare `--sky-well` only if the chapter's text well genuinely *is* open sky; it is never inferred.
-5. `measure_well.py FRAME --text "#1B1B3A" --target ...` from `~/_retired/2026-08-04_among-trees-style/skills-live/verso/scripts/`.
-6. Write the run record in `Style/` and the `spec.json` in the chapter folder.
+4. `python check_grade.py FRAME --verbose`. Declare `--sky-well` only if the chapter's text well genuinely *is* open sky; it is never inferred. 🆕 **Better still, compose so you never need it — see the high-horizon finding below.**
+5. 🆕 `python Style/probe_well.py FRAME --text "#1B1B3A"` — new 2026-09-26. Returns the largest **in-band** box (32–40%) whose **every** pixel clears 4.5:1. Use `--box '{...}'` to re-check a specific inset. `--self-test` green on 17.
+6. `measure_well.py FRAME --text "#1B1B3A" --target ...` from `~/_retired/2026-08-04_among-trees-style/skills-live/verso/scripts/` — still the right tool for `--audit`, and for finding a well when you don't yet know where it is.
+7. Write the run record in `Style/` and the `spec.json` in the chapter folder.
+
+🆕 **The single most reusable finding of the III run: put the horizon HIGH.** Chapter I burned three generations on mid-band warm and ended up needing the `--sky-well` scope invented for it. Chapter III measured **0.4%** against the 15% ceiling, first try, because the clause *"the ridge crest sits HIGH in the picture, up in the upper quarter, so the road climbs through the whole middle of the frame"* puts all the warm dawn sky inside the top quarter by construction and fills the middle band with blue forest instead. **Every remaining exterior should do this. It is cheaper than the scope and it costs nothing.**
+
+🆕 **Exclude the NEXT chapters' subjects in the avoid list.** III's prompt names *a house, a cottage, a cabin, a tent, any building* because the cottage arrival is V's reveal, and enumerates *"it never forks, never splits, never branches"* because the fork is IV's. Neither frame leaked. This model will happily put a cabin at the end of a forest road. **Chapter IV wants the inverse fork clause.**
 
 🆕 **Green is the cool-arc release valve, and it is the most reusable thing Chapter II found.** Green is the only large area in this palette that is neither cool arc nor warm, so it is the only way to pull a too-blue frame down without spending warm budget on a profile that fences warm into the top quarter. Chapter II's t1 passed at cool arc 90.8% against a 92% ceiling — 1.2 points, which is luck rather than control. Commissioning a broad lit meadow moved green 1.7% → 10.6% and cool arc to 78.6% while warm barely moved. **Reach for green first when cool arc runs high.**
 
@@ -33,7 +41,7 @@
 
 ⚠️ **A smaller box inside a passing box does not necessarily pass.** Insetting Chapter II's well upward from y 66.7 to y 60 collapsed worst pixel from 6.16:1 to **2.29:1**, because the mist bank's top edge meets the dark forest right there. Inset for type padding and **re-measure every time.**
 
-⚠️ **`measure_well.py` still enforces the retired 38–45% width band.** The Almanac replaced it with **32–40%, ideal 36%** on 2026-07-30 (`septentrion` `8163faf`) and the script was never updated, so it reports a **false failure** on both chapters — I at 32% and II at 35%, the latter one point off ideal. Fix the constant before trusting that line. This is the oldest open item in the project.
+✅ **The retired 38–45% width band is FIXED (2026-09-26) — the oldest open item in the project is closed.** `measure_well.py` now reads **32–40%, ideal 36%** from named constants, matching the Almanac's 2026-07-30 replacement (`septentrion` `8163faf`). Verified on the real frames, not just on fixtures: Chapter I (32%) and Chapter II (35%) both now report `spec_failures: []` where both previously reported a false failure, and `--audit` passes all three specs. Its `--self-test` is green on **37** checks, including pins on both approved chapters' actual widths so the constant cannot silently drift again. ⚠️ The script lives in `~/_retired/`, which is **not a git repo** — this fix is unbacked. Worth moving the live measurement tools into the vault beside `probe_well.py`.
 
 ⚠️ **Neither frame is 4K.** Both are 1376×768. A full-bleed hero needs a higher-resolution regeneration, and **both colour and well must be re-measured after it** — neither survives a re-roll automatically. Nano Banana exposes no size parameter, so the path that produced Chapter I's old 2389×1344 output is worth finding before this compounds across 15 spreads.
 
@@ -55,7 +63,7 @@
 - 🛑 Root `index.html` is a **throwaway placeholder** and must be overwritten with the Cover before ship. If it reaches production, the build shipped incomplete.
 - Overlay/motion layers and `SceneMotion` are specced but **not built, and correctly deferred** until all 15 masters are approved.
 
-**Still to make: Cover, III, IV, V, VI, VII, VIII, IX, X, XI, XII, XIII, XIV** — thirteen spreads, none started under the new style.
+**Still to make: Cover, IV, V, VI, VII, VIII, IX, X, XI, XII, XIII, XIV** — twelve spreads, none started under the new style.
 
 ⚠️ `.git\claude-handoff-skip` is present, 0 bytes, and **inert** — a blank file does not skip. Delete it before the merge. Housekeeping, not a live risk.
 
@@ -63,6 +71,17 @@
 
 ## Log
 <!-- newest first · one entry per logical task/session · timestamp · source · changed · commit · next -->
+
+### 2026-09-26 · Claude Code (Chapter III passed 5/5 in two generations; the oldest open item is closed)
+- **Changed:** **Chapter III is a verified candidate** — `test-em-III-t1.png`, 5/5 gates on the **strict** ceiling, well **x 0–32.5 / y 16–84 at 5.1:1**, 32.5% × **68%**. That height is 2.6× Chapters I and II and it is what III needs: the Chamber role is the heaviest copy payload so far and is resume content verbatim. Second chapter in a row to clear in two generations. Run record in `Style/prompt-chapter-III.md`, spec in `resume art/03_III/spec.json`, ThePlan's Chapter III entry marked CANDIDATE. Also **closed the project's oldest open item** — `measure_well.py`'s retired 38–45% width band — and **wrote `Style/probe_well.py`**, because fixing the band exposed that `measure_well.py` was answering the wrong question.
+- **Commit:** see the handoff commit below; the art itself is in the vault (`resume art/` is gitignored by design)
+- **Next:** **Chapter IV, the fork.** See DO NEXT. 🟡 And two frames are sitting on Taylor's eye, not on any gate.
+- **Watch out:** 🆕 **The mid-band warm problem that defined Chapter I simply did not occur, and the reason is transferable: put the horizon HIGH.** III measures **0.4%** against a 15% ceiling; I could never get under 21% and had the `--sky-well` scope invented for it. Commissioning the ridge crest *"HIGH in the picture, up in the upper quarter"* puts the entire warm dawn sky inside the top quarter by construction and fills the middle band with blue forest planes. **Every remaining exterior should do this — it is cheaper than the scope, and the scope is the thing this project already had to bend its own rules to create.**
+  🆕 **`measure_well.py` answers "what is the largest region that can carry text?", which stopped being the right question the moment the Almanac fixed the width at 32–40%.** On III's t2 it returns a 45%-wide region — outside the band — and reports its worst pixel at 4.72:1, *below* the AA floor, because its cell test is a 2nd-percentile one that tolerates grain. Both facts are correct for the question it asks and useless for the question we now have. `Style/probe_well.py` returns the largest **in-band** box whose **every** pixel clears the floor; `--self-test` green on 17. ⚠️ **Writing its tests immediately caught a real off-by-one in my own code**: cell edges were rounded to one decimal *downward*, and `measure_region()` floors percentages back to pixels, so a box abutting an intrusion reached one pixel back into it and reported **1.04:1 for a region whose cells all cleared 4.5:1**. On a real frame that is a well silently reported as unusable. Lower edges now round up, upper edges down, and three pins hold it.
+  🛑 **t1 beat t2 on composition, not on measurement, and that is the second time this has happened.** Both passed 5/5. t2 was generated specifically to widen the well and succeeded — 40.0% against t1's 32.5% — but it drops the left-edge tree enclosure ThePlan calls for, shrinks the road that ThePlan makes *"the primary directional line"*, overshoots ThePlan's own *"leftmost 1/5–2/5"* well spec at 45%, and carries visible hard horizontal banding in the dawn sky that the prompt's avoid list explicitly names. **Taylor should see both.** The measurable axes genuinely do not separate them.
+  ⚠️ **III's well is flush to the left frame edge and cannot be inset rightward.** A near-black trunk stands at x = 32.5%; moving the right edge 1.5 points into it costs 5.1:1 → **2.84:1**, and 2.5 points costs **1.00:1**. Left type padding has to be spent *inside* the well in CSS. The vertical inset is free (y 12.5→16 and 87.5→84 both hold at 5.1:1); extending *up* from 12.5 to 8 collapses to 1.00:1 on the canopy. **Third distinct form of the same standing rule — a smaller box inside a passing box does not necessarily pass.**
+  ⚠️ **Green moved cool arc again, same direction, similar size** — t1 green 4.9% / cool arc 83.3%, t2 green 8.9% / cool arc 80.1%, against Chapter II's 1.7→10.6 moving 90.8→78.6. Two chapters now. **Treat it as an established lever rather than an observation.**
+  ⚠️ **Third chapter in a row at 1376×768.** The high-resolution generation path is still unfound and now compounds across three approved-or-candidate frames. Nano Banana exposes no size parameter. ⚠️ Also: the `resume art/` gitignore covers the `spec.json` files, so **every chapter's measured numbers exist on one disk only**, and `~/_retired/` — which holds the live `measure_well.py` — **is not a git repo at all**, so today's fix to it is unbacked. Neither was changed here; both are Taylor's call.
 
 ### 2026-09-05 · Claude Code (added `.gitattributes` — a PDF was one click from being corrupted)
 - **Changed:** Added `.gitattributes`, the repo's first. Marks `*.pdf`, `*.docx`, images, fonts, archives and video as `binary`, and declares the real text types so legitimate EOL warnings stop resurfacing.
